@@ -18,15 +18,43 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	// https://spring.io/projects/spring-cloud 의 Release Trains 부분을 보세요.
+	springCloudVersion = '2021.0.3'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// DB
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// OpenFiegn
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation 'io.github.openfeign:feign-httpclient' //FETCH METHOD 지원
+	testImplementation 'org.springframework.cloud:spring-cloud-contract-wiremock'
+
+	//aws
+	implementation 'com.amazonaws:aws-java-sdk-sts:1.12.187'
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }
+// 뭐야 왜 안됨... 얼탱없네.. 테스트가 아직 없어서 그런가.. 나중에 다시 해보기
+
+//tasks.named('test') {
+//	useJUnitPlatform()
+//}
