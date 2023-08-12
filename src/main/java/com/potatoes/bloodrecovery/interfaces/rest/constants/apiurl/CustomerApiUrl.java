@@ -1,4 +1,4 @@
-package com.potatoes.bloodrecovery.interfaces.rest.constants;
+package com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl;
 
 public class CustomerApiUrl {
 

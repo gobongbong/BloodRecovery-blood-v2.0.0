@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CustomerInfoDto {
+public class CustomerInfoView {
     /**
      * 회원 등급
      */
