@@ -3,6 +3,8 @@ package com.potatoes.constants;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -12,7 +14,8 @@ import java.util.stream.Stream;
 public enum ResponseCode {
 
     SUCCESS("0000", "정상 처리되었습니다.",HttpStatus.OK),
-    SERVER_ERROR("0099", "서비스 접속이 원활하지 않습니다. 잠시 후 다시 이용해주세요.",HttpStatus.INTERNAL_SERVER_ERROR);
+    SERVER_ERROR("0099", "서비스 접속이 원활하지 않습니다. 잠시 후 다시 이용해주세요.",HttpStatus.INTERNAL_SERVER_ERROR),
+    NO_DATA("0009", "조회된 데이터가 없습니다.",HttpStatus.NOT_FOUND);
 
     private final String responseCode;
     private final String message;
@@ -43,5 +46,9 @@ public enum ResponseCode {
             return codes.get(responseCode).getHttpStatus();
         else
             return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+
+    public String getUrlEncodingMessage(){
+        return URLEncoder.encode(this.message, StandardCharsets.UTF_8);
     }
 }
