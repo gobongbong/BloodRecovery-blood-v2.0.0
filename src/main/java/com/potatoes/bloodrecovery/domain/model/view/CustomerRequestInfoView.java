@@ -10,7 +10,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @ToString
-public class UserRequestInfoView {
+public class CustomerRequestInfoView {
     private String gradeSn;
     private String userNickname;
     private String bloodStatus;

@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class GetUserRequestsQuery {
+public class GetCustomerRequestsQuery {
     private String customerId;
 }
