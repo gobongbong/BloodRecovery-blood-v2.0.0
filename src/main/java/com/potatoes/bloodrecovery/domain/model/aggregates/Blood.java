@@ -1,11 +1,12 @@
 package com.potatoes.bloodrecovery.domain.model.aggregates;
 
 import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Slf4j
 @Entity

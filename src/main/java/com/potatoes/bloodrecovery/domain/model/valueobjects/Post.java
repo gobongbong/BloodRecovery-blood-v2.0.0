@@ -1,9 +1,9 @@
 package com.potatoes.bloodrecovery.domain.model.valueobjects;
 
-import jakarta.persistence.Embeddable;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.persistence.Embeddable;
 import java.time.LocalDateTime;
 
 @Slf4j
