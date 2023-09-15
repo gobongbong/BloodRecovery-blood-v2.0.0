@@ -1,16 +1,23 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.1.0'
+	id 'org.springframework.boot' version '2.7.11'
 	id 'io.spring.dependency-management' version '1.1.0'
 }
 
 group = 'com.potatoes'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '11'
 
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
+	}
+	implementation {
+		exclude group: 'org.slf4j', module: 'slf4j-simple'
+		all*.exclude group: 'org.springframework.boot', module : 'spring-boot-starter-logging'
+	}
+	complie {
+		exclude group: 'org.slf4j', module: 'slf4j-simple'
 	}
 }
 
@@ -21,6 +28,7 @@ repositories {
 ext {
 	// https://spring.io/projects/spring-cloud 의 Release Trains 부분을 보세요.
 	springCloudVersion = '2021.0.3'
+	set ('log4j2.version', '2.17.1')
 }
 
 dependencyManagement {
@@ -34,6 +42,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+//	implementation 'org.slf4j:slf4j-simple:1.7.32'
+	implementation 'com.amazonaws:aws-xray-recorder-sdk-slf4j:2.11.0'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

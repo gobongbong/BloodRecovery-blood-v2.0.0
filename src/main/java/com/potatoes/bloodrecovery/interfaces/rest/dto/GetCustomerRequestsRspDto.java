@@ -1,6 +1,6 @@
 package com.potatoes.bloodrecovery.interfaces.rest.dto;
 
-import com.potatoes.bloodrecovery.domain.model.view.UserRequestInfoView;
+import com.potatoes.bloodrecovery.domain.model.view.CustomerRequestInfoView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +12,6 @@ import java.util.List;
 @Builder
 @ToString
 @AllArgsConstructor
-public class GetUserRequestsRspDto {
-    private List<UserRequestInfoView> requests;
+public class GetCustomerRequestsRspDto {
+    private List<CustomerRequestInfoView> requests;
 }
