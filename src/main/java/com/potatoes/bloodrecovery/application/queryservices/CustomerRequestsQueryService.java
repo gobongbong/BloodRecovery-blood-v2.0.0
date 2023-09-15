@@ -1,9 +1,9 @@
 package com.potatoes.bloodrecovery.application.queryservices;
 
 import com.potatoes.bloodrecovery.domain.model.aggregates.Blood;
-import com.potatoes.bloodrecovery.domain.model.queries.GetUserRequestsQuery;
+import com.potatoes.bloodrecovery.domain.model.queries.GetCustomerRequestsQuery;
 import com.potatoes.bloodrecovery.domain.model.view.CustomerInfoView;
-import com.potatoes.bloodrecovery.domain.model.view.UserRequestInfoView;
+import com.potatoes.bloodrecovery.domain.model.view.CustomerRequestInfoView;
 import com.potatoes.bloodrecovery.domain.repository.BloodRepository;
 import com.potatoes.bloodrecovery.domain.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,20 +16,22 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserRequestsQueryService {
+public class CustomerRequestsQueryService {
 
     private final BloodRepository bloodRepository;
     private final CustomerRepository customerRepository;
 
-    public List<UserRequestInfoView> getUserRequest(GetUserRequestsQuery getUserRequestsQuery){
-        List<Blood> bloodList = bloodRepository.findByCustomerId(getUserRequestsQuery.getCustomerId());
+    public List<CustomerRequestInfoView> getCustomerRequests(GetCustomerRequestsQuery getCustomerRequestsQuery){
+        List<Blood> bloodList = new ArrayList<>();
+        bloodList = bloodRepository.findByCustomerId(getCustomerRequestsQuery.getCustomerId())
+                .orElse(bloodList);
 
-        CustomerInfoView customerInfoView = customerRepository.getCustomerInfo(getUserRequestsQuery.getCustomerId());
+        CustomerInfoView customerInfoView = customerRepository.getCustomerInfo(getCustomerRequestsQuery.getCustomerId());
 
-        List<UserRequestInfoView> userRequestInfoViewList = new ArrayList<>();
+        List<CustomerRequestInfoView> customerRequestInfoViewList = new ArrayList<>();
 
         bloodList.forEach(blood -> {
-            UserRequestInfoView userRequestInfoView = UserRequestInfoView.builder()
+            CustomerRequestInfoView customerRequestInfoView = CustomerRequestInfoView.builder()
                     .userNickname(customerInfoView.getUserNickname())
                     .gradeSn(customerInfoView.getGradeSn())
                     .bloodDonationCnt(blood.getBloodDonationCnt())
@@ -38,11 +40,9 @@ public class UserRequestsQueryService {
                     .post(blood.getPost())
                     .build();
 
-            userRequestInfoViewList.add(userRequestInfoView);
+            customerRequestInfoViewList.add(customerRequestInfoView);
         });
 
-        //todo exeption 처리 추가
-
-        return userRequestInfoViewList;
+        return customerRequestInfoViewList;
     }
 }
