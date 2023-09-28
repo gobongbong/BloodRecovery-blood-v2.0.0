@@ -15,7 +15,9 @@ public enum ResponseCode {
 
     SUCCESS("0000", "정상 처리되었습니다.",HttpStatus.OK),
     SERVER_ERROR("0099", "서비스 접속이 원활하지 않습니다. 잠시 후 다시 이용해주세요.",HttpStatus.INTERNAL_SERVER_ERROR),
-    NO_DATA("0009", "조회된 데이터가 없습니다.",HttpStatus.NOT_FOUND);
+    NO_DATA("0009", "조회된 데이터가 없습니다.",HttpStatus.NOT_FOUND),
+    NO_IMAGE("0008", "헌혈증 이미지 파일이 없습니다.",HttpStatus.NOT_FOUND),
+    FAIL_OCR("0010", "헌혈증 OCR 인식에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String responseCode;
     private final String message;
