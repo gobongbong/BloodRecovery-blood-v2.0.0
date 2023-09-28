@@ -1,6 +1,7 @@
 package com.potatoes.bloodrecovery.domain.model.view;
 
 import lombok.*;
+import org.springframework.http.ResponseEntity;
 
 @Getter
 @Builder
@@ -22,6 +23,7 @@ public class CustomerInfoView {
      * 회원 아이디
      */
     private String userId;
+
 
     /**
      * 회원 혈액형
