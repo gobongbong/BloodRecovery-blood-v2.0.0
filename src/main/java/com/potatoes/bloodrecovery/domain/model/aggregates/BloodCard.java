@@ -37,4 +37,5 @@ public class BloodCard {
         this.name = registerBloodCardCommand.getName();
         this.date = registerBloodCardCommand.getDate();
     }
+
 }
