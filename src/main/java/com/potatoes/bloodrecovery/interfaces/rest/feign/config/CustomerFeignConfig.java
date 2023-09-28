@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -33,6 +34,7 @@ import static com.potatoes.utils.RequestScopeUtil.CUSTOMER_ID;
  * Configuration annotaion을 적용하면 전체 feign client에 적용됨.
  */
 @Slf4j
+@Configuration
 public class CustomerFeignConfig {
     @Value("500")
     private int retryPeriod;
@@ -87,5 +89,4 @@ public class CustomerFeignConfig {
     public Retryer retryer(){
         return new Retryer.Default(retryPeriod, retryMaxPeriod, maxAttempts);
     }
-
 }
