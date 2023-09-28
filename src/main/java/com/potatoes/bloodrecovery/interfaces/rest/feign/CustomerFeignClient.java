@@ -12,8 +12,8 @@ import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.Custom
 /**
  * 회원 Domain 호출
  */
-@FeignClient(name="customer", url="${feign.client.config.customer.endpoint}", configuration = CustomerFeignConfig.class)
-public interface CustomerFeignClient { //todo user? customer?
+@FeignClient(name="customer", url="http", configuration = CustomerFeignConfig.class)
+public interface CustomerFeignClient {
 
     /**
      * 회원 정보 조회

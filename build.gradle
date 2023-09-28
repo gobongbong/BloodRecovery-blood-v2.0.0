@@ -28,6 +28,7 @@ repositories {
 ext {
 	// https://spring.io/projects/spring-cloud 의 Release Trains 부분을 보세요.
 	springCloudVersion = '2021.0.3'
+	mapStructVersion = '1.4.2.Final'
 	set ('log4j2.version', '2.17.1')
 }
 
@@ -45,9 +46,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 //	implementation 'org.slf4j:slf4j-simple:1.7.32'
 	implementation 'com.amazonaws:aws-xray-recorder-sdk-slf4j:2.11.0'
+	implementation group: 'com.google.cloud', name: 'spring-cloud-gcp-starter', version: '2.0.7'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//vision
+	implementation platform('com.google.cloud:libraries-bom:23.1.0')
+	implementation 'com.google.cloud:google-cloud-vision:3.21.0'
 
 	// DB
 	runtimeOnly 'com.mysql:mysql-connector-j'
@@ -59,13 +66,16 @@ dependencies {
 
 	//aws
 	implementation 'com.amazonaws:aws-java-sdk-sts:1.12.187'
+
+	// MapStruct
+	implementation "org.mapstruct:mapstruct:${mapStructVersion}"
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"
 }
 
 test {
 	useJUnitPlatform()
 }
-// 뭐야 왜 안됨... 얼탱없네.. 테스트가 아직 없어서 그런가.. 나중에 다시 해보기
 
-//tasks.named('test') {
-//	useJUnitPlatform()
-//}
+jar {
+	enabled = false
+}
