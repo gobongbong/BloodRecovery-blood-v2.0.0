@@ -91,19 +91,19 @@ public class OpenFeignUtils {
      * HttpStatus 가 200일 경우 Header 의 ResponseCode 를 체크한다.
      * 성공 응답 값 체크는 default로 0000 으로 체크한다.
      */
-    public static void checkHeaderResponseCode(ResponseEntity<?> response) {
-        checkHeaderResponseCode(response, null);
-    }
+//    public static void checkHeaderResponseCode(ResponseEntity<?> response) {
+//        checkHeaderResponseCode(response, null);
+//    }
 
     /**
      * HttpStatus 가 200일 경우 Header 의 ResponseCode 를 체크한다.
      */
-    public static void checkHeaderResponseCode(ResponseEntity<?> response, Channel channel) {
-        String resultCode = findHeaderValue(response.getHeaders(), RESULT_CODE);
-        String responseCodeByChannel = ResponseCode.getResponseCodeByChannel(channel, SUCCESS);
-        if(!responseCodeByChannel.equals(resultCode)) {
-            String resultMessage = StringUtils.defaultIfEmpty(OpenFeignUtils.findHeaderValue(response.getHeaders(), RESULT_MESSAGE), SERVER_ERROR.getMessage());
-            throw new ApiException(resultCode, URLDecoder.decode(resultMessage, StandardCharsets.UTF_8));
-        }
-    }
+//    public static void checkHeaderResponseCode(ResponseEntity<?> response, Channel channel) {
+//        String resultCode = findHeaderValue(response.getHeaders(), RESULT_CODE);
+//        String responseCodeByChannel = ResponseCode.getResponseCodeByChannel(channel, SUCCESS);
+//        if(!responseCodeByChannel.equals(resultCode)) {
+//            String resultMessage = StringUtils.defaultIfEmpty(OpenFeignUtils.findHeaderValue(response.getHeaders(), RESULT_MESSAGE), SERVER_ERROR.getMessage());
+//            throw new ApiException(resultCode, URLDecoder.decode(resultMessage, StandardCharsets.UTF_8));
+//        }
+//    }
 }

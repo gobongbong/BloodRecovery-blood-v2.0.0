@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-09-27T15:41:26+0900",
+    date = "2023-09-28T15:26:19+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.20 (Amazon.com Inc.)"
 )
 @Component
-public class RegisterBloodCardMapperImpl extends RegisterBloodCardMapper {
+public class BloodCardMapperImpl extends BloodCardMapper {
 
     @Override
-    public RegisterBloodCardCommand reqDtoToCommand(String customerId, RegisterBloodCardReqDto registerBloodCardReqDto) {
+    public RegisterBloodCardCommand registerReqtoCommand(String customerId, RegisterBloodCardReqDto registerBloodCardReqDto) {
         if ( customerId == null && registerBloodCardReqDto == null ) {
             return null;
         }
