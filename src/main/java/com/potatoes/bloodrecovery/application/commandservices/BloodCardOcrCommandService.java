@@ -25,12 +25,7 @@ public class BloodCardOcrCommandService {
     public OcrView bloodCardOcr (MultipartFile imageFile) throws IOException {
 
         Image image = checkImageFile(imageFile);
-
-        //OCR 초기설정
-        List<AnnotateImageRequest> requests = new ArrayList<>();
-        Feature feature = Feature.newBuilder().setType(Feature.Type.DOCUMENT_TEXT_DETECTION).build();
-        AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feature).setImage(image).build();
-        requests.add(request);
+        List<AnnotateImageRequest> requests = requestOcrInit(image);
 
         //OCR 실행
         String compareName = "성 명: ";
@@ -79,7 +74,6 @@ public class BloodCardOcrCommandService {
     }
 
     private Image checkImageFile(MultipartFile imageFile) throws IOException {
-        log.info("imageFile ==========", imageFile);
         Image image;
 
         if (ObjectUtils.isNotEmpty(imageFile)) {
@@ -90,5 +84,15 @@ public class BloodCardOcrCommandService {
         }
 
         return image;
+    }
+
+    private List<AnnotateImageRequest> requestOcrInit(Image image){
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        Feature feature = Feature.newBuilder().setType(Feature.Type.DOCUMENT_TEXT_DETECTION).build();
+        AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feature).setImage(image).build();
+        requests.add(request);
+
+        return requests;
     }
 }
