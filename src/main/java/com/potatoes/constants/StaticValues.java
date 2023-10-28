@@ -2,10 +2,10 @@ package com.potatoes.constants;
 
 public class StaticValues {
 
-    public static final String RESULT_CODE = "resultCode";
-    public static final String RESULT_MESSAGE = "resultMessage";
+    public static final String RESULT_CODE = "ResultCode";
+    public static final String RESULT_MESSAGE = "ResultMessage";
+    public static final String HTTP_STATUS = "HTTPStatus";
 
     public static final String HEADER_CUSTOMER_ID = "customer_id";
-
 
 }

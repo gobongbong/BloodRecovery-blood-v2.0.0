@@ -126,7 +126,7 @@ class CustomerRequestsQueryServiceTest {
         assertThat(throwable)
                 .isInstanceOf(ApiException.class);
 
-        assertThat(((ApiException)throwable).getResultCode())
-                .isEqualTo(NO_DATA.getResponseCode());
+        assertThat(((ApiException)throwable).getResultMessage())
+                .isEqualTo(NO_DATA.getMessage());
     }
 }
