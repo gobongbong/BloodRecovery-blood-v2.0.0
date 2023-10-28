@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BloodCardRepository {
-    Optional<List<BloodCard>> findByCustomerId(String customerId);
+    List<BloodCard> findByCustomerId(String customerId);
+    Optional<BloodCard> findBloodCardByCustomerIdAndBloodCardId(String customerId, Long bloodCardId);
     BloodCard save(BloodCard bloodCard);
+    BloodCard delete(Long bloodCardId);
 }

@@ -78,7 +78,7 @@ public class CustomerFeignConfig {
             if(responseCode.equals(StringUtils.EMPTY) || responseMessage.equals(StringUtils.EMPTY))
                 return FeignException.errorStatus(methodKey, response);
 
-            return new ApiException(responseCode, URLDecoder.decode(responseMessage, StandardCharsets.UTF_8), HttpStatus.valueOf(response.status()));
+            return new ApiException(URLDecoder.decode(responseMessage, StandardCharsets.UTF_8), HttpStatus.valueOf(response.status()));
         };
     }
 

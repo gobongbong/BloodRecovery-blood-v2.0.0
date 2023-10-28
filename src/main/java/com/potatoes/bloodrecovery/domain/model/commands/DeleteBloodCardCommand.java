@@ -10,16 +10,19 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @ToString
 @AllArgsConstructor
-public class RegisterBloodCardCommand {
+public class DeleteBloodCardCommand {
+    private String customerId;
+    private Long bloodCardId;
+
     private String code;
     private String donationType;
     private String name;
     private String date;
-    private String customerId;
 
-    private Long bloodCardId;
-
-    public void setBloodCardId(BloodCard bloodCard){
-        this.bloodCardId = bloodCard.getBloodCardId();
+    public void setCardInfo(BloodCard bloodCard){
+        this.code = bloodCard.getCode();
+        this.donationType = bloodCard.getDonationType();
+        this.name = bloodCard.getName();
+        this.date = bloodCard.getDate();
     }
 }

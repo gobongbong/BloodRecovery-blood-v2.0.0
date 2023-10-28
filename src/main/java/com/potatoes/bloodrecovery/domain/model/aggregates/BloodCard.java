@@ -38,4 +38,8 @@ public class BloodCard {
         this.date = registerBloodCardCommand.getDate();
     }
 
+    public boolean isValidBloodCard(){
+        //BIMS 외부 연동 불가
+        return true;
+    }
 }
