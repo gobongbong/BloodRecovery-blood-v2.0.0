@@ -1,6 +1,7 @@
 package com.potatoes.bloodrecovery.application.queryservices;
 
 import com.potatoes.bloodrecovery.domain.model.aggregates.BloodCard;
+import com.potatoes.bloodrecovery.domain.model.queries.GetBloodCardsQuery;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardRepository;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.GetBloodCardsRspDto;
 import com.potatoes.exception.ApiException;
@@ -21,8 +22,8 @@ public class GetBloodCardsQueryService {
     private final BloodCardRepository bloodCardRepository;
 
     @Transactional(readOnly = true)
-    public GetBloodCardsRspDto getBloodCards(String customerId){
-        List<BloodCard> cards = bloodCardRepository.findByCustomerId(customerId);
+    public GetBloodCardsRspDto getBloodCards(GetBloodCardsQuery getBloodCardsQuery){
+        List<BloodCard> cards = bloodCardRepository.findByCid(getBloodCardsQuery.getCid());
 
         if (cards.isEmpty()) {
             throw new ApiException(NO_BLOOD_CARD);

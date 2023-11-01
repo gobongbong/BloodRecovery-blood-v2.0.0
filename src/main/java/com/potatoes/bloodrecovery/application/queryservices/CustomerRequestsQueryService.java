@@ -23,10 +23,10 @@ public class CustomerRequestsQueryService {
 
     public List<CustomerRequestInfoView> getCustomerRequests(GetCustomerRequestsQuery getCustomerRequestsQuery){
         List<Blood> bloodList = new ArrayList<>();
-        bloodList = bloodRepository.findByCustomerId(getCustomerRequestsQuery.getCustomerId())
+        bloodList = bloodRepository.findByCustomerId(getCustomerRequestsQuery.getCid())
                 .orElse(bloodList);
 
-        CustomerInfoView customerInfoView = customerRepository.getCustomerInfo(getCustomerRequestsQuery.getCustomerId());
+        CustomerInfoView customerInfoView = customerRepository.getCustomerInfo(getCustomerRequestsQuery.getCid());
 
         List<CustomerRequestInfoView> customerRequestInfoViewList = new ArrayList<>();
 
