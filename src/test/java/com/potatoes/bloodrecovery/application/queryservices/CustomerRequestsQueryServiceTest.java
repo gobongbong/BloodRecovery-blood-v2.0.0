@@ -40,10 +40,10 @@ class CustomerRequestsQueryServiceTest {
     @DisplayName("회원의 헌혈 요청 정보 조회에 성공한다.")
     void getCustomerRequests(){
         //given
-        String customerId = "1111";
+        String cid = "1111";
 
         GetCustomerRequestsQuery getCustomerRequestsQuery = GetCustomerRequestsQuery.builder()
-                .customerId(customerId)
+                .cid(cid)
                 .build();
 
         CustomerInfoView customerInfoView = CustomerInfoView.builder()
@@ -53,7 +53,7 @@ class CustomerRequestsQueryServiceTest {
 
         List<Blood> requests = new ArrayList<>();
         Blood blood = Blood.builder()
-                .customerId("1111")
+                .cid("1111")
                 .bloodId("1111")
                 .bloodDonationCnt(1)
                 .bloodReqCnt(3)
@@ -84,10 +84,10 @@ class CustomerRequestsQueryServiceTest {
     @DisplayName("회원의 헌혈 요청 정보 조회에 성공한다. (헌혈 요청 정보가 없는 경우)")
     void getCustomerRequests_noContent(){
         //given
-        String customerId = "1111";
+        String cid = "1111";
 
         GetCustomerRequestsQuery getCustomerRequestsQuery = GetCustomerRequestsQuery.builder()
-                .customerId(customerId)
+                .cid(cid)
                 .build();
 
         CustomerInfoView customerInfoView = CustomerInfoView.builder()
@@ -111,10 +111,10 @@ class CustomerRequestsQueryServiceTest {
     @DisplayName("회원의 헌혈 요청 정보 조회에 실패한다.")
     void getCustomerRequest_fail(){
         //given
-        String customerId = "1111";
+        String cid = "1111";
 
         GetCustomerRequestsQuery getCustomerRequestsQuery = GetCustomerRequestsQuery.builder()
-                .customerId(customerId)
+                .cid(cid)
                 .build();
 
         given(bloodRepository.findByCustomerId(any())).willThrow(new ApiException(NO_DATA));

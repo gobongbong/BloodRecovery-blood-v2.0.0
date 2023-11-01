@@ -27,7 +27,7 @@ public class BloodCardHistory {
     @GeneratedValue
     private Long bloodCardId;
 
-    private String customerId;
+    private String cid;
 
     private String code;
     private String donationType;
@@ -37,7 +37,7 @@ public class BloodCardHistory {
 
     public BloodCardHistory(RegisterBloodCardCommand registerBloodCardCommand) {
         this.bloodCardId = registerBloodCardCommand.getBloodCardId();
-        this.customerId = registerBloodCardCommand.getCustomerId();
+        this.cid = registerBloodCardCommand.getCid();
         this.code = registerBloodCardCommand.getCode();
         this.donationType = registerBloodCardCommand.getDonationType();
         this.name = registerBloodCardCommand.getName();
@@ -47,7 +47,7 @@ public class BloodCardHistory {
 
     public BloodCardHistory(DeleteBloodCardCommand deleteBloodCardCommand) {
         this.bloodCardId = deleteBloodCardCommand.getBloodCardId();
-        this.customerId = deleteBloodCardCommand.getCustomerId();
+        this.cid = deleteBloodCardCommand.getCid();
         this.code = deleteBloodCardCommand.getCode();
         this.donationType = deleteBloodCardCommand.getDonationType();
         this.name = deleteBloodCardCommand.getName();
