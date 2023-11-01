@@ -24,13 +24,13 @@ public class DeleteBloodCardCommandService {
     @Transactional
     public void deleteBloodCard(DeleteBloodCardCommand deleteBloodCardCommand){
 
-        BloodCard bloodCard = bloodCardRepository.findBloodCardByCustomerIdAndBloodCardId(deleteBloodCardCommand.getCustomerId(), deleteBloodCardCommand.getBloodCardId())
+        BloodCard bloodCard = bloodCardRepository.findBloodCardByCidAndBloodCardId(deleteBloodCardCommand.getCid(), deleteBloodCardCommand.getBloodCardId())
                 .orElseThrow(() -> new ApiException(NO_BLOOD_CARD));
         deleteBloodCardCommand.setCardInfo(bloodCard);
         BloodCardHistory bloodCardHistory  = new BloodCardHistory(deleteBloodCardCommand);
 
         try {
-            bloodCardRepository.delete(deleteBloodCardCommand.getBloodCardId());
+            bloodCardRepository.deleteByBloodCardId(deleteBloodCardCommand.getBloodCardId());
             bloodCardHistoryRepository.save(bloodCardHistory);
         }catch (Exception e){
             log.error("헌혈증 삭제 처리 중 DB ERROR 발생 + {}", e);
