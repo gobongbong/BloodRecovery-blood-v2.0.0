@@ -2,6 +2,7 @@ package com.potatoes.bloodrecovery.domain.model.commands;
 
 import com.potatoes.bloodrecovery.domain.model.aggregates.BloodCard;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @ToString
 @AllArgsConstructor
+@Builder
 public class DeleteBloodCardCommand {
-    private String customerId;
+    private String cid;
     private Long bloodCardId;
 
     private String code;

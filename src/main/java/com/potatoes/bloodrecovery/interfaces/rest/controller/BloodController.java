@@ -7,13 +7,13 @@ import com.potatoes.bloodrecovery.application.queryservices.CustomerRequestsQuer
 import com.potatoes.bloodrecovery.application.queryservices.GetBloodCardsQueryService;
 import com.potatoes.bloodrecovery.domain.model.commands.DeleteBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodCardCommand;
+import com.potatoes.bloodrecovery.domain.model.queries.GetBloodCardsQuery;
 import com.potatoes.bloodrecovery.domain.model.queries.GetCustomerRequestsQuery;
+import com.potatoes.bloodrecovery.domain.model.queries.GetRequestsQuery;
 import com.potatoes.bloodrecovery.domain.model.view.OcrView;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.BloodCardOcrRspDto;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.GetBloodCardsRspDto;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.RegisterBloodCardReqDto;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.GetCustomerRequestsRspDto;
+import com.potatoes.bloodrecovery.interfaces.rest.dto.*;
 import com.potatoes.bloodrecovery.interfaces.rest.mapper.BloodCardMapper;
+import com.potatoes.bloodrecovery.interfaces.rest.mapper.RequestsMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,13 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-
 import java.io.IOException;
 
-import static com.potatoes.bloodrecovery.interfaces.rest.constants.ValidationErrorMessage.EMPTY_HEADER_PARAMETER_CUSTOMER_ID;
 import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.*;
-import static com.potatoes.constants.StaticValues.HEADER_CUSTOMER_ID;
 
 @Slf4j
 @RestController
@@ -41,16 +37,18 @@ public class BloodController extends BaseController{
     private final CustomerRequestsQueryService customerRequestsQueryService;
     private final BloodCardOcrCommandService bloodCardOcrCommandService;
     private final BloodCardMapper bloodCardMapper;
+    private final RequestsMapper requestsMapper;
     private final BloodCardCommandService bloodCardCommandService;
     private final GetBloodCardsQueryService getBloodCardsQueryService;
     private final DeleteBloodCardCommandService deleteBloodCardCommandService;
 
     @GetMapping(GET_CUSTOMER_REQUESTS)
     //todo 추후 수정 필요
-    public ResponseEntity<Object> getCustomerRequests(@RequestHeader(value = HEADER_CUSTOMER_ID) @NotEmpty(message = EMPTY_HEADER_PARAMETER_CUSTOMER_ID) String customerId) {
+    public ResponseEntity<Object> getCustomerRequests(@RequestBody @Valid GetRequestsReqDto getRequestsReqDto) {
+        GetRequestsQuery getRequestsQuery = requestsMapper.getBloodCardsReqtoQuery(getRequestsReqDto);
         GetCustomerRequestsRspDto getCustomerRequestsRspDto = GetCustomerRequestsRspDto.builder()
                 .requests(customerRequestsQueryService.getCustomerRequests(GetCustomerRequestsQuery.builder()
-                        .customerId(customerId)
+                        .cid(getRequestsQuery.getCid())
                         .build()))
                 .build();
         return new ResponseEntity<>(getCustomerRequestsRspDto, getSuccessHeaders(), HttpStatus.OK);
@@ -66,23 +64,24 @@ public class BloodController extends BaseController{
     }
 
     @PostMapping(POST_REGISTER_BLOOD_CARD)
-    //todo 헤더값들 추가하고 customerId 바디값으로 넘겨... cors처리 알아보기!! 스트럭메퍼로 수정하기
-    public ResponseEntity<Object> registerBloodCard(@RequestHeader(value = HEADER_CUSTOMER_ID) String customerId, @RequestBody @Valid RegisterBloodCardReqDto registerBloodCardReqDto) {
-        RegisterBloodCardCommand registerBloodCardCommand = bloodCardMapper.registerReqtoCommand(customerId, registerBloodCardReqDto);
+    public ResponseEntity<Object> registerBloodCard(@RequestBody @Valid RegisterBloodCardReqDto registerBloodCardReqDto) {
+        RegisterBloodCardCommand registerBloodCardCommand = bloodCardMapper.registerReqtoCommand(registerBloodCardReqDto);
         bloodCardCommandService.registerBloodCard(registerBloodCardCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
     @GetMapping(GET_BLOOD_CARDS)
-    public ResponseEntity<Object> getBloodCards(@RequestHeader(value = HEADER_CUSTOMER_ID) String customerId) {
-        GetBloodCardsRspDto getBloodCardsRspDto = getBloodCardsQueryService.getBloodCards(customerId);
+    public ResponseEntity<Object> getBloodCards(@RequestBody @Valid GetBloodCardsReqDto getBloodCardsReqDto) {
+        GetBloodCardsQuery getBloodCardsQuery = bloodCardMapper.getBloodCardsReqtoQuery(getBloodCardsReqDto);
+        GetBloodCardsRspDto getBloodCardsRspDto = getBloodCardsQueryService.getBloodCards(getBloodCardsQuery);
         return new ResponseEntity<>(getBloodCardsRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE_BLOOD_CARD)
-    public ResponseEntity<Object> deleteBloodCard(@RequestHeader(value = HEADER_CUSTOMER_ID) String customerId, @PathVariable String bloodCardId) {
-        DeleteBloodCardCommand deleteBloodCardCommand = bloodCardMapper.deleteReqtoCommand(customerId, bloodCardId);
+    public ResponseEntity<Object> deleteBloodCard(@RequestBody @Valid DeleteBloodCardReqDto deleteBloodCardReqDto) {
+        DeleteBloodCardCommand deleteBloodCardCommand = bloodCardMapper.deleteReqtoCommand(deleteBloodCardReqDto);
         deleteBloodCardCommandService.deleteBloodCard(deleteBloodCardCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 }
+
