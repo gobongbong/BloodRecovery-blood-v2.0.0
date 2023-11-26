@@ -6,20 +6,19 @@ import com.potatoes.bloodrecovery.domain.model.queries.GetBloodCardsQuery;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.DeleteBloodCardReqDto;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.GetBloodCardsReqDto;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.RegisterBloodCardReqDto;
+import com.potatoes.config.MapstructConfig;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(config = MapstructConfig.class)
 public abstract class BloodCardMapper {
-    public abstract GetBloodCardsQuery getBloodCardsReqtoQuery(GetBloodCardsReqDto getBloodCardsReqDto);
 
     @Mapping(target = "bloodCardId", ignore = true)
-    public abstract RegisterBloodCardCommand registerReqtoCommand(RegisterBloodCardReqDto registerBloodCardReqDto);
+    public abstract RegisterBloodCardCommand registerReqtoCommand(String customerId, RegisterBloodCardReqDto registerBloodCardReqDto);
 
     @Mapping(target = "code", ignore = true)
     @Mapping(target = "donationType", ignore = true)
     @Mapping(target = "name", ignore = true)
     @Mapping(target = "date", ignore = true)
-    public abstract DeleteBloodCardCommand deleteReqtoCommand(DeleteBloodCardReqDto deleteBloodCardReqDto);
+    public abstract DeleteBloodCardCommand deleteReqtoCommand(String customerId, String bloodCardId);
 }
