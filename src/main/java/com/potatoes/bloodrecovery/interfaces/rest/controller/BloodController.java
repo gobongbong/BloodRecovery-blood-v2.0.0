@@ -66,6 +66,7 @@ public class BloodController extends BaseController{
     }
 
     @PostMapping(POST_REGISTER_BLOOD_CARD)
+    //todo 헤더값들 추가하고 customerId 바디값으로 넘겨... cors처리 알아보기!! 스트럭메퍼로 수정하기
     public ResponseEntity<Object> registerBloodCard(@RequestHeader(value = HEADER_CUSTOMER_ID) String customerId, @RequestBody @Valid RegisterBloodCardReqDto registerBloodCardReqDto) {
         RegisterBloodCardCommand registerBloodCardCommand = bloodCardMapper.registerReqtoCommand(customerId, registerBloodCardReqDto);
         bloodCardCommandService.registerBloodCard(registerBloodCardCommand);
