@@ -9,5 +9,5 @@ public interface BloodCardRepository {
     List<BloodCard> findByCustomerId(String customerId);
     Optional<BloodCard> findBloodCardByCustomerIdAndBloodCardId(String customerId, Long bloodCardId);
     BloodCard save(BloodCard bloodCard);
-    BloodCard delete(Long bloodCardId);
+    void deleteByBloodCardId(Long bloodCardId);
 }
