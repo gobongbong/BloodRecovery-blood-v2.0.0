@@ -24,7 +24,7 @@ public class DeleteBloodCardCommandService {
     @Transactional
     public void deleteBloodCard(DeleteBloodCardCommand deleteBloodCardCommand){
 
-        BloodCard bloodCard = bloodCardRepository.findBloodCardByCustomerIdAndBloodCardId(deleteBloodCardCommand.getCustomerId(), deleteBloodCardCommand.getBloodCardId())
+        BloodCard bloodCard = bloodCardRepository.findBloodCardByCidAndBloodCardId(deleteBloodCardCommand.getCid(), deleteBloodCardCommand.getBloodCardId())
                 .orElseThrow(() -> new ApiException(NO_BLOOD_CARD));
         deleteBloodCardCommand.setCardInfo(bloodCard);
         BloodCardHistory bloodCardHistory  = new BloodCardHistory(deleteBloodCardCommand);

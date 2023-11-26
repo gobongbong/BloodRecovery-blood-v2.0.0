@@ -7,10 +7,6 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterBloodCardReqDto {
+public class GetBloodCardsReqDto {
     private String cid;
-    private String code;
-    private String donationType;
-    private String name;
-    private String date;
 }

@@ -23,7 +23,7 @@ public class BloodCard {
     @GeneratedValue
     private Long bloodCardId;
 
-    private String customerId;
+    private String cid;
 
     private String code;
     private String donationType;
@@ -31,7 +31,7 @@ public class BloodCard {
     private String date;
 
     public BloodCard(RegisterBloodCardCommand registerBloodCardCommand) {
-        this.customerId = registerBloodCardCommand.getCustomerId();
+        this.cid = registerBloodCardCommand.getCid();
         this.code = registerBloodCardCommand.getCode();
         this.donationType = registerBloodCardCommand.getDonationType();
         this.name = registerBloodCardCommand.getName();
