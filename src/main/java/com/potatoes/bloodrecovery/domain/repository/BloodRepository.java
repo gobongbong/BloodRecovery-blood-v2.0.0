@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BloodRepository {
-    Optional<List<Blood>> findByCustomerId(String customerId);
+    Optional<List<Blood>> findByCid(String cid);
 }
