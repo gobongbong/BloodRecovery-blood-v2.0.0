@@ -14,11 +14,11 @@ import org.mapstruct.Mapping;
 public abstract class BloodCardMapper {
 
     @Mapping(target = "bloodCardId", ignore = true)
-    public abstract RegisterBloodCardCommand registerReqtoCommand(String customerId, RegisterBloodCardReqDto registerBloodCardReqDto);
+    public abstract RegisterBloodCardCommand registerReqtoCommand(String cid, RegisterBloodCardReqDto registerBloodCardReqDto);
 
     @Mapping(target = "code", ignore = true)
     @Mapping(target = "donationType", ignore = true)
     @Mapping(target = "name", ignore = true)
     @Mapping(target = "date", ignore = true)
-    public abstract DeleteBloodCardCommand deleteReqtoCommand(String customerId, String bloodCardId);
+    public abstract DeleteBloodCardCommand deleteReqtoCommand(String cid, String bloodCardId);
 }
