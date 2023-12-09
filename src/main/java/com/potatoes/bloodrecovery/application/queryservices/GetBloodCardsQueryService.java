@@ -22,8 +22,8 @@ public class GetBloodCardsQueryService {
     private final BloodCardRepository bloodCardRepository;
 
     @Transactional(readOnly = true)
-    public GetBloodCardsRspDto getBloodCards(GetBloodCardsQuery getBloodCardsQuery){
-        List<BloodCard> cards = bloodCardRepository.findByCid(getBloodCardsQuery.getCid());
+    public GetBloodCardsRspDto getBloodCards(String ci){
+        List<BloodCard> cards = bloodCardRepository.findByCid(ci);
 
         if (cards.isEmpty()) {
             throw new ApiException(NO_BLOOD_CARD);

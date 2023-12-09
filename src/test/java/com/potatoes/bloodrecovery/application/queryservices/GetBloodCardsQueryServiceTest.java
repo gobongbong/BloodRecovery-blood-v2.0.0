@@ -31,9 +31,7 @@ class GetBloodCardsQueryServiceTest {
     @DisplayName("헌혈증 조회에 성공한다.")
     void getBloodCards_success(){
         //given
-        GetBloodCardsQuery getBloodCardsQuery = GetBloodCardsQuery.builder()
-                .cid("aaaa")
-                .build();
+        String ci = "1111";
         List<BloodCard> cards = new ArrayList<>();
         BloodCard bloodCard = BloodCard.builder()
                 .cid("aaaa")
@@ -52,7 +50,7 @@ class GetBloodCardsQueryServiceTest {
         given(bloodCardRepository.findByCid(any())).willReturn(cards);
 
         //when
-        GetBloodCardsRspDto result = getBloodCardsQueryService.getBloodCards(getBloodCardsQuery);
+        GetBloodCardsRspDto result = getBloodCardsQueryService.getBloodCards(ci);
 
         //then
         assertThat(result).usingRecursiveComparison().isEqualTo(expect);
