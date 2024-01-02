@@ -4,6 +4,7 @@ import com.potatoes.bloodrecovery.application.commandservices.BloodCardCommandSe
 import com.potatoes.bloodrecovery.application.commandservices.BloodCardOcrCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.DeleteBloodCardCommandService;
 import com.potatoes.bloodrecovery.application.queryservices.CustomerRequestsQueryService;
+import com.potatoes.bloodrecovery.application.queryservices.GetBloodCardCountQueryService;
 import com.potatoes.bloodrecovery.application.queryservices.GetBloodCardsQueryService;
 import com.potatoes.bloodrecovery.domain.model.commands.DeleteBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodCardCommand;
@@ -41,6 +42,7 @@ public class BloodController extends BaseController{
     private final BloodCardCommandService bloodCardCommandService;
     private final GetBloodCardsQueryService getBloodCardsQueryService;
     private final DeleteBloodCardCommandService deleteBloodCardCommandService;
+    private final GetBloodCardCountQueryService getBloodCardCountQueryService;
 
     @GetMapping(GET_CUSTOMER_REQUESTS)
     //todo 추후 수정 필요
@@ -79,5 +81,13 @@ public class BloodController extends BaseController{
         DeleteBloodCardCommand deleteBloodCardCommand = bloodCardMapper.deleteReqtoCommand(cid, bloodCardId);
         deleteBloodCardCommandService.deleteBloodCard(deleteBloodCardCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping(GET_BLOOD_CARD_COUNT)
+    public ResponseEntity<Object> getBloodCardCount(@RequestHeader(value = HEADER_CID) String cid) {
+        GetBloodCardCountRspDto getBloodCardsRspDto = GetBloodCardCountRspDto.builder()
+                .cardCnt(getBloodCardCountQueryService.getBloodCardCount(cid))
+                .build();
+        return new ResponseEntity<>(getBloodCardsRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 }
