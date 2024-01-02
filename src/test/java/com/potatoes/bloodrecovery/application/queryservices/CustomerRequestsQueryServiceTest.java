@@ -71,7 +71,7 @@ class CustomerRequestsQueryServiceTest {
         expect.add(customerRequestInfoView);
 
         given(customerRepository.getCustomerInfo(any())).willReturn(customerInfoView);
-        given(bloodRepository.findByCustomerId(any())).willReturn(Optional.of(requests));
+        given(bloodRepository.findByCid(any())).willReturn(Optional.of(requests));
 
         //when
         List<CustomerRequestInfoView> result = customerRequestsQueryService.getCustomerRequests(getCustomerRequestsQuery);
@@ -98,7 +98,7 @@ class CustomerRequestsQueryServiceTest {
         List<CustomerRequestInfoView> expect = new ArrayList<>();
 
         given(customerRepository.getCustomerInfo(any())).willReturn(customerInfoView);
-        given(bloodRepository.findByCustomerId(any())).willReturn(Optional.empty());
+        given(bloodRepository.findByCid(any())).willReturn(Optional.empty());
 
         //when
         List<CustomerRequestInfoView> result = customerRequestsQueryService.getCustomerRequests(getCustomerRequestsQuery);
@@ -117,7 +117,7 @@ class CustomerRequestsQueryServiceTest {
                 .cid(cid)
                 .build();
 
-        given(bloodRepository.findByCustomerId(any())).willThrow(new ApiException(NO_DATA));
+        given(bloodRepository.findByCid(any())).willThrow(new ApiException(NO_DATA));
 
         //when
         Throwable throwable = catchThrowable(()-> customerRequestsQueryService.getCustomerRequests(getCustomerRequestsQuery));

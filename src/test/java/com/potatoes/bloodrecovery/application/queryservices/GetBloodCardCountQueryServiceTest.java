@@ -1,7 +1,6 @@
 package com.potatoes.bloodrecovery.application.queryservices;
 
 import com.potatoes.bloodrecovery.domain.repository.BloodCardRepository;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.GetBloodCardsRspDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,30 +14,27 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-class GetBloodCardsQueryServiceTest {
+class GetBloodCardCountQueryServiceTest {
 
     @InjectMocks
-    GetBloodCardsQueryService getBloodCardsQueryService;
+    GetBloodCardCountQueryService getBloodCardCountQueryService;
 
     @Mock
-    BloodCardRepository bloodCardRepository;
+    private BloodCardRepository bloodCardRepository;
 
     @Test
-    @DisplayName("헌혈증 조회에 성공한다.")
-    void getBloodCards_success(){
+    @DisplayName("헌혈증 개수 조회에 성공한다.")
+    void getCardCount_success(){
         //given
-        String ci = "1111";
-
-        GetBloodCardsRspDto expect = GetBloodCardsRspDto.builder()
-                .cards(commonBloodCard())
-                .build();
-
+        String cid = "aaaa";
         given(bloodCardRepository.findByCid(any())).willReturn(commonBloodCard());
 
+        int expect = 1;
+
         //when
-        GetBloodCardsRspDto result = getBloodCardsQueryService.getBloodCards(ci);
+        int result = getBloodCardCountQueryService.getBloodCardCount(cid);
 
         //then
-        assertThat(result).usingRecursiveComparison().isEqualTo(expect);
+        assertThat(result).isEqualTo(expect);
     }
 }
