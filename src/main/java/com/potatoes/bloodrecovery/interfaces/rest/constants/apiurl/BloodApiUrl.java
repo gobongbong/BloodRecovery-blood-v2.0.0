@@ -19,4 +19,6 @@ public class BloodApiUrl {
     /** 헌혈증 삭제 */
     public static final String DELETE_BLOOD_CARD = "/card";
 
+    /** 헌혈증 개수 조회 */
+    public static final String GET_BLOOD_CARD_COUNT = "/card/count";
 }

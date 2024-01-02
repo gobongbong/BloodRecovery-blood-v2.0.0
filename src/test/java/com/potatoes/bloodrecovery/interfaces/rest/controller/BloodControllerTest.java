@@ -7,6 +7,7 @@ import com.potatoes.bloodrecovery.application.commandservices.BloodCardCommandSe
 import com.potatoes.bloodrecovery.application.commandservices.BloodCardOcrCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.DeleteBloodCardCommandService;
 import com.potatoes.bloodrecovery.application.queryservices.CustomerRequestsQueryService;
+import com.potatoes.bloodrecovery.application.queryservices.GetBloodCardCountQueryService;
 import com.potatoes.bloodrecovery.application.queryservices.GetBloodCardsQueryService;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodCardCommand;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.RegisterBloodCardReqDto;
@@ -49,6 +50,8 @@ class BloodControllerTest {
     private GetBloodCardsQueryService getBloodCardsQueryService;
     @MockBean
     private DeleteBloodCardCommandService deleteBloodCardCommandService;
+    @MockBean
+    private GetBloodCardCountQueryService getBloodCardCountQueryService;
 
     public static String asJsonString(final Object obj) {
         try {
