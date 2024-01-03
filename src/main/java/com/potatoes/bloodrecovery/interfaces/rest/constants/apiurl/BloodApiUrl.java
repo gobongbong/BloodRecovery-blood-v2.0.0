@@ -21,4 +21,7 @@ public class BloodApiUrl {
 
     /** 헌혈증 개수 조회 */
     public static final String GET_BLOOD_CARD_COUNT = "/card/count";
+
+    /** 헌혈 요청 글 등록 */
+    public static final String POST_REGISTER_BLOOD_REQUEST = "/request";
 }
