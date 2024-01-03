@@ -30,10 +30,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(BloodController.class)
+@WebMvcTest(BloodCardController.class)
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureMockMvc
-class BloodControllerTest {
+class BloodCardControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
