@@ -15,16 +15,9 @@ public class RegisterBloodRequestCommand {
     private String cid;
     private String requestType;
     private Integer bloodReqCnt;
-    private List<RegisterBloodRequestReqDto.Content> contentInfo;
+    private String title;
+    private String contents;
     private List<RegisterBloodRequestReqDto.DirectedDonation> directInfo;
-
-    @Builder
-    @ToString
-    @NoArgsConstructor
-    public static class Content {
-        private String title;
-        private String contents;
-    }
 
     @Builder
     @ToString
