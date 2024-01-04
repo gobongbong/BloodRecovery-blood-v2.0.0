@@ -12,16 +12,10 @@ import java.util.List;
 public class RegisterBloodRequestReqDto {
     private String requestType;
     private Integer bloodReqCnt;
-    private List<Content> contentInfo;
-    private List<DirectedDonation> directInfo;
+    private String title;
+    private String contents;
 
-    @Builder
-    @ToString
-    @NoArgsConstructor
-    public static class Content {
-        private String title;
-        private String contents;
-    }
+    private List<DirectedDonation> directInfo;
 
     @Builder
     @ToString
