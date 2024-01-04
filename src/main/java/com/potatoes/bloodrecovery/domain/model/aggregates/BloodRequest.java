@@ -1,5 +1,6 @@
 package com.potatoes.bloodrecovery.domain.model.aggregates;
 
+import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.valueobjects.DirectedDonation;
 import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
 import lombok.*;
@@ -28,7 +29,6 @@ public class BloodRequest {
     private String userNickname;
 
     private String requestType;
-    private String bloodStatus;
     private Integer bloodReqCnt;
     private Integer bloodDonationCnt;
 
@@ -37,4 +37,15 @@ public class BloodRequest {
     private DirectedDonation directedDonation;
 
     private boolean editable;
+
+    public BloodRequest(RegisterBloodRequestCommand registerBloodRequestCommand, String nickName) {
+        this.cid = registerBloodRequestCommand.getCid();
+        this.userNickname = nickName;
+        this.requestType = registerBloodRequestCommand.getRequestType();
+        this.bloodReqCnt = registerBloodRequestCommand.getBloodReqCnt();
+        this.post = new Post(registerBloodRequestCommand);
+        if (!registerBloodRequestCommand.getDirectInfo().isEmpty()){
+            //todo 존재하면 값 셋팅
+        }
+    }
 }

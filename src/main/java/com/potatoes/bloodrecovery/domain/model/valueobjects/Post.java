@@ -1,10 +1,14 @@
 package com.potatoes.bloodrecovery.domain.model.valueobjects;
 
+import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestCommand;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Embeddable;
 import java.time.LocalDateTime;
+
+import static com.potatoes.constants.StaticValues.REQUEST;
 
 @Slf4j
 @Getter
@@ -15,9 +19,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Post {
 
-    private String postId;
     private String title;
     private String contents;
-    private LocalDateTime regDate; //todo 글 생성될 때마다 자동으로 들어가게 수정
     private String postStatus; //todo enum으로 따로 만들자
+    @CreatedDate
+    private LocalDateTime regDate;
+
+    public Post(RegisterBloodRequestCommand registerBloodRequestCommand) {
+        this.title = registerBloodRequestCommand.getTitle();
+        this.contents = registerBloodRequestCommand.getContents();
+        this.postStatus = REQUEST;
+    }
 }

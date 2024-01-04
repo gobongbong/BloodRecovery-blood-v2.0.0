@@ -2,10 +2,10 @@ package com.potatoes.bloodrecovery.application.queryservices;
 
 import com.potatoes.bloodrecovery.domain.model.aggregates.Blood;
 import com.potatoes.bloodrecovery.domain.model.queries.GetCustomerRequestsQuery;
-import com.potatoes.bloodrecovery.domain.model.view.CustomerInfoView;
+import com.potatoes.bloodrecovery.domain.model.view.UserInfoView;
 import com.potatoes.bloodrecovery.domain.model.view.CustomerRequestInfoView;
 import com.potatoes.bloodrecovery.domain.repository.BloodRepository;
-import com.potatoes.bloodrecovery.domain.repository.CustomerRepository;
+import com.potatoes.bloodrecovery.domain.repository.UserRepository;
 import com.potatoes.exception.ApiException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class CustomerRequestsQueryServiceTest {
     private CustomerRequestsQueryService customerRequestsQueryService;
 
     @Mock
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
 
     @Mock
     private BloodRepository bloodRepository;
@@ -46,7 +46,7 @@ class CustomerRequestsQueryServiceTest {
                 .cid(cid)
                 .build();
 
-        CustomerInfoView customerInfoView = CustomerInfoView.builder()
+        UserInfoView userInfoView = UserInfoView.builder()
                 .gradeSn("Siver")
                 .userBlood("A")
                 .build();
@@ -70,7 +70,7 @@ class CustomerRequestsQueryServiceTest {
                 .build();
         expect.add(customerRequestInfoView);
 
-        given(customerRepository.getCustomerInfo(any())).willReturn(customerInfoView);
+        given(userRepository.getUserInfo(any())).willReturn(userInfoView);
         given(bloodRepository.findByCid(any())).willReturn(Optional.of(requests));
 
         //when
@@ -90,14 +90,14 @@ class CustomerRequestsQueryServiceTest {
                 .cid(cid)
                 .build();
 
-        CustomerInfoView customerInfoView = CustomerInfoView.builder()
+        UserInfoView userInfoView = UserInfoView.builder()
                 .gradeSn("Siver")
                 .userBlood("A")
                 .build();
 
         List<CustomerRequestInfoView> expect = new ArrayList<>();
 
-        given(customerRepository.getCustomerInfo(any())).willReturn(customerInfoView);
+        given(userRepository.getUserInfo(any())).willReturn(userInfoView);
         given(bloodRepository.findByCid(any())).willReturn(Optional.empty());
 
         //when
