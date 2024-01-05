@@ -45,7 +45,7 @@ public class BloodRequest {
         this.bloodReqCnt = registerBloodRequestCommand.getBloodReqCnt();
         this.post = new Post(registerBloodRequestCommand);
         if (!registerBloodRequestCommand.getDirectInfo().isEmpty()){
-            //todo 존재하면 값 셋팅
+            new DirectedDonation(registerBloodRequestCommand);
         }
     }
 }

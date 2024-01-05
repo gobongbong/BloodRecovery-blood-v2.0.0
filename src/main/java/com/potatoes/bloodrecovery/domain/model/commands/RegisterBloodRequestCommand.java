@@ -1,7 +1,10 @@
 package com.potatoes.bloodrecovery.domain.model.commands;
 
-import com.potatoes.bloodrecovery.interfaces.rest.dto.RegisterBloodRequestReqDto;
-import lombok.*;
+import com.potatoes.bloodrecovery.domain.model.valueobjects.DirectedDonation;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -17,14 +20,6 @@ public class RegisterBloodRequestCommand {
     private Integer bloodReqCnt;
     private String title;
     private String contents;
-    private List<RegisterBloodRequestReqDto.DirectedDonation> directInfo;
 
-    @Builder
-    @ToString
-    @NoArgsConstructor
-    public static class DirectedDonation {
-        private String hospitalName;
-        private String patientName;
-        private String roomNumber;
-    }
+    private List<DirectedDonation> directInfo;
 }

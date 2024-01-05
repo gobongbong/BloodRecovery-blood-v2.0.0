@@ -35,7 +35,7 @@ import static com.potatoes.utils.RequestScopeUtil.CUSTOMER_ID;
  */
 @Slf4j
 @Configuration
-public class CustomerFeignConfig {
+public class UserFeignConfig {
     @Value("500")
     private int retryPeriod;
     @Value("1000")

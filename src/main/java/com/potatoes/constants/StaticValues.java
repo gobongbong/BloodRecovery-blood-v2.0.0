@@ -7,9 +7,4 @@ public class StaticValues {
     public static final String HTTP_STATUS = "HTTPStatus";
 
     public static final String HEADER_CID = "cid";
-
-    //헌혈 요청
-    public static final String REQUEST = "요청";
-
-
 }

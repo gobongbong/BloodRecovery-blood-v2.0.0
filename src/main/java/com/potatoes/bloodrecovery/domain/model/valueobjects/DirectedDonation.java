@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.Embeddable;
+import java.util.List;
 
 @Slf4j
 @Getter
@@ -20,6 +21,11 @@ public class DirectedDonation {
     private String roomNumber;
 
     public DirectedDonation(RegisterBloodRequestCommand registerBloodRequestCommand) {
-
+        List<DirectedDonation> donationList = registerBloodRequestCommand.getDirectInfo();
+        for (DirectedDonation directedDonation : donationList) {
+            this.hospitalName = directedDonation.getHospitalName();
+            this.patientName = directedDonation.patientName;
+            this.roomNumber = directedDonation.getRoomNumber();
+        }
     }
 }
