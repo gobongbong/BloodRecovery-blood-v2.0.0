@@ -24,4 +24,7 @@ public class BloodApiUrl {
 
     /** 헌혈 요청 글 등록 */
     public static final String POST_REGISTER_BLOOD_REQUEST = "/request";
+
+    /** 헌혈 요청 글 수정 */
+    public static final String MODIFY_REGISTER_BLOOD_REQUEST = "/request/{requestId}";
 }
