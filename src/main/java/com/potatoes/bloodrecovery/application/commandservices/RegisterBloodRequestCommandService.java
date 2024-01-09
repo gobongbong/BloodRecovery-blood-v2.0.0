@@ -4,9 +4,12 @@ import com.potatoes.bloodrecovery.domain.model.aggregates.BloodRequest;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
+import com.potatoes.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.potatoes.constants.ResponseCode.FAIL_REGISTER_BLOOD_REQUEST;
 
 @Service
 @RequiredArgsConstructor
@@ -17,11 +20,16 @@ public class RegisterBloodRequestCommandService {
 
     @Transactional
     public void registerBloodRequest(RegisterBloodRequestCommand registerBloodRequestCommand){
-        String nickName = userRepository.getUserInfo(registerBloodRequestCommand.getCid()).getNickname();
-        BloodRequest bloodRequest = new BloodRequest(registerBloodRequestCommand, nickName);
+        try {
+            String nickName = userRepository.getUserInfo(registerBloodRequestCommand.getCid()).getNickname();
+            BloodRequest bloodRequest = new BloodRequest(registerBloodRequestCommand, nickName);
 
-        bloodRequestRepository.save(bloodRequest);
+            bloodRequestRepository.save(bloodRequest);
 
-        //todo 요청하는 헌혈증 개수 x 50 포인트만큼 차감
+            //요청한 헌혈증 개수 x 50 포인트 만큼 차감
+            userRepository.requestPoint(registerBloodRequestCommand.getCid(), "PLUS", registerBloodRequestCommand.getBloodReqCnt() * 50);
+        }catch (Exception e){
+            throw new ApiException(FAIL_REGISTER_BLOOD_REQUEST);
+        }
     }
 }
