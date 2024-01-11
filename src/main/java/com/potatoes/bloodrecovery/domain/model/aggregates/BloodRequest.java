@@ -1,5 +1,6 @@
 package com.potatoes.bloodrecovery.domain.model.aggregates;
 
+import com.potatoes.bloodrecovery.domain.model.commands.ModifyBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.valueobjects.DirectedDonation;
 import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
@@ -46,6 +47,16 @@ public class BloodRequest {
         this.post = new Post(registerBloodRequestCommand);
         if (!registerBloodRequestCommand.getDirectInfo().isEmpty()){
             new DirectedDonation(registerBloodRequestCommand);
+        }
+    }
+
+    public void modifyBloodRequest(ModifyBloodRequestCommand modifyBloodRequestCommand) {
+        this.cid = modifyBloodRequestCommand.getCid();
+        this.requestType = modifyBloodRequestCommand.getRequestType();
+        this.bloodReqCnt = modifyBloodRequestCommand.getBloodReqCnt();
+        this.post = new Post(modifyBloodRequestCommand);
+        if (!modifyBloodRequestCommand.getDirectInfo().isEmpty()){
+            new DirectedDonation(modifyBloodRequestCommand);
         }
     }
 }
