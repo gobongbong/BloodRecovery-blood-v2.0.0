@@ -16,7 +16,8 @@ public enum ResponseCode {
     FAIL_OCR("헌혈증 OCR 인식에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
     NOT_VALID_CARD("유효하지 않은 헌혈증입니다.",HttpStatus.NO_CONTENT),
     NO_BLOOD_CARD("등록된 헌혈증이 존재하지 않습니다.",HttpStatus.NOT_FOUND),
-    FAIL_REGISTER_BLOOD_REQUEST("헌혈 요청 등록에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR);
+    FAIL_REGISTER_BLOOD_REQUEST("헌혈 요청 등록에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
+    NO_BLOOD_REQUEST("헌혈 요청 내역이 존재하지 않습니다.",HttpStatus.NOT_FOUND);
 
 
     private final String message;

@@ -53,7 +53,7 @@ public class BloodRequestController extends BaseController{
 
     @PostMapping(MODIFY_REGISTER_BLOOD_REQUEST)
     public ResponseEntity<Object> modifyBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
-                                                   @PathVariable String requestId,
+                                                   @PathVariable Long requestId,
                                                    @RequestBody @Valid ModifyBloodRequestReqDto modifyBloodRequestReqDto) {
         ModifyBloodRequestCommand modifyBloodRequestCommand = bloodRequestMapper.modifyReqtoCommand(cid, requestId, modifyBloodRequestReqDto);
         modifyBloodRequestCommandService.modifyBloodRequest(modifyBloodRequestCommand);
