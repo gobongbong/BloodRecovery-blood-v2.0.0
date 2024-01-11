@@ -12,7 +12,7 @@ public abstract class BloodRequestMapper {
 
     public abstract RegisterBloodRequestCommand registerReqtoCommand(String cid, RegisterBloodRequestReqDto registerBloodRequestReqDto);
 
-    public abstract ModifyBloodRequestCommand modifyReqtoCommand(String cid, String requestId, ModifyBloodRequestReqDto modifyBloodRequestReqDto);
+    public abstract ModifyBloodRequestCommand modifyReqtoCommand(String cid, Long requestId, ModifyBloodRequestReqDto modifyBloodRequestReqDto);
 
 //    @Mapping(target = "code", ignore = true)
 //    @Mapping(target = "donationType", ignore = true)

@@ -1,5 +1,6 @@
 package com.potatoes.bloodrecovery.domain.model.valueobjects;
 
+import com.potatoes.bloodrecovery.domain.model.commands.ModifyBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestCommand;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,16 @@ public class DirectedDonation {
         List<DirectedDonation> donationList = registerBloodRequestCommand.getDirectInfo();
         for (DirectedDonation directedDonation : donationList) {
             this.hospitalName = directedDonation.getHospitalName();
-            this.patientName = directedDonation.patientName;
+            this.patientName = directedDonation.getPatientName();
+            this.roomNumber = directedDonation.getRoomNumber();
+        }
+    }
+
+    public DirectedDonation(ModifyBloodRequestCommand modifyBloodRequestCommand) {
+        List<DirectedDonation> donationList = modifyBloodRequestCommand.getDirectInfo();
+        for (DirectedDonation directedDonation : donationList) {
+            this.hospitalName = directedDonation.getHospitalName();
+            this.patientName = directedDonation.getPatientName();
             this.roomNumber = directedDonation.getRoomNumber();
         }
     }

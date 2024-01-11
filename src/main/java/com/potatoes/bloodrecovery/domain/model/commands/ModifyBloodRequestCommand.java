@@ -25,5 +25,5 @@ public class ModifyBloodRequestCommand {
 
     private List<DirectedDonation> directInfo;
 
-    private String requestId;
+    private Long requestId;
 }
