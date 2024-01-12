@@ -7,4 +7,7 @@ public class StaticValues {
     public static final String HTTP_STATUS = "HTTPStatus";
 
     public static final String HEADER_CID = "cid";
+
+    public static final String POINT_PLUS = "PLUS";
+    public static final String POINT_MINUS = "MINUS";
 }
