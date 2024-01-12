@@ -32,8 +32,7 @@ public class CustomerRequestsQueryService {
 
         bloodList.forEach(blood -> {
             CustomerRequestInfoView customerRequestInfoView = CustomerRequestInfoView.builder()
-                    .userNickname(userInfoView.getUserNickname())
-                    .gradeSn(userInfoView.getGradeSn())
+                    .userNickname(userInfoView.getNickname())
                     .bloodDonationCnt(blood.getBloodDonationCnt())
                     .bloodReqCnt(blood.getBloodReqCnt())
                     .bloodStatus(blood.getBloodStatus())
