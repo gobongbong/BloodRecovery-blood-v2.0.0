@@ -1,5 +1,6 @@
 package com.potatoes.bloodrecovery.interfaces.rest.controller;
 
+import com.potatoes.bloodrecovery.application.commandservices.DeleteBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.ModifyBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.RegisterBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.queryservices.CustomerRequestsQueryService;
@@ -33,6 +34,7 @@ public class BloodRequestController extends BaseController{
     private final BloodRequestMapper bloodRequestMapper;
     private final RegisterBloodRequestCommandService registerBloodRequestCommandService;
     private final ModifyBloodRequestCommandService modifyBloodRequestCommandService;
+    private final DeleteBloodRequestCommandService deleteBloodRequestCommandService;
 
     @GetMapping(GET_CUSTOMER_REQUESTS)
     //todo 추후 수정 필요
@@ -44,19 +46,26 @@ public class BloodRequestController extends BaseController{
         return new ResponseEntity<>(getCustomerRequestsRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 
-    @PostMapping(POST_REGISTER_BLOOD_REQUEST)
+    @PostMapping(REGISTER_BLOOD_REQUEST)
     public ResponseEntity<Object> registerBloodRequest(@RequestHeader(value = HEADER_CID) String cid, @RequestBody @Valid RegisterBloodRequestReqDto registerBloodRequestReqDto) {
         RegisterBloodRequestCommand registerBloodRequestCommand = bloodRequestMapper.registerReqtoCommand(cid, registerBloodRequestReqDto);
         registerBloodRequestCommandService.registerBloodRequest(registerBloodRequestCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
-    @PostMapping(MODIFY_REGISTER_BLOOD_REQUEST)
+    @PostMapping(MODIFY_BLOOD_REQUEST)
     public ResponseEntity<Object> modifyBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
                                                    @PathVariable Long requestId,
                                                    @RequestBody @Valid ModifyBloodRequestReqDto modifyBloodRequestReqDto) {
         ModifyBloodRequestCommand modifyBloodRequestCommand = bloodRequestMapper.modifyReqtoCommand(cid, requestId, modifyBloodRequestReqDto);
         modifyBloodRequestCommandService.modifyBloodRequest(modifyBloodRequestCommand);
+        return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
+    }
+
+    @PostMapping(DELETE_BLOOD_REQUEST)
+    public ResponseEntity<Object> deleteBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
+                                                     @PathVariable Long requestId) {
+        deleteBloodRequestCommandService.deleteBloodRequest(cid, requestId);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 }

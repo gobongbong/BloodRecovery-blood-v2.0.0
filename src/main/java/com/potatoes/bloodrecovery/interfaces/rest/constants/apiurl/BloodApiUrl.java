@@ -8,10 +8,10 @@ public class BloodApiUrl {
     public static final String GET_CUSTOMER_REQUESTS = "/requests";
 
     /** 헌혈증 등록 */
-    public static final String POST_REGISTER_BLOOD_CARD = "/card";
+    public static final String REGISTER_BLOOD_CARD = "/card";
 
     /** 헌혈증 OCR */
-    public static final String POST_BLOOD_CARD_OCR = "/card/ocr";
+    public static final String BLOOD_CARD_OCR = "/card/ocr";
 
     /** 헌혈증 조회 */
     public static final String GET_BLOOD_CARDS = "/card";
@@ -23,8 +23,11 @@ public class BloodApiUrl {
     public static final String GET_BLOOD_CARD_COUNT = "/card/count";
 
     /** 헌혈 요청 글 등록 */
-    public static final String POST_REGISTER_BLOOD_REQUEST = "/request";
+    public static final String REGISTER_BLOOD_REQUEST = "/request";
 
     /** 헌혈 요청 글 수정 */
-    public static final String MODIFY_REGISTER_BLOOD_REQUEST = "/request/{requestId}";
+    public static final String MODIFY_BLOOD_REQUEST = "/request/{requestId}";
+
+    /** 헌혈 요청 글 삭제 */
+    public static final String DELETE_BLOOD_REQUEST = "/request/{requestId}";
 }
