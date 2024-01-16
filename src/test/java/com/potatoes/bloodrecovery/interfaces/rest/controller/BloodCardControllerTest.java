@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.BLOOD_BASE_URL;
-import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.POST_REGISTER_BLOOD_CARD;
+import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.REGISTER_BLOOD_CARD;
 import static com.potatoes.constants.StaticValues.HEADER_CID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -88,7 +88,7 @@ class BloodCardControllerTest {
 
         //when
         mockMvc.perform(MockMvcRequestBuilders
-                        .post(BLOOD_BASE_URL + POST_REGISTER_BLOOD_CARD)
+                        .post(BLOOD_BASE_URL + REGISTER_BLOOD_CARD)
                         .header(HEADER_CID, ci)
                         .content(asJsonString(registerBloodCardReqDto))
                         .contentType(MediaType.APPLICATION_JSON)

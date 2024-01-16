@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.potatoes.constants.ResponseCode.FAIL_REGISTER_BLOOD_REQUEST;
-import static com.potatoes.constants.StaticValues.POINT_PLUS;
+import static com.potatoes.constants.StaticValues.POINT_MINUS;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +28,7 @@ public class RegisterBloodRequestCommandService {
             bloodRequestRepository.save(bloodRequest);
 
             //요청한 헌혈증 개수 x 50 포인트 만큼 차감
-            userRepository.requestPoint(registerBloodRequestCommand.getCid(), POINT_PLUS, registerBloodRequestCommand.getBloodReqCnt() * 50);
+            userRepository.requestPoint(registerBloodRequestCommand.getCid(), POINT_MINUS, registerBloodRequestCommand.getBloodReqCnt() * 50);
         }catch (Exception e){
             throw new ApiException(FAIL_REGISTER_BLOOD_REQUEST);
         }
