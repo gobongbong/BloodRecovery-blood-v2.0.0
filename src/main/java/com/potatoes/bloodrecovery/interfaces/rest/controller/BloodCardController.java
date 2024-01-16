@@ -41,7 +41,7 @@ public class BloodCardController extends BaseController{
     private final DeleteBloodCardCommandService deleteBloodCardCommandService;
     private final GetBloodCardCountQueryService getBloodCardCountQueryService;
 
-    @PostMapping(POST_BLOOD_CARD_OCR)
+    @PostMapping(BLOOD_CARD_OCR)
     public ResponseEntity<Object> bloodCardOcr(@RequestParam("imageFile") MultipartFile imageFile) throws IOException {
         OcrView ocrView = bloodCardOcrCommandService.bloodCardOcr(imageFile);
         BloodCardOcrRspDto bloodCardOcrRspDto = BloodCardOcrRspDto.builder()
@@ -50,7 +50,7 @@ public class BloodCardController extends BaseController{
         return new ResponseEntity<>(bloodCardOcrRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 
-    @PostMapping(POST_REGISTER_BLOOD_CARD)
+    @PostMapping(REGISTER_BLOOD_CARD)
     public ResponseEntity<Object> registerBloodCard(@RequestHeader(value = HEADER_CID) String cid, @RequestBody @Valid RegisterBloodCardReqDto registerBloodCardReqDto) {
         RegisterBloodCardCommand registerBloodCardCommand = bloodCardMapper.registerReqtoCommand(cid, registerBloodCardReqDto);
         bloodCardCommandService.registerBloodCard(registerBloodCardCommand);
