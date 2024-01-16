@@ -41,4 +41,8 @@ public class Post {
     public boolean isModifiable(){
         return !this.postStatus.equals(DIRECTED_DONATION_ONGOING) && !this.postStatus.equals(ONGOING);
     }
+
+    public void changeStatus(PostStatus postStatus){
+        this.postStatus = postStatus;
+    }
 }

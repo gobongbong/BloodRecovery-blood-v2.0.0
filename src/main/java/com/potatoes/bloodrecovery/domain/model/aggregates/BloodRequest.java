@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import static com.potatoes.constants.PostStatus.DELETE;
+
 @Slf4j
 @Entity
 @NoArgsConstructor
@@ -58,5 +60,12 @@ public class BloodRequest {
         if (!modifyBloodRequestCommand.getDirectInfo().isEmpty()){
             new DirectedDonation(modifyBloodRequestCommand);
         }
+    }
+
+    public boolean deletableBloodRequest(){
+        return this.bloodDonationCnt == 0;
+    }
+    public void deleteBloodRequest(){
+        this.post.changeStatus(DELETE);
     }
 }
