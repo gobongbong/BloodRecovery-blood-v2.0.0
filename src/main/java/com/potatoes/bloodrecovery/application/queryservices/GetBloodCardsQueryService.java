@@ -22,15 +22,13 @@ public class GetBloodCardsQueryService {
     private final BloodCardRepository bloodCardRepository;
 
     @Transactional(readOnly = true)
-    public GetBloodCardsRspDto getBloodCards(String ci){
-        List<BloodCard> cards = bloodCardRepository.findByCid(ci);
+    public  List<BloodCard> getBloodCards(String cid){
+        List<BloodCard> cards = bloodCardRepository.findByCid(cid);
 
         if (cards.isEmpty()) {
             throw new ApiException(NO_BLOOD_CARD);
         }
 
-        return GetBloodCardsRspDto.builder()
-                .cards(cards)
-                .build();
+        return cards;
     }
 }

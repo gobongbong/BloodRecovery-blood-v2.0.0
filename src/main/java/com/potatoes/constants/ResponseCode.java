@@ -19,7 +19,8 @@ public enum ResponseCode {
     FAIL_REGISTER_BLOOD_REQUEST("헌혈 요청 등록에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
     NO_BLOOD_REQUEST("헌혈 요청 내역이 존재하지 않습니다.",HttpStatus.NOT_FOUND),
     FAIL_DELETE_BLOOD_REQUEST("헌혈 요청 삭제에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
-    FAIL_MODIFY_BLOOD_REQUEST("헌혈 요청 수정에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR);
+    FAIL_MODIFY_BLOOD_REQUEST("헌혈 요청 수정에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
+    FAIL_GET_BLOOD_REQUEST("헌혈 요청 상세 조회에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR);
 
 
     private final String message;

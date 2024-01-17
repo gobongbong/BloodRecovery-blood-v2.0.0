@@ -8,10 +8,7 @@ import com.potatoes.bloodrecovery.application.queryservices.GetBloodCardsQuerySe
 import com.potatoes.bloodrecovery.domain.model.commands.DeleteBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.model.view.OcrView;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.BloodCardOcrRspDto;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.GetBloodCardCountRspDto;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.GetBloodCardsRspDto;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.RegisterBloodCardReqDto;
+import com.potatoes.bloodrecovery.interfaces.rest.dto.*;
 import com.potatoes.bloodrecovery.interfaces.rest.mapper.BloodCardMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +56,9 @@ public class BloodCardController extends BaseController{
 
     @GetMapping(GET_BLOOD_CARDS)
     public ResponseEntity<Object> getBloodCards(@RequestHeader(value = HEADER_CID) String cid) {
-        GetBloodCardsRspDto getBloodCardsRspDto = getBloodCardsQueryService.getBloodCards(cid);
+        GetBloodCardsRspDto getBloodCardsRspDto = GetBloodCardsRspDto.builder()
+                .cards(getBloodCardsQueryService.getBloodCards(cid))
+                .build();
         return new ResponseEntity<>(getBloodCardsRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 
