@@ -4,9 +4,11 @@ import com.potatoes.bloodrecovery.application.commandservices.DeleteBloodRequest
 import com.potatoes.bloodrecovery.application.commandservices.ModifyBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.RegisterBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.queryservices.CustomerRequestsQueryService;
+import com.potatoes.bloodrecovery.application.queryservices.GetBloodRequestQueryService;
 import com.potatoes.bloodrecovery.domain.model.commands.ModifyBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.queries.GetCustomerRequestsQuery;
+import com.potatoes.bloodrecovery.domain.model.view.BloodRequestView;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.*;
 import com.potatoes.bloodrecovery.interfaces.rest.mapper.BloodRequestMapper;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,7 @@ public class BloodRequestController extends BaseController{
     private final RegisterBloodRequestCommandService registerBloodRequestCommandService;
     private final ModifyBloodRequestCommandService modifyBloodRequestCommandService;
     private final DeleteBloodRequestCommandService deleteBloodRequestCommandService;
+    private final GetBloodRequestQueryService getBloodRequestQueryService;
 
     @GetMapping(GET_CUSTOMER_REQUESTS)
     //todo 추후 수정 필요
@@ -48,7 +51,7 @@ public class BloodRequestController extends BaseController{
 
     @PostMapping(REGISTER_BLOOD_REQUEST)
     public ResponseEntity<Object> registerBloodRequest(@RequestHeader(value = HEADER_CID) String cid, @RequestBody @Valid RegisterBloodRequestReqDto registerBloodRequestReqDto) {
-        RegisterBloodRequestCommand registerBloodRequestCommand = bloodRequestMapper.registerReqtoCommand(cid, registerBloodRequestReqDto);
+        RegisterBloodRequestCommand registerBloodRequestCommand = bloodRequestMapper.registerReqToCommand(cid, registerBloodRequestReqDto);
         registerBloodRequestCommandService.registerBloodRequest(registerBloodRequestCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
@@ -57,7 +60,7 @@ public class BloodRequestController extends BaseController{
     public ResponseEntity<Object> modifyBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
                                                    @PathVariable Long requestId,
                                                    @RequestBody @Valid ModifyBloodRequestReqDto modifyBloodRequestReqDto) {
-        ModifyBloodRequestCommand modifyBloodRequestCommand = bloodRequestMapper.modifyReqtoCommand(cid, requestId, modifyBloodRequestReqDto);
+        ModifyBloodRequestCommand modifyBloodRequestCommand = bloodRequestMapper.modifyReqToCommand(cid, requestId, modifyBloodRequestReqDto);
         modifyBloodRequestCommandService.modifyBloodRequest(modifyBloodRequestCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
@@ -67,5 +70,13 @@ public class BloodRequestController extends BaseController{
                                                      @PathVariable Long requestId) {
         deleteBloodRequestCommandService.deleteBloodRequest(cid, requestId);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping(GET_BLOOD_REQUEST)
+    public ResponseEntity<Object> getBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
+                                                     @PathVariable Long requestId) {
+        BloodRequestView bloodRequestView = getBloodRequestQueryService.getBloodRequest(cid, requestId);
+        GetBloodRequestRspDto getBloodRequestRspDto = bloodRequestMapper.bloodRequsetViewToDto(bloodRequestView);
+        return new ResponseEntity<>(getBloodRequestRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 }
