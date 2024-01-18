@@ -4,6 +4,7 @@ import com.potatoes.bloodrecovery.domain.model.commands.ModifyBloodRequestComman
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.valueobjects.DirectedDonation;
 import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
+import com.potatoes.constants.RequestStatus;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,7 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import static com.potatoes.constants.PostStatus.DELETE;
+import static com.potatoes.constants.RequestStatus.*;
+import static com.potatoes.constants.RequestStatus.ONGOING;
 
 @Slf4j
 @Entity
@@ -27,9 +29,8 @@ public class BloodRequest {
     @Id
     @GeneratedValue
     private Long requestId;
-
     private String cid;
-    private String userNickname;
+    private RequestStatus requestStatus;
 
     private String requestType;
     private Integer bloodReqCnt;
@@ -41,11 +42,11 @@ public class BloodRequest {
 
     private boolean editable;
 
-    public BloodRequest(RegisterBloodRequestCommand registerBloodRequestCommand, String nickName) {
+    public BloodRequest(RegisterBloodRequestCommand registerBloodRequestCommand) {
         this.cid = registerBloodRequestCommand.getCid();
-        this.userNickname = nickName;
         this.requestType = registerBloodRequestCommand.getRequestType();
         this.bloodReqCnt = registerBloodRequestCommand.getBloodReqCnt();
+        this.requestStatus = REGISTER;
         this.post = new Post(registerBloodRequestCommand);
         if (!registerBloodRequestCommand.getDirectInfo().isEmpty()){
             new DirectedDonation(registerBloodRequestCommand);
@@ -66,6 +67,10 @@ public class BloodRequest {
         return this.bloodDonationCnt == 0;
     }
     public void deleteBloodRequest(){
-        this.post.changeStatus(DELETE);
+        this.requestStatus = DELETE;
+    }
+
+    public boolean isModifiable(){
+        return !this.requestStatus.equals(DIRECTED_DONATION_ONGOING) && !this.requestStatus.equals(ONGOING);
     }
 }
