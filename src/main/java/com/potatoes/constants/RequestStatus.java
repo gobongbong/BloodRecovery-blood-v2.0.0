@@ -3,7 +3,7 @@ package com.potatoes.constants;
 import lombok.Getter;
 
 @Getter
-public enum PostStatus {
+public enum RequestStatus {
 
     REGISTER("등록"),
     DIRECTED_DONATION_ONGOING("지정헌혈 대기 중"),
@@ -13,7 +13,7 @@ public enum PostStatus {
 
     private String status;
 
-    PostStatus(String status) {
+    RequestStatus(String status) {
         this.status = status;
     }
 }
