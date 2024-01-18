@@ -31,7 +31,7 @@ public class ModifyBloodRequestCommandService {
         }
 
         try {
-            if (bloodRequest.getPost().isModifiable()){
+            if (bloodRequest.isModifiable()){
                 if (bloodRequest.getBloodReqCnt() > newBloodReqCnt){
                     userRepository.requestPoint(modifyBloodRequestCommand.getCid(), POINT_MINUS, bloodRequest.getBloodReqCnt() - newBloodReqCnt);
                 }
