@@ -2,6 +2,8 @@ package com.potatoes.constants;
 
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public enum RequestStatus {
 
@@ -15,5 +17,9 @@ public enum RequestStatus {
 
     RequestStatus(String status) {
         this.status = status;
+    }
+
+    public static List<RequestStatus> getOngoing(){
+        return List.of(REGISTER, DIRECTED_DONATION_ONGOING, ONGOING);
     }
 }
