@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.potatoes.constants.RequestStatus.REGISTER;
 import static com.potatoes.constants.ResponseCode.EXIST_BLOOD_REQUEST;
 import static com.potatoes.constants.ResponseCode.FAIL_REGISTER_BLOOD_REQUEST;
 import static com.potatoes.constants.StaticValues.POINT_MINUS;
@@ -23,23 +22,21 @@ public class RegisterBloodRequestCommandService {
     private final BloodRequestRepository bloodRequestRepository;
 
     @Transactional
-    public void registerBloodRequest(RegisterBloodRequestCommand registerBloodRequestCommand){
-        //todo 진행 중인 애들 다 걸러야함...
-        boolean isRequestExist = bloodRequestRepository.existsByCidAndRequestStatus(registerBloodRequestCommand.getCid(), REGISTER);
-        if (!isRequestExist){
+    public void registerBloodRequest(RegisterBloodRequestCommand registerBloodRequestCommand) {
+        boolean isRequestExist = bloodRequestRepository.existsByCidAndRequestStatusIn(registerBloodRequestCommand.getCid(), RequestStatus.getOngoing());
+        if (isRequestExist) {
             throw new ApiException(EXIST_BLOOD_REQUEST);
         }
 
         try {
-            if (!isRequestExist){
-                BloodRequest bloodRequest = new BloodRequest(registerBloodRequestCommand);
+            BloodRequest bloodRequest = new BloodRequest(registerBloodRequestCommand);
 
-                bloodRequestRepository.save(bloodRequest);
+            bloodRequestRepository.save(bloodRequest);
 
-                //요청한 헌혈증 개수 x 50 포인트 만큼 차감
-                userRepository.requestPoint(registerBloodRequestCommand.getCid(), POINT_MINUS, registerBloodRequestCommand.getBloodReqCnt() * 50);
-            }
-        }catch (Exception e){
+            //요청한 헌혈증 개수 x 50 포인트 만큼 차감
+            userRepository.requestPoint(registerBloodRequestCommand.getCid(), POINT_MINUS, registerBloodRequestCommand.getBloodReqCnt() * 50);
+
+        } catch (Exception e) {
             throw new ApiException(FAIL_REGISTER_BLOOD_REQUEST);
         }
     }

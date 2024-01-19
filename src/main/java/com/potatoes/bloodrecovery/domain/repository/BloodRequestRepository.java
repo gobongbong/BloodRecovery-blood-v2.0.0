@@ -3,8 +3,10 @@ package com.potatoes.bloodrecovery.domain.repository;
 import com.potatoes.bloodrecovery.domain.model.aggregates.BloodRequest;
 import com.potatoes.constants.RequestStatus;
 
+import java.util.List;
+
 public interface BloodRequestRepository {
-    BloodRequest save(BloodRequest bloodRequest);
+    void save(BloodRequest bloodRequest);
     BloodRequest findByRequestId(Long requestId);
-    boolean existsByCidAndRequestStatus(String cid, RequestStatus requestStatus);
+    boolean existsByCidAndRequestStatusIn(String cid, List<RequestStatus> requestStatus);
 }
