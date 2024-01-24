@@ -23,7 +23,7 @@ public class ModifyBloodRequestCommand {
 
     private String postStatus;
 
-    private List<DirectedDonation> directInfo;
+    private DirectedDonation directInfo;
 
     private Long requestId;
 }
