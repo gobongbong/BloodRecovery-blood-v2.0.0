@@ -1,5 +1,6 @@
 package com.potatoes.bloodrecovery.interfaces.rest.controller;
 
+import com.potatoes.bloodrecovery.application.commandservices.CompleteBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.DeleteBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.ModifyBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.RegisterBloodRequestCommandService;
@@ -38,6 +39,7 @@ public class BloodRequestController extends BaseController{
     private final ModifyBloodRequestCommandService modifyBloodRequestCommandService;
     private final DeleteBloodRequestCommandService deleteBloodRequestCommandService;
     private final GetBloodRequestQueryService getBloodRequestQueryService;
+    private final CompleteBloodRequestCommandService completeBloodRequestCommandService;
 
     @GetMapping(GET_CUSTOMER_REQUESTS)
     //todo 추후 수정 필요
@@ -56,7 +58,7 @@ public class BloodRequestController extends BaseController{
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
-    @PostMapping(MODIFY_BLOOD_REQUEST)
+    @PatchMapping(MODIFY_BLOOD_REQUEST)
     public ResponseEntity<Object> modifyBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
                                                    @PathVariable Long requestId,
                                                    @RequestBody @Valid ModifyBloodRequestReqDto modifyBloodRequestReqDto) {
@@ -78,5 +80,12 @@ public class BloodRequestController extends BaseController{
         BloodRequestView bloodRequestView = getBloodRequestQueryService.getBloodRequest(cid, requestId);
         GetBloodRequestRspDto getBloodRequestRspDto = bloodRequestMapper.bloodRequsetViewToDto(bloodRequestView);
         return new ResponseEntity<>(getBloodRequestRspDto, getSuccessHeaders(), HttpStatus.OK);
+    }
+
+    @PatchMapping(COMPLETE_BLOOD_REQUEST)
+    public ResponseEntity<Object> completeBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
+                                                     @PathVariable Long requestId) {
+        completeBloodRequestCommandService.completeBloodRequest(cid, requestId);
+        return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 }
