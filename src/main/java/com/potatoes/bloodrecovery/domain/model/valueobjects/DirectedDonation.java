@@ -22,20 +22,16 @@ public class DirectedDonation {
     private String roomNumber;
 
     public DirectedDonation(RegisterBloodRequestCommand registerBloodRequestCommand) {
-        List<DirectedDonation> donationList = registerBloodRequestCommand.getDirectInfo();
-        for (DirectedDonation directedDonation : donationList) {
-            this.hospitalName = directedDonation.getHospitalName();
-            this.patientName = directedDonation.getPatientName();
-            this.roomNumber = directedDonation.getRoomNumber();
-        }
+        DirectedDonation directedDonation = registerBloodRequestCommand.getDirectInfo();
+        this.hospitalName = directedDonation.getHospitalName();
+        this.patientName = directedDonation.getPatientName();
+        this.roomNumber = directedDonation.getRoomNumber();
     }
 
     public DirectedDonation(ModifyBloodRequestCommand modifyBloodRequestCommand) {
-        List<DirectedDonation> donationList = modifyBloodRequestCommand.getDirectInfo();
-        for (DirectedDonation directedDonation : donationList) {
-            this.hospitalName = directedDonation.getHospitalName();
-            this.patientName = directedDonation.getPatientName();
-            this.roomNumber = directedDonation.getRoomNumber();
-        }
+        DirectedDonation directedDonation = modifyBloodRequestCommand.getDirectInfo();
+        this.hospitalName = directedDonation.getHospitalName();
+        this.patientName = directedDonation.getPatientName();
+        this.roomNumber = directedDonation.getRoomNumber();
     }
 }

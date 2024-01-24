@@ -17,9 +17,7 @@ public class BloodRequestView {
     private boolean editable;
     private Integer bloodReqCnt;
     private Integer bloodDonationCnt;
-    //todo list?
     private Post postInfo;
-    //todo list?
     private DirectedDonation directInfo;
 
     public BloodRequestView(BloodRequest bloodRequest, UserInfoView userInfoView, boolean editable) {
