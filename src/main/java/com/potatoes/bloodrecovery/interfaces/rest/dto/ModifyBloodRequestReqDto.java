@@ -3,8 +3,6 @@ package com.potatoes.bloodrecovery.interfaces.rest.dto;
 import com.potatoes.bloodrecovery.domain.model.valueobjects.DirectedDonation;
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Builder
 @ToString
@@ -18,5 +16,5 @@ public class ModifyBloodRequestReqDto {
 
     private String postStatus;
 
-    private List<DirectedDonation> directInfo;
+    private DirectedDonation directInfo;
 }

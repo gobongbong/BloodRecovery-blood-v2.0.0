@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import java.util.Objects;
+
 import static com.potatoes.constants.RequestStatus.*;
 import static com.potatoes.constants.RequestStatus.ONGOING;
 
@@ -48,7 +50,7 @@ public class BloodRequest {
         this.bloodReqCnt = registerBloodRequestCommand.getBloodReqCnt();
         this.requestStatus = REGISTER;
         this.post = new Post(registerBloodRequestCommand);
-        if (!registerBloodRequestCommand.getDirectInfo().isEmpty()){
+        if (Objects.nonNull(registerBloodRequestCommand.getDirectInfo())){
             new DirectedDonation(registerBloodRequestCommand);
         }
     }
@@ -58,7 +60,7 @@ public class BloodRequest {
         this.requestType = modifyBloodRequestCommand.getRequestType();
         this.bloodReqCnt = modifyBloodRequestCommand.getBloodReqCnt();
         this.post = new Post(modifyBloodRequestCommand);
-        if (!modifyBloodRequestCommand.getDirectInfo().isEmpty()){
+        if (Objects.nonNull(modifyBloodRequestCommand.getDirectInfo())){
             new DirectedDonation(modifyBloodRequestCommand);
         }
     }
@@ -72,5 +74,9 @@ public class BloodRequest {
 
     public boolean isModifiable(){
         return !this.requestStatus.equals(DIRECTED_DONATION_ONGOING) && !this.requestStatus.equals(ONGOING);
+    }
+
+    public void changeRequestStatus(RequestStatus requestStatus){
+        this.requestStatus = requestStatus;
     }
 }
