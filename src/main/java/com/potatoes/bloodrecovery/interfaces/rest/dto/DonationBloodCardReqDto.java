@@ -9,5 +9,5 @@ import lombok.*;
 @NoArgsConstructor
 public class DonationBloodCardReqDto {
     private Long requestId;
-    private Long cardId;
+    private Integer cardCnt;
 }
