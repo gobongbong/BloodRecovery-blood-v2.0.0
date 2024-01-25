@@ -25,10 +25,8 @@ public class ModifyBloodRequestCommandService {
     public void modifyBloodRequest(ModifyBloodRequestCommand modifyBloodRequestCommand){
         Integer newBloodReqCnt = modifyBloodRequestCommand.getBloodReqCnt();
 
-        BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(modifyBloodRequestCommand.getRequestId());
-        if (bloodRequest == null){
-            throw new ApiException(NO_BLOOD_REQUEST);
-        }
+        BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(modifyBloodRequestCommand.getRequestId())
+                .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
 
         try {
             if (bloodRequest.isModifiable()){

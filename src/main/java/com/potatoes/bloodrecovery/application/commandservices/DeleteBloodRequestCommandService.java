@@ -21,10 +21,8 @@ public class DeleteBloodRequestCommandService {
 
     @Transactional
     public void deleteBloodRequest(String cid, Long requestId){
-        BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(requestId);
-        if (bloodRequest == null){
-            throw new ApiException(NO_BLOOD_REQUEST);
-        }
+        BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(requestId)
+                .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
 
         try {
             if (bloodRequest.deletableBloodRequest()){

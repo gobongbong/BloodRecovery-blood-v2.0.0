@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.potatoes.constants.ResponseCode.FAIL_GET_BLOOD_REQUEST;
+import static com.potatoes.constants.ResponseCode.NO_BLOOD_REQUEST;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,9 @@ public class GetBloodRequestQueryService {
         boolean editable = false;
         BloodRequestView bloodRequestView;
         try {
-            BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(requestId);
+            BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(requestId)
+                    .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
+
             if (StringUtils.equals(bloodRequest.getCid(), cid)) {
                 editable = true;
             }
