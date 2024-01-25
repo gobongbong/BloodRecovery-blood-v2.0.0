@@ -1,6 +1,9 @@
 package com.potatoes.bloodrecovery.interfaces.rest.controller;
 
+import com.potatoes.bloodrecovery.application.commandservices.DonationBloodCardCommandService;
+import com.potatoes.bloodrecovery.domain.model.commands.DonationBloodCardCommand;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.DonationBloodCardReqDto;
+import com.potatoes.bloodrecovery.interfaces.rest.mapper.DonationBloodMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,10 +24,13 @@ import static com.potatoes.constants.StaticValues.HEADER_CID;
 @RequestMapping(BLOOD_BASE_URL)
 public class BloodDonationController extends BaseController{
 
-//    private final BloodRequestMapper bloodRequestMapper;
+    private final DonationBloodCardCommandService donationBloodCardCommandService;
+    private final DonationBloodMapper donationBloodMapper;
 
     @PostMapping(DONATION_BLOOD_CARD)
     public ResponseEntity<Object> donationBloodCard(@RequestHeader(value = HEADER_CID) String cid, @RequestBody @Valid DonationBloodCardReqDto donationBloodCardReqDto) {
+        DonationBloodCardCommand donationBloodCardCommand = donationBloodMapper.donationBloodCardReqtoCommand(cid, donationBloodCardReqDto);
+        donationBloodCardCommandService.donationBloodCard(donationBloodCardCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 }
