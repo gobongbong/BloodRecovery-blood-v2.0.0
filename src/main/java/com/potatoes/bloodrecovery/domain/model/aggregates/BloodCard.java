@@ -42,4 +42,8 @@ public class BloodCard {
         //BIMS 외부 연동 불가
         return true;
     }
+
+    public void changeOwner(String cid){
+        this.cid = cid;
+    }
 }

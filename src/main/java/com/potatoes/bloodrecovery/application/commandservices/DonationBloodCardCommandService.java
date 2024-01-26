@@ -11,9 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.potatoes.constants.ResponseCode.NO_BLOOD_REQUEST;
+import static com.potatoes.constants.ResponseCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,17 +36,31 @@ public class DonationBloodCardCommandService {
         BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(donationBloodCardCommand.getRequestId())
                 .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
 
-        //todo 유효한 헌혈증 -> 하나씩 가져와서 BIMS 찔러보기?
-        List<BloodCard> bloodCardList = bloodCardRepository.findByCid(donationBloodCardCommand.getCid());
+        List<BloodCard> validBloodCardList = getValidBloodCardList(donationBloodCardCommand);
 
-
+        if (validateBloodCard(donationBloodCardCommand, validBloodCardList)){
+            for (BloodCard bloodCard : validBloodCardList) {
+                bloodCard.changeOwner(donationBloodCardCommand.getCid());
+            }
+        }else {
+            throw new ApiException(NOT_VALID_CARD);
+        }
     }
 
-    public boolean validateBloodCard(DonationBloodCardCommand donationBloodCardCommand, List<BloodCard> bloodCardList){
-        //todo 유효한 헌혈증 개수가 필요함
-        if (bloodCardList.size() < donationBloodCardCommand.getCardCnt()){
-            return false;
+    public List<BloodCard> getValidBloodCardList(DonationBloodCardCommand donationBloodCardCommand){
+        List<BloodCard> bloodCardList = bloodCardRepository.findByCid(donationBloodCardCommand.getCid());
+        if (bloodCardList.isEmpty()){
+            throw new ApiException(NO_BLOOD_CARD);
         }
-        return true;
+        return bloodCardList.stream()
+                .filter(BloodCard::isValidBloodCard)
+                .sorted(Comparator.comparing(BloodCard::getDate).reversed())
+                .limit(donationBloodCardCommand.getCardCnt())
+                .collect(Collectors.toList());
+    }
+
+    //todo 메소드명 수정...
+    public boolean validateBloodCard(DonationBloodCardCommand donationBloodCardCommand,List<BloodCard> validBloodCardList){
+        return validBloodCardList.size() >= donationBloodCardCommand.getCardCnt();
     }
 }
