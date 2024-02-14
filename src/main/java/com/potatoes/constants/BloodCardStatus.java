@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum BloodCardStatus {
 
     REGISTER("등록"),
-    DELETE("삭제");
+    DELETE("삭제"),
+    OWNER_CHANGE("소유자 변경");
 
     private String status;
 
