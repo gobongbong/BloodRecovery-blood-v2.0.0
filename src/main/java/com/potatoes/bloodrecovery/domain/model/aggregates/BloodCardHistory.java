@@ -1,6 +1,7 @@
 package com.potatoes.bloodrecovery.domain.model.aggregates;
 
 import com.potatoes.bloodrecovery.domain.model.commands.DeleteBloodCardCommand;
+import com.potatoes.bloodrecovery.domain.model.commands.DonationBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodCardCommand;
 import com.potatoes.constants.BloodCardStatus;
 import lombok.*;
@@ -25,8 +26,9 @@ public class BloodCardHistory {
 
     @Id
     @GeneratedValue
-    private Long bloodCardId;
+    private Long historyId;
 
+    private Long bloodCardId;
     private String cid;
 
     private String code;
@@ -53,5 +55,15 @@ public class BloodCardHistory {
         this.name = deleteBloodCardCommand.getName();
         this.date = deleteBloodCardCommand.getDate();
         this.status = DELETE;
+    }
+
+    public BloodCardHistory(DonationBloodCardCommand donationBloodCardCommand, BloodCard bloodCard) {
+        this.bloodCardId = bloodCard.getBloodCardId();
+        this.cid = donationBloodCardCommand.getCid();
+        this.code = bloodCard.getCode();
+        this.donationType = bloodCard.getDonationType();
+        this.name = bloodCard.getName();
+        this.date = bloodCard.getDate();
+        this.status = OWNER_CHANGE;
     }
 }
