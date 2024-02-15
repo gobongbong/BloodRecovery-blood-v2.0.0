@@ -79,4 +79,8 @@ public class BloodRequest {
     public void changeRequestStatus(RequestStatus requestStatus){
         this.requestStatus = requestStatus;
     }
+
+    public void changeBloodDonationCnt(Integer donatedBloodCardCnt){
+        this.bloodDonationCnt = bloodDonationCnt + donatedBloodCardCnt;
+    }
 }

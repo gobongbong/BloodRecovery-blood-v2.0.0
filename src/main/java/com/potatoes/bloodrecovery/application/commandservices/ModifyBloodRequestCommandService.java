@@ -31,10 +31,10 @@ public class ModifyBloodRequestCommandService {
         try {
             if (bloodRequest.isModifiable()){
                 if (bloodRequest.getBloodReqCnt() > newBloodReqCnt){
-                    userRepository.requestPoint(modifyBloodRequestCommand.getCid(), POINT_MINUS, bloodRequest.getBloodReqCnt() - newBloodReqCnt);
+                    userRepository.requestPoint(modifyBloodRequestCommand.getCid(), POINT_MINUS, 50 * (bloodRequest.getBloodReqCnt() - newBloodReqCnt));
                 }
                 if (bloodRequest.getBloodReqCnt() < newBloodReqCnt){
-                    userRepository.requestPoint(modifyBloodRequestCommand.getCid(), POINT_PLUS, newBloodReqCnt - bloodRequest.getBloodReqCnt());
+                    userRepository.requestPoint(modifyBloodRequestCommand.getCid(), POINT_PLUS, 50 * (newBloodReqCnt - bloodRequest.getBloodReqCnt()));
                 }
                 bloodRequest.modifyBloodRequest(modifyBloodRequestCommand);
                 bloodRequestRepository.save(bloodRequest);
