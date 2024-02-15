@@ -34,7 +34,7 @@ public class RegisterBloodRequestCommandService {
             bloodRequestRepository.save(bloodRequest);
 
             //요청한 헌혈증 개수 x 50 포인트 만큼 차감
-            userRepository.requestPoint(registerBloodRequestCommand.getCid(), POINT_MINUS, registerBloodRequestCommand.getBloodReqCnt() * 50);
+            userRepository.requestPoint(registerBloodRequestCommand.getCid(), POINT_MINUS, 50 * registerBloodRequestCommand.getBloodReqCnt());
 
         } catch (Exception e) {
             throw new ApiException(FAIL_REGISTER_BLOOD_REQUEST);

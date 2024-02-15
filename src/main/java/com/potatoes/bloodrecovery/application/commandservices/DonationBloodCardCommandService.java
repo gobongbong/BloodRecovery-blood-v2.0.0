@@ -32,13 +32,6 @@ public class DonationBloodCardCommandService {
 
     @Transactional
     public void donationBloodCard(DonationBloodCardCommand donationBloodCardCommand) {
-        //1. 헌혈증 요청글 조회
-        //2. 유효한 헌혈증 목록 정렬해서 가져오기 (오래된 헌혈증부터 기불할 개수만큼)
-        //3. 해당 헌혈증들 소유자 변경
-        //4. 헌혈증 히스토리 등록 (소유자 변경 내역)
-        //5. 기부 유저 포인트 증가
-        //6. 헌혈증 요청글 상태, 기부받을 헌혈증 개수 변경
-
         BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(donationBloodCardCommand.getRequestId())
                 .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
 
@@ -47,28 +40,23 @@ public class DonationBloodCardCommandService {
             throw new ApiException(NOT_VALID_CARD);
         }
 
-        for (BloodCard bloodCard : validBloodCardList) {
-            bloodCard.changeOwner(donationBloodCardCommand.getCid());
-            bloodCardRepository.save(bloodCard);
-            BloodCardHistory bloodCardHistory = new BloodCardHistory(donationBloodCardCommand, bloodCard);
-            bloodCardHistoryRepository.save(bloodCardHistory);
-        }
-
-        userRepository.requestPoint(donationBloodCardCommand.getCid(), POINT_PLUS, donationBloodCardCommand.getCardCnt());
-
-        if (bloodRequest.getRequestStatus().equals(REGISTER)){
-            bloodRequest.changeRequestStatus(ONGOING);
-        }
-
-        if (bloodRequest.getRequestStatus().equals(ONGOING)){
-            //todo 요청글의 헌혈증 요청 개수를 다 채웠을때 완료로 상태 변경 필요 -> 완료처리하는 api 따로 존재하는데...
-            if (bloodRequest.getBloodDonationCnt() + donationBloodCardCommand.getCardCnt() == bloodRequest.getBloodDonationCnt()){
-                bloodRequest.changeRequestStatus(COMPLETE);
+        try {
+            for (BloodCard bloodCard : validBloodCardList) {
+                bloodCard.changeOwner(donationBloodCardCommand.getCid());
+                bloodCardRepository.save(bloodCard);
+                BloodCardHistory bloodCardHistory = new BloodCardHistory(donationBloodCardCommand, bloodCard);
+                bloodCardHistoryRepository.save(bloodCardHistory);
             }
+
+            userRepository.requestPoint(donationBloodCardCommand.getCid(), POINT_PLUS, 50 * donationBloodCardCommand.getCardCnt());
+            changeRequestStatusAndDonationCnt(bloodRequest, donationBloodCardCommand);
+            //todo 기부 이력 쌓기
+        }catch (Exception e){
+            throw new ApiException(FAIL_DONATE_BLOOD_CARD);
         }
     }
 
-    public List<BloodCard> getValidBloodCardList(DonationBloodCardCommand donationBloodCardCommand){
+    private List<BloodCard> getValidBloodCardList(DonationBloodCardCommand donationBloodCardCommand){
         List<BloodCard> bloodCardList = bloodCardRepository.findByCid(donationBloodCardCommand.getCid());
         if (bloodCardList.isEmpty()){
             throw new ApiException(NO_BLOOD_CARD);
@@ -78,5 +66,18 @@ public class DonationBloodCardCommandService {
                 .sorted(Comparator.comparing(BloodCard::getDate).reversed())
                 .limit(donationBloodCardCommand.getCardCnt())
                 .collect(Collectors.toList());
+    }
+
+    private void changeRequestStatusAndDonationCnt(BloodRequest bloodRequest, DonationBloodCardCommand donationBloodCardCommand){
+        if (bloodRequest.getRequestStatus().equals(REGISTER)){
+            bloodRequest.changeRequestStatus(ONGOING);
+        }
+
+        if (bloodRequest.getRequestStatus().equals(ONGOING)){
+            if (bloodRequest.getBloodDonationCnt() + donationBloodCardCommand.getCardCnt() == bloodRequest.getBloodDonationCnt()){
+                bloodRequest.changeRequestStatus(COMPLETE);
+            }
+        }
+        bloodRequest.changeBloodDonationCnt(donationBloodCardCommand.getCardCnt());
     }
 }
