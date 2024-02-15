@@ -26,7 +26,7 @@ public class CompleteBloodRequestCommandService {
 
         try {
             if (bloodRequest.getBloodDonationCnt() < bloodRequest.getBloodReqCnt()){
-                userRepository.requestPoint(cid, POINT_PLUS, bloodRequest.getBloodReqCnt() - bloodRequest.getBloodDonationCnt());
+                userRepository.requestPoint(cid, POINT_PLUS, 50 * (bloodRequest.getBloodReqCnt() - bloodRequest.getBloodDonationCnt()));
             }
             bloodRequest.changeRequestStatus(COMPLETE);
         }catch (Exception e){
