@@ -26,7 +26,7 @@ public class DeleteBloodRequestCommandService {
 
         try {
             if (bloodRequest.deletableBloodRequest()){
-                userRepository.requestPoint(cid, POINT_PLUS, bloodRequest.getBloodReqCnt());
+                userRepository.requestPoint(cid, POINT_PLUS, 50 * bloodRequest.getBloodReqCnt());
                 bloodRequest.deleteBloodRequest();
                 bloodRequestRepository.save(bloodRequest);
             }
