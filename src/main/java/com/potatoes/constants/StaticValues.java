@@ -10,4 +10,7 @@ public class StaticValues {
 
     public static final String POINT_PLUS = "PLUS";
     public static final String POINT_MINUS = "MINUS";
+
+    public static final String DIRECTED_BLOOD_DONATION = "지정헌혈";
+    public static final String BLOOD_CARD_DONATION = "헌혈증";
 }
