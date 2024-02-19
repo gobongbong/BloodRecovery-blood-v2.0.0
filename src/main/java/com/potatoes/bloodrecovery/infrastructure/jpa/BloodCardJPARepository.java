@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface BloodCardJPARepository extends JpaRepository<BloodCard, String>, BloodCardRepository{
+public interface BloodCardJPARepository extends JpaRepository<BloodCard, Long>, BloodCardRepository{
     List<BloodCard> findByCid(String cid);
     Optional<BloodCard> findBloodCardByCidAndBloodCardId(String cid, Long bloodCardId);
     void deleteByBloodCardId(Long bloodCardId);

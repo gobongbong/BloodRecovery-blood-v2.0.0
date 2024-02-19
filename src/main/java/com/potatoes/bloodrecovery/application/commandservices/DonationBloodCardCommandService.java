@@ -3,11 +3,9 @@ package com.potatoes.bloodrecovery.application.commandservices;
 import com.potatoes.bloodrecovery.domain.model.aggregates.BloodCard;
 import com.potatoes.bloodrecovery.domain.model.aggregates.BloodCardHistory;
 import com.potatoes.bloodrecovery.domain.model.aggregates.BloodRequest;
+import com.potatoes.bloodrecovery.domain.model.aggregates.DonationHistory;
 import com.potatoes.bloodrecovery.domain.model.commands.DonationBloodCardCommand;
-import com.potatoes.bloodrecovery.domain.repository.BloodCardHistoryRepository;
-import com.potatoes.bloodrecovery.domain.repository.BloodCardRepository;
-import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
-import com.potatoes.bloodrecovery.domain.repository.UserRepository;
+import com.potatoes.bloodrecovery.domain.repository.*;
 import com.potatoes.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +27,7 @@ public class DonationBloodCardCommandService {
     private final BloodRequestRepository bloodRequestRepository;
     private final BloodCardRepository bloodCardRepository;
     private final BloodCardHistoryRepository bloodCardHistoryRepository;
+    private final DonationHistoryRepository donationHistoryRepository;
 
     @Transactional
     public void donationBloodCard(DonationBloodCardCommand donationBloodCardCommand) {
@@ -50,7 +49,9 @@ public class DonationBloodCardCommandService {
 
             userRepository.requestPoint(donationBloodCardCommand.getCid(), POINT_PLUS, 50 * donationBloodCardCommand.getCardCnt());
             changeRequestStatusAndDonationCnt(bloodRequest, donationBloodCardCommand);
-            //todo 기부 이력 쌓기
+
+            DonationHistory donationHistory = new DonationHistory(donationBloodCardCommand);
+            donationHistoryRepository.save(donationHistory);
         }catch (Exception e){
             throw new ApiException(FAIL_DONATE_BLOOD_CARD);
         }
