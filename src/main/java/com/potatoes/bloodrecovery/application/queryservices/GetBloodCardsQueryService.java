@@ -1,9 +1,7 @@
 package com.potatoes.bloodrecovery.application.queryservices;
 
 import com.potatoes.bloodrecovery.domain.model.aggregates.BloodCard;
-import com.potatoes.bloodrecovery.domain.model.queries.GetBloodCardsQuery;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardRepository;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.GetBloodCardsRspDto;
 import com.potatoes.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
