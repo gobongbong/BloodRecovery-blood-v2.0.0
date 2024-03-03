@@ -1,7 +1,7 @@
 package com.potatoes.bloodrecovery.application.queryservices;
 
+import com.potatoes.bloodrecovery.domain.model.aggregates.BloodCard;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardRepository;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.GetBloodCardsRspDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,7 +9,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodCard;
+import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodCardList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -29,14 +33,13 @@ class GetBloodCardsQueryServiceTest {
         //given
         String ci = "1111";
 
-        GetBloodCardsRspDto expect = GetBloodCardsRspDto.builder()
-                .cards(commonBloodCard())
-                .build();
+        List<BloodCard> expect = new ArrayList<>();
+        expect.add(commonBloodCard());
 
-        given(bloodCardRepository.findByCid(any())).willReturn(commonBloodCard());
+        given(bloodCardRepository.findByCid(any())).willReturn(commonBloodCardList());
 
         //when
-        GetBloodCardsRspDto result = getBloodCardsQueryService.getBloodCards(ci);
+        List<BloodCard> result = getBloodCardsQueryService.getBloodCards(ci);
 
         //then
         assertThat(result).usingRecursiveComparison().isEqualTo(expect);

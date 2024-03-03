@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BloodRequestRepository {
-    void save(BloodRequest bloodRequest);
+    BloodRequest save(BloodRequest bloodRequest);
     Optional<BloodRequest> findByRequestId(Long requestId);
     boolean existsByCidAndRequestStatusIn(String cid, List<RequestStatus> requestStatus);
 }
