@@ -20,12 +20,14 @@ public class DirectedDonation {
     private String hospitalName;
     private String patientName;
     private String roomNumber;
+    private String patientNumber;
 
     public DirectedDonation(RegisterBloodRequestCommand registerBloodRequestCommand) {
         DirectedDonation directedDonation = registerBloodRequestCommand.getDirectInfo();
         this.hospitalName = directedDonation.getHospitalName();
         this.patientName = directedDonation.getPatientName();
         this.roomNumber = directedDonation.getRoomNumber();
+        this.patientNumber = directedDonation.getPatientNumber();
     }
 
     public DirectedDonation(ModifyBloodRequestCommand modifyBloodRequestCommand) {
@@ -33,5 +35,6 @@ public class DirectedDonation {
         this.hospitalName = directedDonation.getHospitalName();
         this.patientName = directedDonation.getPatientName();
         this.roomNumber = directedDonation.getRoomNumber();
+        this.patientNumber = directedDonation.getPatientNumber();
     }
 }

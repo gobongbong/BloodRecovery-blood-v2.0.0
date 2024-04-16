@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DonationHistoryView {
+    private Long historyId;
     private String donationType;
     private Integer donationCnt;
     private LocalDateTime donationDate;
