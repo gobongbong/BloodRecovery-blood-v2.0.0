@@ -35,7 +35,7 @@ public class GetBloodRequestQueryService {
                 editable = true;
             }
 
-            UserInfoView userInfoView = userRepository.getUserInfo(cid);
+            UserInfoView userInfoView = userRepository.getUserInfo(bloodRequest.getCid());
             bloodRequestView = new BloodRequestView(bloodRequest, userInfoView, editable);
         } catch (Exception e) {
             throw new ApiException(FAIL_GET_BLOOD_REQUEST);
