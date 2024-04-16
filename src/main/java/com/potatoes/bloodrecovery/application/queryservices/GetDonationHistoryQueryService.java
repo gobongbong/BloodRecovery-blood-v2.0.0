@@ -29,6 +29,7 @@ public class GetDonationHistoryQueryService {
 
             for (DonationHistory donationHistory : donationHistories) {
                 DonationHistoryView donationHistoryView = DonationHistoryView.builder()
+                        .historyId(donationHistory.getHistoryId())
                         .donationCnt(donationHistory.getDonationCnt())
                         .donationType(donationHistory.getDonationType())
                         .donationDate(donationHistory.getDate())
