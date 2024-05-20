@@ -1,8 +1,11 @@
 package com.potatoes.bloodrecovery.interfaces.rest.controller;
 
+import com.potatoes.bloodrecovery.application.commandservices.DirectedBloodDonationCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.DonationBloodCardCommandService;
 import com.potatoes.bloodrecovery.application.queryservices.GetDonationHistoryQueryService;
+import com.potatoes.bloodrecovery.domain.model.commands.DirectedBloodDonationCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.DonationBloodCardCommand;
+import com.potatoes.bloodrecovery.interfaces.rest.dto.DirectedBloodDonationReqDto;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.DonationBloodCardReqDto;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.GetDonationHistoryRspDto;
 import com.potatoes.bloodrecovery.interfaces.rest.mapper.DonationBloodMapper;
@@ -14,9 +17,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
-import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.BLOOD_BASE_URL;
-import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.DONATION_BLOOD_CARD;
+import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.*;
 import static com.potatoes.constants.StaticValues.HEADER_CID;
 
 @Slf4j
@@ -27,6 +30,7 @@ import static com.potatoes.constants.StaticValues.HEADER_CID;
 public class BloodDonationController extends BaseController{
 
     private final DonationBloodCardCommandService donationBloodCardCommandService;
+    private final DirectedBloodDonationCommandService directedBloodDonationCommandService;
     private final DonationBloodMapper donationBloodMapper;
     private final GetDonationHistoryQueryService getDonationHistoryQueryService;
 
@@ -43,5 +47,14 @@ public class BloodDonationController extends BaseController{
                 .donationHistory(getDonationHistoryQueryService.getDonationHistory(cid))
                 .build();
         return new ResponseEntity<>(getDonationHistoryRspDto, getSuccessHeaders(), HttpStatus.OK);
+    }
+
+    // todo validation
+    @PostMapping(APPLY_DIRECTED_DONATION)
+    public ResponseEntity<Object> applyDirectedBloodDonation(@RequestHeader(value = HEADER_CID) String cid, @RequestBody @Valid DirectedBloodDonationReqDto directedBloodDonationReqDto) {
+        DirectedBloodDonationCommand directedBloodDonationCommand = donationBloodMapper.directedDonationReqtoCommand(cid, directedBloodDonationReqDto);
+        directedBloodDonationCommandService.applyDirectedBloodDonation(directedBloodDonationCommand);
+
+        return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 }

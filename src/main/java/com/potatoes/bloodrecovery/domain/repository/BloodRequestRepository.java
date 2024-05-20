@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface BloodRequestRepository {
     BloodRequest save(BloodRequest bloodRequest);
     Optional<BloodRequest> findByRequestId(Long requestId);
+    Optional<BloodRequest> findByRequestIdAndCid(Long requestId, String cid);
     boolean existsByCidAndRequestStatusIn(String cid, List<RequestStatus> requestStatus);
 }

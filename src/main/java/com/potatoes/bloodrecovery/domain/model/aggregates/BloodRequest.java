@@ -12,11 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import java.util.Objects;
+import java.util.*;
 
 import static com.potatoes.constants.RequestStatus.*;
-import static com.potatoes.constants.RequestStatus.ONGOING;
 
 @Slf4j
 @Entity

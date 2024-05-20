@@ -24,7 +24,9 @@ public enum ResponseCode {
     FAIL_GET_BLOOD_REQUEST("헌혈 요청 상세 조회에 실패했습니다.",HttpStatus.NOT_FOUND),
     FAIL_COMPLETE_BLOOD_REQUEST("헌혈 요청 완료 처리에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
     FAIL_DONATE_BLOOD_CARD("헌혈증 기부에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
-    FAIL_GET_DONATION_HISTORY("헌혈 기부 이력 조회에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR);
+    FAIL_GET_DONATION_HISTORY("헌혈 기부 이력 조회에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
+    FAIL_APPLY_DIRECTED_BLOOD_DONATION("지정 헌혈 신청에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    BAD_REQUEST_TYPE("잘못된 요청 유형입니다.", HttpStatus.BAD_REQUEST);
 
 
     private final String message;
