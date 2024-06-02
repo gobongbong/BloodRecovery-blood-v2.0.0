@@ -13,10 +13,10 @@ public enum RequestStatus {
     COMPLETE("완료"),
     DELETE("삭제");
 
-    private String status;
+    private final String value;
 
-    RequestStatus(String status) {
-        this.status = status;
+    RequestStatus(String value) {
+        this.value = value;
     }
 
     public static List<RequestStatus> getOngoing(){
