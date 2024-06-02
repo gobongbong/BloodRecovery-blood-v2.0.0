@@ -10,4 +10,5 @@ public interface BloodRequestRepository {
     BloodRequest save(BloodRequest bloodRequest);
     Optional<BloodRequest> findByRequestId(Long requestId);
     boolean existsByCidAndRequestStatusIn(String cid, List<RequestStatus> requestStatus);
+    boolean existsByCidAndRequestId(String cid, Long requestId);
 }
