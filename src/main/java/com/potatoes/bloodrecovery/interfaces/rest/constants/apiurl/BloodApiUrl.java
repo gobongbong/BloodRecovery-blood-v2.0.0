@@ -39,4 +39,10 @@ public class BloodApiUrl {
 
     /** 헌혈 요청 글 완료 */
     public static final String COMPLETE_BLOOD_REQUEST = "/request/{requestId}/complete";
+
+    /** 지정 헌혈 완료 */
+    public static final String COMPLETE_DIRECTED_DONATION = "/donation/direct/{requestId}/complete";
+
+    /** 지정 헌혈 신청자 조회 */
+    public static final String GET_DIRECTED_DONATION_APPLICANT = "/donation/direct/{requestId}";
 }

@@ -1,6 +1,7 @@
 package com.potatoes.bloodrecovery.domain.model.aggregates;
 
 import com.potatoes.bloodrecovery.domain.model.commands.DonationBloodCardCommand;
+import com.potatoes.constants.RequestStatus;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
@@ -32,6 +33,7 @@ public class DonationHistory {
 
     private Integer donationCnt;
     private String donationType;
+    private RequestStatus donationStatus;
 
     @CreatedDate
     private LocalDateTime date;
@@ -41,5 +43,9 @@ public class DonationHistory {
         this.cid = donationBloodCardCommand.getCid();
         this.donationCnt = donationBloodCardCommand.getCardCnt();
         this.donationType = BLOOD_CARD_DONATION;
+    }
+
+    public void changeRequestStatus(RequestStatus requestStatus) {
+        this.donationStatus = requestStatus;
     }
 }
