@@ -44,6 +44,8 @@ public class CompleteDirectedDonationCommandService {
 
                 BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(requestId).orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
                 bloodRequest.changeRequestStatus(COMPLETE);
+
+                //todo 알람 호출(지정헌혈 신청자에게)
             }
         }catch (Exception e){
             throw new ApiException(FAIL_COMPLETE_BLOOD_REQUEST);

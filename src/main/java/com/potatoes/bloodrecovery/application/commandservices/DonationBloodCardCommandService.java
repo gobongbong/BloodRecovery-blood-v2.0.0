@@ -6,6 +6,7 @@ import com.potatoes.bloodrecovery.domain.model.aggregates.BloodRequest;
 import com.potatoes.bloodrecovery.domain.model.aggregates.DonationHistory;
 import com.potatoes.bloodrecovery.domain.model.commands.DonationBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.repository.*;
+import com.potatoes.constants.RequestStatus;
 import com.potatoes.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class DonationBloodCardCommandService {
 
     @Transactional
     public void donationBloodCard(DonationBloodCardCommand donationBloodCardCommand) {
-        BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(donationBloodCardCommand.getRequestId())
+        BloodRequest bloodRequest = bloodRequestRepository.findByRequestIdAndRequestStatusIn(donationBloodCardCommand.getRequestId(), RequestStatus.getOngoing())
                 .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
 
         List<BloodCard> validBloodCardList = getValidBloodCardList(donationBloodCardCommand);
@@ -52,6 +53,8 @@ public class DonationBloodCardCommandService {
 
             DonationHistory donationHistory = new DonationHistory(donationBloodCardCommand);
             donationHistoryRepository.save(donationHistory);
+
+            //todo 알람 호출(요청글 작성자에게)
         }catch (Exception e){
             throw new ApiException(FAIL_DONATE_BLOOD_CARD);
         }
@@ -77,6 +80,7 @@ public class DonationBloodCardCommandService {
         if (bloodRequest.getRequestStatus().equals(ONGOING)){
             if (bloodRequest.getBloodDonationCnt() + donationBloodCardCommand.getCardCnt() == bloodRequest.getBloodDonationCnt()){
                 bloodRequest.changeRequestStatus(COMPLETE);
+                //todo 알람 호출(요청글 작성자에게)
             }
         }
         bloodRequest.changeBloodDonationCnt(donationBloodCardCommand.getCardCnt());
