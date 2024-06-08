@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.potatoes.bloodrecovery.application.commandservices.BloodCardCommandService;
-import com.potatoes.bloodrecovery.application.commandservices.BloodCardOcrCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.DeleteBloodCardCommandService;
 import com.potatoes.bloodrecovery.application.queryservices.CustomerRequestsQueryService;
 import com.potatoes.bloodrecovery.application.queryservices.GetBloodCardCountQueryService;
@@ -40,8 +39,6 @@ class BloodCardControllerTest {
 
     @MockBean
     private CustomerRequestsQueryService customerRequestsQueryService;
-    @MockBean
-    private BloodCardOcrCommandService bloodCardOcrCommandService;
     @MockBean
     private BloodCardMapper bloodCardMapper;
     @MockBean

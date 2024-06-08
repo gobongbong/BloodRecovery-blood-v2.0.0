@@ -26,6 +26,7 @@ public class CompleteBloodRequestCommandService {
 
         try {
             if (bloodRequest.getBloodDonationCnt() < bloodRequest.getBloodReqCnt()){
+                //todo event transaction 끝나고...
                 userRepository.requestPoint(cid, POINT_PLUS, 50 * (bloodRequest.getBloodReqCnt() - bloodRequest.getBloodDonationCnt()));
             }
             bloodRequest.changeRequestStatus(COMPLETE);
