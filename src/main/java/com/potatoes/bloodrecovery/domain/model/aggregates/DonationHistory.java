@@ -1,5 +1,6 @@
 package com.potatoes.bloodrecovery.domain.model.aggregates;
 
+import com.potatoes.bloodrecovery.domain.model.commands.DirectedBloodDonationCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.DonationBloodCardCommand;
 import com.potatoes.constants.RequestStatus;
 import lombok.*;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 import static com.potatoes.constants.StaticValues.BLOOD_CARD_DONATION;
+import static com.potatoes.constants.StaticValues.DIRECTED_BLOOD_DONATION;
 
 @Slf4j
 @Entity
@@ -43,6 +45,16 @@ public class DonationHistory {
         this.cid = donationBloodCardCommand.getCid();
         this.donationCnt = donationBloodCardCommand.getCardCnt();
         this.donationType = BLOOD_CARD_DONATION;
+    }
+
+    /**
+     * 지정헌혈 이력 생성자
+     */
+    public DonationHistory(DirectedBloodDonationCommand directedBloodDonationCommand) {
+        this.requestId = directedBloodDonationCommand.getRequestId();
+        this.cid = directedBloodDonationCommand.getCid();
+        this.donationCnt = 1;
+        this.donationType = DIRECTED_BLOOD_DONATION;
     }
 
     public void changeRequestStatus(RequestStatus requestStatus) {

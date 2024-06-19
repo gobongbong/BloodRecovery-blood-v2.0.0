@@ -34,6 +34,9 @@ public class BloodApiUrl {
     /** 헌혈증 기부 */
     public static final String DONATION_BLOOD_CARD = "/donation";
 
+    /** 지정 헌혈 신청 */
+    public static final String APPLY_DIRECTED_DONATION = "donation/direct";
+
     /** 헌혈 요청 글 완료 */
     public static final String COMPLETE_BLOOD_REQUEST = "/request/{requestId}/complete";
 
