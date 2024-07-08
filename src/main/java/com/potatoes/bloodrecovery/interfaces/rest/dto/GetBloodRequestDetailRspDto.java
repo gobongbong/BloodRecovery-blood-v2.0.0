@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetBloodRequestRspDto {
+public class GetBloodRequestDetailRspDto {
     private String userNickName;
     private String profileImage;
     private String requestType;

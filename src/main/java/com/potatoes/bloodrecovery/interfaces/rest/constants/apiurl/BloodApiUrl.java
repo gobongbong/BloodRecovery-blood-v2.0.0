@@ -22,6 +22,9 @@ public class BloodApiUrl {
     /** 헌혈 요청 글 등록 */
     public static final String REGISTER_BLOOD_REQUEST = "/request";
 
+    /** 헌혈 요청 글 목록 조회 */
+    public static final String GET_BLOOD_REQUEST_LIST = "/request";
+
     /** 헌혈 요청 글 수정 */
     public static final String MODIFY_BLOOD_REQUEST = "/request/{requestId}";
 
@@ -29,7 +32,7 @@ public class BloodApiUrl {
     public static final String DELETE_BLOOD_REQUEST = "/request/{requestId}";
 
     /** 헌혈 요청 글 상세 조회 */
-    public static final String GET_BLOOD_REQUEST = "/request/{requestId}";
+    public static final String GET_BLOOD_REQUEST_DETAIL = "/request/{requestId}";
 
     /** 헌혈증 기부 */
     public static final String DONATION_BLOOD_CARD = "/donation";
