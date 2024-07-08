@@ -1,9 +1,9 @@
 package com.potatoes.bloodrecovery.domain.model.view;
 
 import com.potatoes.bloodrecovery.domain.model.aggregates.BloodRequest;
-import com.potatoes.bloodrecovery.domain.model.valueobjects.DirectedDonation;
-import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -11,23 +11,23 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BloodRequestView {
-    private String userNickName;
-    private String profileImage;
-    private String requestType;
-    private boolean editable;
-    private Integer bloodReqCnt;
-    private Integer bloodDonationCnt;
-    private Post postInfo;
-    private DirectedDonation directInfo;
+    Long requestId;
+    String userNickname;
+    String profileImage;
+    String requestType;
+    Integer bloodReqCnt;
+    Integer bloodDonationCnt;
+    String title;
+    LocalDateTime date;
 
-    public BloodRequestView(BloodRequest bloodRequest, UserInfoView userInfoView, boolean editable) {
-        this.userNickName = userInfoView.getNickname();
+    public BloodRequestView(BloodRequest bloodRequest, UserInfoView userInfoView) {
+        this.requestId = bloodRequest.getRequestId();
+        this.userNickname = userInfoView.getNickname();
         this.profileImage = userInfoView.getFileNm();
         this.requestType = bloodRequest.getRequestType();
-        this.editable = editable;
         this.bloodReqCnt = bloodRequest.getBloodReqCnt();
         this.bloodDonationCnt = bloodRequest.getBloodDonationCnt();
-        this.postInfo = bloodRequest.getPost();
-        this.directInfo = bloodRequest.getDirectedDonation();
+        this.title = bloodRequest.getPost().getTitle();
+        this.date = bloodRequest.getPost().getRegDate();
     }
 }

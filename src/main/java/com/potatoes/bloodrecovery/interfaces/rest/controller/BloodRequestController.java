@@ -5,10 +5,12 @@ import com.potatoes.bloodrecovery.application.commandservices.DeleteBloodRequest
 import com.potatoes.bloodrecovery.application.commandservices.ModifyBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.RegisterBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.queryservices.CustomerRequestsQueryService;
-import com.potatoes.bloodrecovery.application.queryservices.GetBloodRequestQueryService;
+import com.potatoes.bloodrecovery.application.queryservices.GetBloodRequestDetailQueryService;
+import com.potatoes.bloodrecovery.application.queryservices.GetBloodRequestsQueryService;
 import com.potatoes.bloodrecovery.domain.model.commands.ModifyBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.queries.GetCustomerRequestsQuery;
+import com.potatoes.bloodrecovery.domain.model.view.BloodRequestDetailView;
 import com.potatoes.bloodrecovery.domain.model.view.BloodRequestView;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.*;
 import com.potatoes.bloodrecovery.interfaces.rest.mapper.BloodRequestMapper;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+
+import java.util.List;
 
 import static com.potatoes.bloodrecovery.interfaces.rest.constants.ValidationErrorMessage.EMPTY_HEADER_PARAMETER_CID;
 import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.*;
@@ -38,8 +42,9 @@ public class BloodRequestController extends BaseController{
     private final RegisterBloodRequestCommandService registerBloodRequestCommandService;
     private final ModifyBloodRequestCommandService modifyBloodRequestCommandService;
     private final DeleteBloodRequestCommandService deleteBloodRequestCommandService;
-    private final GetBloodRequestQueryService getBloodRequestQueryService;
+    private final GetBloodRequestDetailQueryService getBloodRequestDetailQueryService;
     private final CompleteBloodRequestCommandService completeBloodRequestCommandService;
+    private final GetBloodRequestsQueryService getBloodRequestsQueryService;
 
     @GetMapping(GET_CUSTOMER_REQUESTS)
     //todo 추후 수정 필요
@@ -74,12 +79,12 @@ public class BloodRequestController extends BaseController{
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
-    @GetMapping(GET_BLOOD_REQUEST)
-    public ResponseEntity<Object> getBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
-                                                     @PathVariable Long requestId) {
-        BloodRequestView bloodRequestView = getBloodRequestQueryService.getBloodRequest(cid, requestId);
-        GetBloodRequestRspDto getBloodRequestRspDto = bloodRequestMapper.bloodRequsetViewToDto(bloodRequestView);
-        return new ResponseEntity<>(getBloodRequestRspDto, getSuccessHeaders(), HttpStatus.OK);
+    @GetMapping(GET_BLOOD_REQUEST_DETAIL)
+    public ResponseEntity<Object> getBloodRequestDetail(@RequestHeader(value = HEADER_CID) String cid,
+                                                        @PathVariable Long requestId) {
+        BloodRequestDetailView bloodRequestDetailView = getBloodRequestDetailQueryService.getBloodRequestDetail(cid, requestId);
+        GetBloodRequestDetailRspDto getBloodRequestDetailRspDto = bloodRequestMapper.bloodRequsetDetailViewToDto(bloodRequestDetailView);
+        return new ResponseEntity<>(getBloodRequestDetailRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 
     @PatchMapping(COMPLETE_BLOOD_REQUEST)
@@ -87,5 +92,12 @@ public class BloodRequestController extends BaseController{
                                                      @PathVariable Long requestId) {
         completeBloodRequestCommandService.completeBloodRequest(cid, requestId);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping(GET_BLOOD_REQUEST_LIST)
+    public ResponseEntity<Object> getBloodRequests(@RequestParam int pageSize, @RequestParam int pageCount){
+        List<BloodRequestView> list = getBloodRequestsQueryService.getBloodRequests(pageSize, pageCount);
+        GetBloodRequestsRspDto getBloodRequestsRspDto = bloodRequestMapper.bloodRequseViewToDto(list);
+        return new ResponseEntity<>(getBloodRequestsRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 }
