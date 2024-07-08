@@ -11,6 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetBloodRequestsRspDto {
-    private List<BloodRequestView>  requestInfo;
+    private List<BloodRequestView> requestInfo;
 }
 

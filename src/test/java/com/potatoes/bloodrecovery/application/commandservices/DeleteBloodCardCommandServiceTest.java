@@ -53,4 +53,19 @@ class DeleteBloodCardCommandServiceTest {
             deleteBloodCardCommandService.deleteBloodCard(deleteBloodCardCommand);
         });
     }
+
+    @Test
+    @DisplayName("헌혈증 삭제에 실패한다.")
+    void deleteBloodCard_fail(){
+        //given
+        DeleteBloodCardCommand deleteBloodCardCommand = DeleteBloodCardCommand.builder()
+                .cid("aaaa")
+                .bloodCardId(1L)
+                .build();
+
+        given(bloodCardRepository.findBloodCardByCidAndBloodCardId(any(), any())).willThrow();
+
+        //when, then
+        assertThrows(Exception.class, () -> deleteBloodCardCommandService.deleteBloodCard(deleteBloodCardCommand));
+    }
 }

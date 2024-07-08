@@ -12,7 +12,8 @@ public class ApiException extends RuntimeException {
     private final HttpStatus httpStatus;
 
     public ApiException(String resultMessage, HttpStatus httpStatus) {
-        super(resultMessage);
+        super("["+httpStatus+"]" + resultMessage);
+
         this.resultMessage = resultMessage;
         this.httpStatus = httpStatus;
     }
@@ -25,7 +26,7 @@ public class ApiException extends RuntimeException {
 //    }
 //
     public ApiException(ResponseCode responseCode){
-        super("["+responseCode.getHttpStatus()+"]" + responseCode.getMessage());
+        super(responseCode.getMessage());
 //        this.resultCode = responseCode.getResponseCode();
         this.resultMessage = responseCode.getMessage();
         this.httpStatus = responseCode.getHttpStatus();

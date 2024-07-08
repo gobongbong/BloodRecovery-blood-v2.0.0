@@ -18,14 +18,11 @@ public abstract class BloodRequestMapper {
 
     public abstract RegisterBloodRequestCommand registerReqToCommand(String cid, RegisterBloodRequestReqDto registerBloodRequestReqDto);
     public abstract ModifyBloodRequestCommand modifyReqToCommand(String cid, Long requestId, ModifyBloodRequestReqDto modifyBloodRequestReqDto);
-    public abstract GetBloodRequestDetailRspDto bloodRequsetDetailViewToDto(BloodRequestDetailView bloodRequestDetailView);
-    public abstract GetBloodRequestsRspDto bloodRequseViewToDto(List<BloodRequestView> list);
+    public abstract GetBloodRequestDetailRspDto bloodRequestDetailViewToDto(BloodRequestDetailView bloodRequestDetailView);
 
-
-
-//    @Mapping(target = "code", ignore = true)
-//    @Mapping(target = "donationType", ignore = true)
-//    @Mapping(target = "name", ignore = true)
-//    @Mapping(target = "date", ignore = true)
-//    public abstract DeleteBloodCardCommand deleteReqtoCommand(String cid, String bloodCardId);
+    public static GetBloodRequestsRspDto bloodRequestViewToDto(List<BloodRequestView> viewList){
+        return GetBloodRequestsRspDto.builder()
+                .requestInfo(viewList)
+                .build();
+    }
 }
