@@ -83,7 +83,7 @@ public class BloodRequestController extends BaseController{
     public ResponseEntity<Object> getBloodRequestDetail(@RequestHeader(value = HEADER_CID) String cid,
                                                         @PathVariable Long requestId) {
         BloodRequestDetailView bloodRequestDetailView = getBloodRequestDetailQueryService.getBloodRequestDetail(cid, requestId);
-        GetBloodRequestDetailRspDto getBloodRequestDetailRspDto = bloodRequestMapper.bloodRequsetDetailViewToDto(bloodRequestDetailView);
+        GetBloodRequestDetailRspDto getBloodRequestDetailRspDto = bloodRequestMapper.bloodRequestDetailViewToDto(bloodRequestDetailView);
         return new ResponseEntity<>(getBloodRequestDetailRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 
@@ -97,7 +97,7 @@ public class BloodRequestController extends BaseController{
     @GetMapping(GET_BLOOD_REQUEST_LIST)
     public ResponseEntity<Object> getBloodRequests(@RequestParam int pageSize, @RequestParam int pageCount){
         List<BloodRequestView> list = getBloodRequestsQueryService.getBloodRequests(pageSize, pageCount);
-        GetBloodRequestsRspDto getBloodRequestsRspDto = bloodRequestMapper.bloodRequseViewToDto(list);
+        GetBloodRequestsRspDto getBloodRequestsRspDto = BloodRequestMapper.bloodRequestViewToDto(list);
         return new ResponseEntity<>(getBloodRequestsRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 }

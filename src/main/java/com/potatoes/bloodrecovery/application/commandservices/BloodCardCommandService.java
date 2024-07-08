@@ -5,11 +5,13 @@ import com.potatoes.bloodrecovery.domain.model.aggregates.BloodCardHistory;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardHistoryRepository;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardRepository;
-import com.potatoes.constants.ResponseCode;
 import com.potatoes.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.potatoes.constants.ResponseCode.FAIL_REGISTER_CARD;
+import static com.potatoes.constants.ResponseCode.NOT_VALID_CARD;
 
 @Service
 @RequiredArgsConstructor
@@ -24,14 +26,17 @@ public class BloodCardCommandService {
         BloodCard bloodCard = new BloodCard(registerBloodCardCommand);
         registerBloodCardCommand.setBloodCardId(bloodCard);
 
-        //todo event로 처리할지 고민
         BloodCardHistory bloodCardHistory = new BloodCardHistory(registerBloodCardCommand);
 
         if ((bloodCard.isValidBloodCard())){
-            bloodCardRepository.save(bloodCard);
-            bloodCardHistoryRepository.save(bloodCardHistory);
+            try {
+                bloodCardRepository.save(bloodCard);
+                bloodCardHistoryRepository.save(bloodCardHistory);
+            } catch (Exception e){
+                throw new ApiException(FAIL_REGISTER_CARD);
+            }
         } else {
-            throw new ApiException(ResponseCode.NOT_VALID_CARD);
+            throw new ApiException(NOT_VALID_CARD);
         }
     }
 }
