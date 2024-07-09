@@ -37,7 +37,7 @@ public class DonationBloodCardCommandService {
 
         List<BloodCard> validBloodCardList = getValidBloodCardList(donationBloodCardCommand);
         if (validBloodCardList.isEmpty()){
-            throw new ApiException(NOT_VALID_CARD);
+            throw new ApiException(NO_VALID_BLOOD_CARD);
         }
 
         try {

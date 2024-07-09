@@ -17,6 +17,7 @@ public enum ResponseCode {
     NOT_VALID_CARD("유효하지 않은 헌혈증입니다.",HttpStatus.NO_CONTENT),
     FAIL_REGISTER_CARD("헌혈증 등록에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
     NO_BLOOD_CARD("등록된 헌혈증이 존재하지 않습니다.",HttpStatus.NOT_FOUND),
+    NO_VALID_BLOOD_CARD("유효한 헌혈증이 존재하지 않습니다.",HttpStatus.NOT_FOUND),
     FAIL_REGISTER_BLOOD_REQUEST("헌혈 요청 등록에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
     EXIST_BLOOD_REQUEST("이미 진행 중인 헌혈 요청이 존재합니다.",HttpStatus.BAD_REQUEST),
     NO_BLOOD_REQUEST("헌혈 요청 내역이 존재하지 않습니다.",HttpStatus.NOT_FOUND),

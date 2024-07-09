@@ -36,7 +36,7 @@ public class BloodCardController extends BaseController{
     private final DeleteBloodCardCommandService deleteBloodCardCommandService;
     private final GetBloodCardCountQueryService getBloodCardCountQueryService;
 
-    @PostMapping(REGISTER_BLOOD_CARD)
+    @PostMapping(BLOOD_CARD)
     public ResponseEntity<Object> registerBloodCard(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
                                                     @RequestBody @Valid RegisterBloodCardReqDto registerBloodCardReqDto) {
         RegisterBloodCardCommand registerBloodCardCommand = bloodCardMapper.registerReqtoCommand(cid, registerBloodCardReqDto);
@@ -44,7 +44,7 @@ public class BloodCardController extends BaseController{
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
-    @GetMapping(GET_BLOOD_CARDS)
+    @GetMapping(BLOOD_CARD)
     public ResponseEntity<Object> getBloodCards(@RequestHeader(value = HEADER_CID) @NotBlank String cid) {
         GetBloodCardsRspDto getBloodCardsRspDto = GetBloodCardsRspDto.builder()
                 .cards(getBloodCardsQueryService.getBloodCards(cid))
