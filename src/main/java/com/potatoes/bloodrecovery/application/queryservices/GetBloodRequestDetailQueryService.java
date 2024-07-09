@@ -27,14 +27,14 @@ public class GetBloodRequestDetailQueryService {
     public BloodRequestDetailView getBloodRequestDetail(String cid, Long requestId) {
         boolean editable = false;
         BloodRequestDetailView bloodRequestDetailView;
+
+        BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(requestId)
+                .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
+
+        if (StringUtils.equals(bloodRequest.getCid(), cid))
+            editable = true;
+
         try {
-            BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(requestId)
-                    .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
-
-            if (StringUtils.equals(bloodRequest.getCid(), cid)) {
-                editable = true;
-            }
-
             UserInfoView userInfoView = userRepository.getUserInfo(bloodRequest.getCid());
             bloodRequestDetailView = new BloodRequestDetailView(bloodRequest, userInfoView, editable);
         } catch (Exception e) {

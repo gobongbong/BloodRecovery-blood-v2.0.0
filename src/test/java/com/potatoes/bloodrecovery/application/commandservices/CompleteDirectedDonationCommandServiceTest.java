@@ -17,8 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodRequest_Register;
+import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodRequest;
 import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonDonationHistoryList_Card;
+import static com.potatoes.constants.RequestStatus.REGISTER;
 import static com.potatoes.constants.ResponseCode.FAIL_COMPLETE_BLOOD_REQUEST;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +51,7 @@ class CompleteDirectedDonationCommandServiceTest {
                 .build();
 
         given(donationHistoryRepository.findByCidAndDonationTypeAndDonationStatus(any(), any(), any())).willReturn(commonDonationHistoryList_Card());
-        given(bloodRequestRepository.findByRequestId(any())).willReturn(Optional.ofNullable(commonBloodRequest_Register()));
+        given(bloodRequestRepository.findByRequestId(any())).willReturn(Optional.ofNullable(commonBloodRequest(REGISTER)));
 
         //when, then
         assertDoesNotThrow(() -> completeDirectedDonationCommandService.completeDirectedDonation(111L, completeDirectedDonationReqDto));
