@@ -43,7 +43,7 @@ public class GetDirectedDonationApplicantQueryService {
                             .cid(history.getCid())
                             .name(userInfoView.getName())
                             .phone(userInfoView.getPhone())
-                            .donationStatus(history.getDonationStatus().getValue())
+                            .donationStatus(history.getDonationStatus())
                             .build();
                     applicants.add(directedDonationApplicantView);
                 }

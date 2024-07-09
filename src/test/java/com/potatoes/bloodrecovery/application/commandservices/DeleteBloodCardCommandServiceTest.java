@@ -1,6 +1,5 @@
 package com.potatoes.bloodrecovery.application.commandservices;
 
-import com.potatoes.bloodrecovery.domain.model.aggregates.BloodCard;
 import com.potatoes.bloodrecovery.domain.model.commands.DeleteBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardHistoryRepository;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardRepository;
@@ -13,7 +12,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodCard;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -37,16 +38,7 @@ class DeleteBloodCardCommandServiceTest {
                 .bloodCardId(1L)
                 .build();
 
-        BloodCard bloodCard = BloodCard.builder()
-                .cid("aaaa")
-                .code("1111")
-                .date("20230201")
-                .donationType("전혈")
-                .name("고봉")
-                .bloodCardId(1L)
-                .build();
-
-        given(bloodCardRepository.findBloodCardByCidAndBloodCardId(any(), any())).willReturn(Optional.of(bloodCard));
+        given(bloodCardRepository.findBloodCardByCidAndBloodCardId(any(), any())).willReturn(Optional.of(commonBloodCard()));
 
         //when, then
         assertDoesNotThrow(() -> {

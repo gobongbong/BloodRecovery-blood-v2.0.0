@@ -33,7 +33,7 @@ public class DonationHistory {
 
     private Integer donationCnt;
     private String donationType;
-    private RequestStatus donationStatus;
+    private String donationStatus;
 
     @CreatedDate
     private LocalDateTime date;
@@ -45,7 +45,7 @@ public class DonationHistory {
         this.donationType = BLOOD_CARD_DONATION;
     }
 
-    public void changeRequestStatus(RequestStatus requestStatus) {
-        this.donationStatus = requestStatus;
+    public void changeDonationStatus(String donationStatus) {
+        this.donationStatus = donationStatus;
     }
 }
