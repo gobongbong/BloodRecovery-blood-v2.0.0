@@ -16,7 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodCardList;
-import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodRequest_Register;
+import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodRequest;
+import static com.potatoes.constants.RequestStatus.REGISTER;
 import static com.potatoes.constants.ResponseCode.NO_BLOOD_CARD;
 import static com.potatoes.constants.ResponseCode.NO_BLOOD_REQUEST;
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,7 +51,7 @@ class DonationBloodCardCommandServiceTest {
                 .requestId(111L)
                 .build();
 
-        given(bloodRequestRepository.findByRequestIdAndRequestStatusIn(any(), any())).willReturn(Optional.ofNullable(commonBloodRequest_Register()));
+        given(bloodRequestRepository.findByRequestIdAndRequestStatusIn(any(), any())).willReturn(Optional.ofNullable(commonBloodRequest(REGISTER)));
         given(bloodCardRepository.findByCid(any())).willReturn(commonBloodCardList());
 
         //when, then
@@ -87,7 +88,7 @@ class DonationBloodCardCommandServiceTest {
                 .build();
         List<BloodCard> cards = new ArrayList<>();
 
-        given(bloodRequestRepository.findByRequestIdAndRequestStatusIn(any(), any())).willReturn(Optional.ofNullable(commonBloodRequest_Register()));
+        given(bloodRequestRepository.findByRequestIdAndRequestStatusIn(any(), any())).willReturn(Optional.ofNullable(commonBloodRequest(REGISTER)));
         given(bloodCardRepository.findByCid(any())).willReturn(cards);
 
         //when
