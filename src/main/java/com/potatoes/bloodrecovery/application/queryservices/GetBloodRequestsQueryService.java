@@ -28,21 +28,21 @@ public class GetBloodRequestsQueryService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public List<BloodRequestView> getBloodRequests(int pageSize, int pageCount) {
-        List<BloodRequestView> list = new ArrayList<>();
-        PageRequest pageRequest = PageRequest.of(pageCount, pageSize);
+    public List<BloodRequestView> getBloodRequests(int pageNumber, int pageSize) {
+        List<BloodRequestView> bloodRequestViews = new ArrayList<>();
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
 
         try {
-            Page<BloodRequest> bloodRequestList = bloodRequestRepository.findByRequestStatusIn(pageRequest, RequestStatus.getOngoing());
+            Page<BloodRequest> bloodRequests = bloodRequestRepository.findByRequestStatusIn(pageRequest, RequestStatus.getOngoing());
 
-            for (BloodRequest bloodRequest: bloodRequestList) {
+            for (BloodRequest bloodRequest: bloodRequests) {
                 UserInfoView userInfoView = userRepository.getUserInfo(bloodRequest.getCid());
                 BloodRequestView bloodRequestView = new BloodRequestView(bloodRequest, userInfoView);
-                list.add(bloodRequestView);
+                bloodRequestViews.add(bloodRequestView);
             }
         }catch (Exception e){
             throw new ApiException(FAIL_GET_BLOOD_REQUEST_LIST);
         }
-        return list;
+        return bloodRequestViews;
     }
 }
