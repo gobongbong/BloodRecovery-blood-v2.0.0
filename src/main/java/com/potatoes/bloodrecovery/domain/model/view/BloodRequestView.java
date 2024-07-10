@@ -1,6 +1,7 @@
 package com.potatoes.bloodrecovery.domain.model.view;
 
 import com.potatoes.bloodrecovery.domain.model.aggregates.BloodRequest;
+import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,8 +18,7 @@ public class BloodRequestView {
     String requestType;
     Integer bloodReqCnt;
     Integer bloodDonationCnt;
-    String title;
-    LocalDateTime date;
+    Post postInfo;
 
     public BloodRequestView(BloodRequest bloodRequest, UserInfoView userInfoView) {
         this.requestId = bloodRequest.getRequestId();
@@ -27,7 +27,9 @@ public class BloodRequestView {
         this.requestType = bloodRequest.getRequestType();
         this.bloodReqCnt = bloodRequest.getBloodReqCnt();
         this.bloodDonationCnt = bloodRequest.getBloodDonationCnt();
-        this.title = bloodRequest.getPost().getTitle();
-        this.date = bloodRequest.getPost().getRegDate();
+        this.postInfo = Post.builder()
+                .title(bloodRequest.getPost().getTitle())
+                .regDate(bloodRequest.getPost().getRegDate())
+                .build();
     }
 }
