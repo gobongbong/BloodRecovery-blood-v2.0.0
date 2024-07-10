@@ -2,3 +2,5 @@
 BloodRecovery refactoring!!!
 
 말하는 감자들의 피로회복 리팩토링
+
+Blood Domain Repository!!
