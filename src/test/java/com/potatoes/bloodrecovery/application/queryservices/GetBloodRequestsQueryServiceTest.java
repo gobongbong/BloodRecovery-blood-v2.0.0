@@ -49,6 +49,7 @@ class GetBloodRequestsQueryServiceTest {
 
         //then
         assertEquals(2, result.size());
+
     }
 
     @Test

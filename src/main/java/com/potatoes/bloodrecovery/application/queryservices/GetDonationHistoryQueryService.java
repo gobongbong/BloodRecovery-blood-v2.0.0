@@ -26,15 +26,16 @@ public class GetDonationHistoryQueryService {
         List<DonationHistoryView> historyList = new ArrayList<>();
         try {
             List<DonationHistory> donationHistories = donationHistoryRepository.findByCid(cid);
-
-            for (DonationHistory donationHistory : donationHistories) {
-                DonationHistoryView donationHistoryView = DonationHistoryView.builder()
-                        .historyId(donationHistory.getHistoryId())
-                        .donationCnt(donationHistory.getDonationCnt())
-                        .donationType(donationHistory.getDonationType())
-                        .donationDate(donationHistory.getDate())
-                        .build();
-                historyList.add(donationHistoryView);
+            if (!donationHistories.isEmpty()){
+                for (DonationHistory donationHistory : donationHistories) {
+                    DonationHistoryView donationHistoryView = DonationHistoryView.builder()
+                            .historyId(donationHistory.getHistoryId())
+                            .donationCnt(donationHistory.getDonationCnt())
+                            .donationType(donationHistory.getDonationType())
+                            .donationDate(donationHistory.getDate())
+                            .build();
+                    historyList.add(donationHistoryView);
+                }
             }
         }catch (Exception e){
             throw new ApiException(FAIL_GET_DONATION_HISTORY);

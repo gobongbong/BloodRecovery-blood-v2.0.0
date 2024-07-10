@@ -8,10 +8,7 @@ import com.potatoes.constants.RequestStatus;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import java.util.Objects;
 
@@ -42,6 +39,7 @@ public class BloodRequest {
 
     private DirectedDonation directedDonation;
 
+    @Transient
     private boolean editable;
 
     public BloodRequest(RegisterBloodRequestCommand registerBloodRequestCommand) {

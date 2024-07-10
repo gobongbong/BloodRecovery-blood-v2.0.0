@@ -2,6 +2,7 @@ package com.potatoes.bloodrecovery.interfaces.rest.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
@@ -10,5 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompleteDirectedDonationReqDto {
+    @NotBlank
     private List<String> cidList;
 }

@@ -16,8 +16,6 @@ public class GetBloodRequestDetailRspDto {
     private boolean editable;
     private Integer bloodReqCnt;
     private Integer bloodDonationCnt;
-    //todo list?
     private Post postInfo;
-    //todo list?
     private DirectedDonation directInfo;
 }
