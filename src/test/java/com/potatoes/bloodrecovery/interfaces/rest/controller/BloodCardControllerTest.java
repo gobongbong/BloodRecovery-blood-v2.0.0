@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.potatoes.bloodrecovery.application.commandservices.BloodCardCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.DeleteBloodCardCommandService;
-import com.potatoes.bloodrecovery.application.queryservices.CustomerRequestsQueryService;
 import com.potatoes.bloodrecovery.application.queryservices.GetBloodCardCountQueryService;
 import com.potatoes.bloodrecovery.application.queryservices.GetBloodCardsQueryService;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodCardCommand;
@@ -22,6 +21,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.LocalDate;
+
 import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.BLOOD_BASE_URL;
 import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.BLOOD_CARD;
 import static com.potatoes.constants.StaticValues.HEADER_CID;
@@ -37,8 +38,6 @@ class BloodCardControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private CustomerRequestsQueryService customerRequestsQueryService;
     @MockBean
     private BloodCardMapper bloodCardMapper;
     @MockBean
@@ -74,7 +73,7 @@ class BloodCardControllerTest {
         RegisterBloodCardCommand registerBloodCardCommand = RegisterBloodCardCommand.builder()
                 .cid("11111")
                 .code("1111")
-                .date("20231111")
+                .date(LocalDate.now())
                 .name("최고봉")
                 .donationType("전혈")
                 .build();

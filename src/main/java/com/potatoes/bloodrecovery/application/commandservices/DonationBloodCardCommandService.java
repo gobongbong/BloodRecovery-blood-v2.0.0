@@ -42,7 +42,7 @@ public class DonationBloodCardCommandService {
 
         try {
             for (BloodCard bloodCard : validBloodCardList) {
-                bloodCard.changeOwner(donationBloodCardCommand.getCid());
+                bloodCard.changeOwner(bloodRequest.getCid());
                 bloodCardRepository.save(bloodCard);
                 BloodCardHistory bloodCardHistory = new BloodCardHistory(donationBloodCardCommand, bloodCard);
                 bloodCardHistoryRepository.save(bloodCardHistory);
@@ -67,7 +67,7 @@ public class DonationBloodCardCommandService {
         }
         return bloodCardList.stream()
                 .filter(BloodCard::isValidBloodCard)
-                .sorted(Comparator.comparing(BloodCard::getDate).reversed())
+                .sorted(Comparator.comparing(BloodCard::getDate))
                 .limit(donationBloodCardCommand.getCardCnt())
                 .collect(Collectors.toList());
     }
@@ -78,7 +78,7 @@ public class DonationBloodCardCommandService {
         }
 
         if (bloodRequest.getRequestStatus().equals(ONGOING)){
-            if (bloodRequest.getBloodDonationCnt() + donationBloodCardCommand.getCardCnt() == bloodRequest.getBloodDonationCnt()){
+            if (bloodRequest.getBloodDonationCnt() + donationBloodCardCommand.getCardCnt() == bloodRequest.getBloodReqCnt()){
                 bloodRequest.changeRequestStatus(COMPLETE);
                 //todo 알람 호출(요청글 작성자에게)
             }

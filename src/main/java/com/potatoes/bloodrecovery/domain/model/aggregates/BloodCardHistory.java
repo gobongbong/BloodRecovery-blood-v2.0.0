@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
+
 import static com.potatoes.constants.BloodCardStatus.*;
 
 @Slf4j
@@ -32,7 +34,7 @@ public class BloodCardHistory {
     private String code;
     private String donationType;
     private String name;
-    private String date;
+    private LocalDate date;
     @Convert(converter = BloodCardStatusConverter.class)
     private BloodCardStatus status;
 

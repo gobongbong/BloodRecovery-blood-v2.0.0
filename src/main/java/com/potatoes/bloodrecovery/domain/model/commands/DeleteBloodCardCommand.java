@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
+
 @Slf4j
 @Getter
 @ToString
@@ -19,7 +21,7 @@ public class DeleteBloodCardCommand {
     private String code;
     private String donationType;
     private String name;
-    private String date;
+    private LocalDate date;
 
     public void setCardInfo(BloodCard bloodCard){
         this.code = bloodCard.getCode();
