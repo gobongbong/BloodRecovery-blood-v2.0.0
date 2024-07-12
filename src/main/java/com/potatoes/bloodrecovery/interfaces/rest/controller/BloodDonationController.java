@@ -60,7 +60,8 @@ public class BloodDonationController extends BaseController{
     }
 
     @GetMapping(GET_DIRECTED_DONATION_APPLICANT)
-    public ResponseEntity<Object> getDirectedDonationApplicant(@RequestHeader(value = HEADER_CID) @NotBlank String cid, @PathVariable @NotBlank Long requestId){
+    public ResponseEntity<Object> getDirectedDonationApplicant(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
+                                                               @PathVariable Long requestId){
         GetDirectedDonationApplicantRspDto getDirectedDonationApplicantRspDto= GetDirectedDonationApplicantRspDto.builder()
                 .applicants(getDirectedDonationApplicantQueryService.getDirectedDonationApplicant(cid, requestId))
                 .build();

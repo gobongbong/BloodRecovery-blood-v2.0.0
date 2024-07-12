@@ -55,7 +55,7 @@ public class BloodRequestController extends BaseController {
 
     @PatchMapping(BLOOD_REQUEST + "/{requestId}")
     public ResponseEntity<Object> modifyBloodRequest(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
-                                                     @PathVariable @NotBlank Long requestId,
+                                                     @PathVariable Long requestId,
                                                      @RequestBody @Valid ModifyBloodRequestReqDto modifyBloodRequestReqDto) {
         ModifyBloodRequestCommand modifyBloodRequestCommand = bloodRequestMapper.modifyReqToCommand(cid, requestId, modifyBloodRequestReqDto);
         modifyBloodRequestCommandService.modifyBloodRequest(modifyBloodRequestCommand);
@@ -64,14 +64,14 @@ public class BloodRequestController extends BaseController {
 
     @PostMapping(BLOOD_REQUEST + "/{requestId}")
     public ResponseEntity<Object> deleteBloodRequest(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
-                                                     @PathVariable @NotBlank Long requestId) {
+                                                     @PathVariable Long requestId) {
         deleteBloodRequestCommandService.deleteBloodRequest(cid, requestId);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
     @GetMapping(BLOOD_REQUEST + "/{requestId}")
     public ResponseEntity<Object> getBloodRequestDetail(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
-                                                        @PathVariable @NotBlank Long requestId) {
+                                                        @PathVariable Long requestId) {
         BloodRequestDetailView bloodRequestDetailView = getBloodRequestDetailQueryService.getBloodRequestDetail(cid, requestId);
         GetBloodRequestDetailRspDto getBloodRequestDetailRspDto = bloodRequestMapper.bloodRequestDetailViewToDto(bloodRequestDetailView);
         return new ResponseEntity<>(getBloodRequestDetailRspDto, getSuccessHeaders(), HttpStatus.OK);
@@ -79,7 +79,7 @@ public class BloodRequestController extends BaseController {
 
     @PatchMapping(COMPLETE_BLOOD_REQUEST)
     public ResponseEntity<Object> completeBloodRequest(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
-                                                       @PathVariable @NotBlank Long requestId) {
+                                                       @PathVariable Long requestId) {
         completeBloodRequestCommandService.completeBloodRequest(cid, requestId);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }

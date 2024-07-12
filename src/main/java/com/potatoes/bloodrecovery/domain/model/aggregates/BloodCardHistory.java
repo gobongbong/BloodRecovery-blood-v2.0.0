@@ -4,13 +4,11 @@ import com.potatoes.bloodrecovery.domain.model.commands.DeleteBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.DonationBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodCardCommand;
 import com.potatoes.constants.BloodCardStatus;
+import com.potatoes.converter.BloodCardStatusConverter;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import static com.potatoes.constants.BloodCardStatus.*;
 
@@ -35,6 +33,7 @@ public class BloodCardHistory {
     private String donationType;
     private String name;
     private String date;
+    @Convert(converter = BloodCardStatusConverter.class)
     private BloodCardStatus status;
 
     public BloodCardHistory(RegisterBloodCardCommand registerBloodCardCommand) {
