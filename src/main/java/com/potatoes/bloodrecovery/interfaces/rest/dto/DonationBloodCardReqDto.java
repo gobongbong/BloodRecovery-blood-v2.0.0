@@ -2,7 +2,7 @@ package com.potatoes.bloodrecovery.interfaces.rest.dto;
 
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Builder
@@ -10,8 +10,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DonationBloodCardReqDto {
-    @NotBlank
+    @NotNull
     private Long requestId;
-    @NotBlank
+    @NotNull
     private Integer cardCnt;
 }
