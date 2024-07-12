@@ -15,4 +15,15 @@ public class UserInfoView {
     private String phone;
     private String fileNm;
     private String email;
+
+    public static UserInfoView userInfoView(){
+        return UserInfoView.builder()
+                .userId("1111")
+                .nickname("gobong")
+                .name("고봉")
+                .phone("010-1111-2222")
+                .fileNm("aaaaa")
+                .email("gobong@naver.com")
+                .build();
+    }
 }
