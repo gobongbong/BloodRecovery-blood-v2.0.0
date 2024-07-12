@@ -17,7 +17,6 @@ import java.util.Optional;
 import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodRequest;
 import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonUserInfoView;
 import static com.potatoes.constants.RequestStatus.REGISTER;
-import static com.potatoes.constants.StaticValues.BLOOD_CARD_DONATION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -40,7 +39,7 @@ class GetBloodRequestDetailQueryServiceTest {
         BloodRequestDetailView expect = BloodRequestDetailView.builder()
                 .userNickName("gobong")
                 .profileImage("aaaaa")
-                .requestType(BLOOD_CARD_DONATION)
+                .requestType(REGISTER.getValue())
                 .editable(true)
                 .bloodReqCnt(3)
                 .bloodDonationCnt(0)
@@ -65,7 +64,7 @@ class GetBloodRequestDetailQueryServiceTest {
         BloodRequestDetailView expect = BloodRequestDetailView.builder()
                 .userNickName("gobong")
                 .profileImage("aaaaa")
-                .requestType(BLOOD_CARD_DONATION)
+                .requestType(REGISTER.getValue())
                 .editable(false)
                 .bloodReqCnt(3)
                 .bloodDonationCnt(0)

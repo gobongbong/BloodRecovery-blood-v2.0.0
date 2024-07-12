@@ -73,14 +73,12 @@ public class MockDataUtil {
                 .build();
     }
 
-    public static Page<BloodRequest> commonBloodRequests(){
+    public static List<BloodRequest> commonBloodRequests(){
         List<BloodRequest> list = new ArrayList<>();
         list.add(commonBloodRequest(REGISTER));
         list.add(commonBloodRequest(ONGOING));
 
-        Pageable pageable = Mockito.mock(Pageable.class);
-
-        return new PageImpl<>(list, pageable, list.size());
+        return list;
     }
 
     public static List<DonationHistory> commonDonationHistoryList_Card() {

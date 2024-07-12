@@ -17,11 +17,12 @@ import static com.potatoes.constants.StaticValues.HEADER_CID;
 /**
  * 회원 Domain 호출
  */
-@FeignClient(name="user", url="localhost:8081", configuration = UserFeignConfig.class)
+@FeignClient(name="user", url="http", configuration = UserFeignConfig.class)
 public interface UserFeignClient {
 
     @GetMapping(GET_USER_INFO)
     ResponseEntity<UserInfoView> getUserInfo(@RequestHeader(value = HEADER_CID) String cid);
+
     @PostMapping (POST_REQUEST_POINT)
     void requestPoint(@RequestHeader(value = HEADER_CID) String cid, @RequestBody RequestPointReqDto requestPointReqDto);
 }

@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.*;
 import static com.potatoes.constants.StaticValues.HEADER_CID;
@@ -36,14 +37,15 @@ public class BloodDonationController extends BaseController{
     private final GetDirectedDonationApplicantQueryService getDirectedDonationApplicantQueryService;
 
     @PostMapping(DONATION_BLOOD_CARD)
-    public ResponseEntity<Object> donationBloodCard(@RequestHeader(value = HEADER_CID) String cid, @RequestBody @Valid DonationBloodCardReqDto donationBloodCardReqDto) {
+    public ResponseEntity<Object> donationBloodCard(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
+                                                    @RequestBody @Valid DonationBloodCardReqDto donationBloodCardReqDto) {
         DonationBloodCardCommand donationBloodCardCommand = donationBloodMapper.donationBloodCardReqtoCommand(cid, donationBloodCardReqDto);
         donationBloodCardCommandService.donationBloodCard(donationBloodCardCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
     @GetMapping(DONATION_BLOOD_CARD)
-    public ResponseEntity<Object> getDonationHistory(@RequestHeader(value = HEADER_CID) String cid){
+    public ResponseEntity<Object> getDonationHistory(@RequestHeader(value = HEADER_CID) @NotBlank String cid){
         GetDonationHistoryRspDto getDonationHistoryRspDto = GetDonationHistoryRspDto.builder()
                 .donationHistory(getDonationHistoryQueryService.getDonationHistory(cid))
                 .build();
@@ -51,13 +53,14 @@ public class BloodDonationController extends BaseController{
     }
 
     @PatchMapping(COMPLETE_DIRECTED_DONATION)
-    public ResponseEntity<Object> completeDirectedDonation(@PathVariable Long requestId, @RequestBody @Valid CompleteDirectedDonationReqDto completeDirectedDonationReqDto) {
+    public ResponseEntity<Object> completeDirectedDonation(@PathVariable @NotBlank Long requestId,
+                                                           @RequestBody @Valid CompleteDirectedDonationReqDto completeDirectedDonationReqDto) {
         completeDirectedDonationCommandService.completeDirectedDonation(requestId, completeDirectedDonationReqDto);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
     @GetMapping(GET_DIRECTED_DONATION_APPLICANT)
-    public ResponseEntity<Object> getDirectedDonationApplicant(@RequestHeader(value = HEADER_CID) String cid, @PathVariable Long requestId){
+    public ResponseEntity<Object> getDirectedDonationApplicant(@RequestHeader(value = HEADER_CID) @NotBlank String cid, @PathVariable @NotBlank Long requestId){
         GetDirectedDonationApplicantRspDto getDirectedDonationApplicantRspDto= GetDirectedDonationApplicantRspDto.builder()
                 .applicants(getDirectedDonationApplicantQueryService.getDirectedDonationApplicant(cid, requestId))
                 .build();
