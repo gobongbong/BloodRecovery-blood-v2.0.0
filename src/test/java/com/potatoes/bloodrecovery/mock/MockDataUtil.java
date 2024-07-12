@@ -5,6 +5,7 @@ import com.potatoes.bloodrecovery.domain.model.aggregates.BloodRequest;
 import com.potatoes.bloodrecovery.domain.model.aggregates.DonationHistory;
 import com.potatoes.bloodrecovery.domain.model.valueobjects.DirectedDonation;
 import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
+import com.potatoes.bloodrecovery.domain.model.view.BloodRequestView;
 import com.potatoes.bloodrecovery.domain.model.view.UserInfoView;
 import com.potatoes.constants.RequestStatus;
 import org.mockito.Mockito;
@@ -52,7 +53,20 @@ public class MockDataUtil {
                 .requestId(111L)
                 .bloodDonationCnt(requestStatus == ONGOING ? 1 : 0)
                 .bloodReqCnt(3)
-                .requestType(BLOOD_CARD_DONATION)
+                .requestType(DIRECTED_DONATION)
+                .requestStatus(requestStatus)
+                .cid("111")
+                .post(new Post())
+                .directedDonation(new DirectedDonation())
+                .build();
+    }
+
+    public static BloodRequest commonBloodRequest(RequestStatus requestStatus, String requestType){
+        return BloodRequest.builder()
+                .requestId(111L)
+                .bloodDonationCnt(requestStatus == ONGOING ? 1 : 0)
+                .bloodReqCnt(3)
+                .requestType(requestType)
                 .requestStatus(requestStatus)
                 .cid("111")
                 .post(new Post())
@@ -75,8 +89,15 @@ public class MockDataUtil {
 
     public static List<BloodRequest> commonBloodRequests(){
         List<BloodRequest> list = new ArrayList<>();
-        list.add(commonBloodRequest(REGISTER));
-        list.add(commonBloodRequest(ONGOING));
+        list.add(commonBloodRequest(REGISTER, DIRECTED_DONATION));
+        list.add(commonBloodRequest(ONGOING, DIRECTED_DONATION));
+
+        return list;
+    }
+
+    public static List<BloodRequest> commonDirectedBloodRequests(){
+        List<BloodRequest> list = new ArrayList<>();
+        list.add(commonBloodRequest(ONGOING, DIRECTED_DONATION));
 
         return list;
     }
@@ -121,6 +142,18 @@ public class MockDataUtil {
                 .phone("010-1111-2222")
                 .fileNm("aaaaa")
                 .email("gobong@naver.com")
+                .build();
+    }
+
+    public static BloodRequestView commonBloodRequestView(){
+        return BloodRequestView.builder()
+                .requestId(111L)
+                .userNickname("gobong")
+                .profileImage("aaaaa")
+                .bloodDonationCnt(1)
+                .bloodReqCnt(3)
+                .requestType(DIRECTED_DONATION)
+                .postInfo(new Post())
                 .build();
     }
 }

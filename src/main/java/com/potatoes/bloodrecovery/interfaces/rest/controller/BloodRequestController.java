@@ -4,9 +4,9 @@ import com.potatoes.bloodrecovery.application.commandservices.CompleteBloodReque
 import com.potatoes.bloodrecovery.application.commandservices.DeleteBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.ModifyBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.RegisterBloodRequestCommandService;
-import com.potatoes.bloodrecovery.application.queryservices.CustomerRequestsQueryService;
 import com.potatoes.bloodrecovery.application.queryservices.GetBloodRequestDetailQueryService;
 import com.potatoes.bloodrecovery.application.queryservices.GetBloodRequestsQueryService;
+import com.potatoes.bloodrecovery.application.queryservices.GetDirectedBloodRequestsQueryService;
 import com.potatoes.bloodrecovery.domain.model.commands.ModifyBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.view.BloodRequestDetailView;
@@ -44,6 +44,7 @@ public class BloodRequestController extends BaseController {
     private final GetBloodRequestDetailQueryService getBloodRequestDetailQueryService;
     private final CompleteBloodRequestCommandService completeBloodRequestCommandService;
     private final GetBloodRequestsQueryService getBloodRequestsQueryService;
+    private final GetDirectedBloodRequestsQueryService getDirectedBloodRequestsQueryService;
 
     @PostMapping(BLOOD_REQUEST)
     public ResponseEntity<Object> registerBloodRequest(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
@@ -87,6 +88,13 @@ public class BloodRequestController extends BaseController {
     @GetMapping(BLOOD_REQUEST)
     public ResponseEntity<Object> getBloodRequests(@RequestParam int pageSize, @RequestParam int pageNumber) {
         List<BloodRequestView> list = getBloodRequestsQueryService.getBloodRequests(pageNumber, pageSize);
+        GetBloodRequestsRspDto getBloodRequestsRspDto = BloodRequestMapper.bloodRequestViewToDto(list);
+        return new ResponseEntity<>(getBloodRequestsRspDto, getSuccessHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping(DIRECTED_BLOOD_REQUESTS)
+    public ResponseEntity<Object> getDirectedBloodRequests(@RequestHeader(value = HEADER_CID) @NotBlank String cid) {
+        List<BloodRequestView> list = getDirectedBloodRequestsQueryService.getDirectedBloodRequests(cid);
         GetBloodRequestsRspDto getBloodRequestsRspDto = BloodRequestMapper.bloodRequestViewToDto(list);
         return new ResponseEntity<>(getBloodRequestsRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
