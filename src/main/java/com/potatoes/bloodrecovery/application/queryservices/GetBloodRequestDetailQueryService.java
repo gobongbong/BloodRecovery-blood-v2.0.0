@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.potatoes.bloodrecovery.domain.model.view.UserInfoView.userInfoView;
 import static com.potatoes.constants.ResponseCode.FAIL_GET_BLOOD_REQUEST_DETAIL;
 import static com.potatoes.constants.ResponseCode.NO_BLOOD_REQUEST;
 
@@ -35,7 +36,8 @@ public class GetBloodRequestDetailQueryService {
             editable = true;
 
         try {
-            UserInfoView userInfoView = userRepository.getUserInfo(bloodRequest.getCid());
+//            UserInfoView userInfoView = userRepository.getUserInfo(bloodRequest.getCid());
+            UserInfoView userInfoView = userInfoView();
             bloodRequestDetailView = new BloodRequestDetailView(bloodRequest, userInfoView, editable);
         } catch (Exception e) {
             throw new ApiException(FAIL_GET_BLOOD_REQUEST_DETAIL);

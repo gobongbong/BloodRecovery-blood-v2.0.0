@@ -48,7 +48,7 @@ public class DonationBloodCardCommandService {
                 bloodCardHistoryRepository.save(bloodCardHistory);
             }
 
-            userRepository.requestPoint(donationBloodCardCommand.getCid(), POINT_PLUS, 50 * donationBloodCardCommand.getCardCnt());
+//            userRepository.requestPoint(donationBloodCardCommand.getCid(), POINT_PLUS, 50 * donationBloodCardCommand.getCardCnt());
             changeRequestStatusAndDonationCnt(bloodRequest, donationBloodCardCommand);
 
             DonationHistory donationHistory = new DonationHistory(donationBloodCardCommand);
