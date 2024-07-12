@@ -16,6 +16,9 @@ public class BloodApiUrl {
     /** 헌혈 요청 글 등록, 목록 조회, 수정, 삭제, 상세 조회 */
     public static final String BLOOD_REQUEST = "/request";
 
+    /** 지정 헌혈 요청 글 목록 조회 */
+    public static final String DIRECTED_BLOOD_REQUESTS = "/request/direct";
+
     /** 헌혈증 기부 */
     public static final String DONATION_BLOOD_CARD = "/donation";
 

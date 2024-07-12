@@ -12,6 +12,7 @@ public interface BloodRequestRepository {
     BloodRequest save(BloodRequest bloodRequest);
     Optional<BloodRequest> findByRequestId(Long requestId);
     Optional<BloodRequest> findByRequestIdAndRequestStatusIn(Long requestId, List<RequestStatus> requestStatus);
+    List<BloodRequest> findByCidAndRequestType(String cid, String requestType);
     boolean existsByCidAndRequestStatusIn(String cid, List<RequestStatus> requestStatus);
     boolean existsByCidAndRequestId(String cid, Long requestId);
     Page<BloodRequest> findByRequestStatusIn(Pageable pageable, List<RequestStatus> requestStatus);

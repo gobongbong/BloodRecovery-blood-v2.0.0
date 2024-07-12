@@ -28,6 +28,7 @@ public enum ResponseCode {
     NOT_MODIFY_BLOOD_REQUEST("이미 기부가 진행 중인 요청글은 수정이 불가능합니다.",HttpStatus.INTERNAL_SERVER_ERROR),
     FAIL_GET_BLOOD_REQUEST_DETAIL("헌혈 요청글 상세 조회에 실패했습니다.",HttpStatus.NOT_FOUND),
     FAIL_GET_BLOOD_REQUEST_LIST("헌혈 요청글 목록 조회에 실패했습니다.",HttpStatus.NOT_FOUND),
+    FAIL_GET_DIRECTED_BLOOD_REQUEST_LIST("지정 헌혈 요청글 목록 조회에 실패했습니다.",HttpStatus.NOT_FOUND),
     FAIL_COMPLETE_BLOOD_REQUEST("헌혈 요청 완료 처리에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
     FAIL_DONATE_BLOOD_CARD("헌혈증 기부에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
     FAIL_GET_DIRECTED_DONATION_APPLICANT("지정 헌혈 신청자 목록 조회에 실패했습니다.",HttpStatus.INTERNAL_SERVER_ERROR),
