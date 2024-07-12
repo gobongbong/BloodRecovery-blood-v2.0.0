@@ -5,6 +5,7 @@ import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestComm
 import com.potatoes.bloodrecovery.domain.model.valueobjects.DirectedDonation;
 import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
 import com.potatoes.constants.RequestStatus;
+import com.potatoes.converter.RequestStatusConverter;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,14 +30,15 @@ public class BloodRequest {
     @GeneratedValue
     private Long requestId;
     private String cid;
+    @Convert(converter = RequestStatusConverter.class)
     private RequestStatus requestStatus;
-
     private String requestType;
     private Integer bloodReqCnt;
     private Integer bloodDonationCnt;
 
+    @Embedded
     private Post post;
-
+    @Embedded
     private DirectedDonation directedDonation;
 
     @Transient

@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.potatoes.bloodrecovery.domain.model.view.UserInfoView.userInfoView;
 import static com.potatoes.constants.ResponseCode.FAIL_GET_BLOOD_REQUEST_LIST;
 
 @Service
@@ -38,8 +37,7 @@ public class GetBloodRequestsQueryService {
             Page<BloodRequest> bloodRequests = bloodRequestRepository.findByRequestStatusIn(pageRequest, RequestStatus.getOngoing());
             if (!bloodRequests.getContent().isEmpty()) {
                 for (BloodRequest bloodRequest: bloodRequests) {
-//                    UserInfoView userInfoView = userRepository.getUserInfo(bloodRequest.getCid());
-                    UserInfoView userInfoView = userInfoView();
+                    UserInfoView userInfoView = userRepository.getUserInfo(bloodRequest.getCid());
                     BloodRequestView bloodRequestView = new BloodRequestView(bloodRequest, userInfoView);
                     bloodRequestViews.add(bloodRequestView);
                 }

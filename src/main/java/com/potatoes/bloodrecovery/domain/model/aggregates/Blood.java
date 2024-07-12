@@ -4,6 +4,7 @@ import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -26,6 +27,7 @@ public class Blood {
     private String bloodStatus;
     private Integer bloodReqCnt;
     private Integer bloodDonationCnt;
+    @Embedded
     private Post post;
 
 }

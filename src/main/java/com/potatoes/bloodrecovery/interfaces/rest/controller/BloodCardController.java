@@ -54,7 +54,7 @@ public class BloodCardController extends BaseController{
 
     @DeleteMapping(DELETE_BLOOD_CARD)
     public ResponseEntity<Object> deleteBloodCard(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
-                                                  @PathVariable @NotBlank String bloodCardId) {
+                                                  @PathVariable String bloodCardId) {
         DeleteBloodCardCommand deleteBloodCardCommand = bloodCardMapper.deleteReqtoCommand(cid, bloodCardId);
         deleteBloodCardCommandService.deleteBloodCard(deleteBloodCardCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
