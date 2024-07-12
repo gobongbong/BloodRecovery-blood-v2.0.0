@@ -53,7 +53,7 @@ public class BloodDonationController extends BaseController{
     }
 
     @PatchMapping(COMPLETE_DIRECTED_DONATION)
-    public ResponseEntity<Object> completeDirectedDonation(@PathVariable @NotBlank Long requestId,
+    public ResponseEntity<Object> completeDirectedDonation(@PathVariable Long requestId,
                                                            @RequestBody @Valid CompleteDirectedDonationReqDto completeDirectedDonationReqDto) {
         completeDirectedDonationCommandService.completeDirectedDonation(requestId, completeDirectedDonationReqDto);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
