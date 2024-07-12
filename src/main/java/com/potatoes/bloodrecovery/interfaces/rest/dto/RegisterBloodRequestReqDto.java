@@ -4,6 +4,7 @@ import com.potatoes.bloodrecovery.domain.model.valueobjects.DirectedDonation;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Builder
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class RegisterBloodRequestReqDto {
     @NotBlank
     private String requestType;
-    @NotBlank
+    @NotNull
     private Integer bloodReqCnt;
     @NotBlank
     private String title;
