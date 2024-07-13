@@ -5,7 +5,7 @@ import com.potatoes.bloodrecovery.domain.model.aggregates.BloodCardHistory;
 import com.potatoes.bloodrecovery.domain.model.commands.DeleteBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardHistoryRepository;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardRepository;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

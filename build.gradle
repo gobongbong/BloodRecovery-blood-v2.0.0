@@ -16,7 +16,7 @@ configurations {
 		exclude group: 'org.slf4j', module: 'slf4j-simple'
 		all*.exclude group: 'org.springframework.boot', module : 'spring-boot-starter-logging'
 	}
-	complie {
+	compile {
 		exclude group: 'org.slf4j', module: 'slf4j-simple'
 	}
 }

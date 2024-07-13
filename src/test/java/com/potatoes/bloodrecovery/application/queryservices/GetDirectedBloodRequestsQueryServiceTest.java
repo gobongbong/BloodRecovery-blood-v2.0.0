@@ -3,7 +3,7 @@ package com.potatoes.bloodrecovery.application.queryservices;
 import com.potatoes.bloodrecovery.domain.model.view.BloodRequestView;
 import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

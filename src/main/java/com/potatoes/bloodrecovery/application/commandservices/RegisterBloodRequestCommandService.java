@@ -5,7 +5,7 @@ import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestComm
 import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
 import com.potatoes.constants.RequestStatus;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

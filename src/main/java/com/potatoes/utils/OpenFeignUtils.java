@@ -1,17 +1,12 @@
 package com.potatoes.utils;
 
 import com.amazonaws.util.CollectionUtils;
-import com.potatoes.constants.Channel;
-import com.potatoes.constants.ResponseCode;
-import com.potatoes.exception.ApiException;
 import feign.Response;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,9 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.potatoes.constants.ResponseCode.SERVER_ERROR;
-import static com.potatoes.constants.ResponseCode.SUCCESS;
-import static com.potatoes.constants.StaticValues.RESULT_CODE;
 import static com.potatoes.constants.StaticValues.RESULT_MESSAGE;
 
 @Slf4j
@@ -53,10 +45,6 @@ public class OpenFeignUtils {
             log.error("feign response body converting error - response: {}", response, e);
             return "";
         }
-    }
-
-    public static String getHeaderResponseCode(Response response){
-        return getResponseHeader(response, RESULT_CODE);
     }
 
     public static String getHeaderResponseMessage(Response response){

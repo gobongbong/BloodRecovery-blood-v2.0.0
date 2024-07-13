@@ -3,7 +3,7 @@ package com.potatoes.bloodrecovery.application.commandservices;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardHistoryRepository;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardRepository;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

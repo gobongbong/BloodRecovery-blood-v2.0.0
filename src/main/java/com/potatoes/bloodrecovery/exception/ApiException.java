@@ -1,4 +1,4 @@
-package com.potatoes.exception;
+package com.potatoes.bloodrecovery.exception;
 
 import com.potatoes.constants.ResponseCode;
 import lombok.Getter;
