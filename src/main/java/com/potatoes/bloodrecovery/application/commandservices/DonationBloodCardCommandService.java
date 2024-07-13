@@ -7,7 +7,7 @@ import com.potatoes.bloodrecovery.domain.model.aggregates.DonationHistory;
 import com.potatoes.bloodrecovery.domain.model.commands.DonationBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.repository.*;
 import com.potatoes.constants.RequestStatus;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

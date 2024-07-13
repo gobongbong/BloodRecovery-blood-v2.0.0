@@ -1,6 +1,6 @@
 package com.potatoes.bloodrecovery.interfaces.rest.feign.config;
 
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import com.potatoes.utils.OpenFeignUtils;
 import com.potatoes.utils.RequestScopeUtil;
 import feign.FeignException;
@@ -71,11 +71,10 @@ public class UserFeignConfig {
     @Bean
     public ErrorDecoder decoder() {
         return (methodKey, response) -> {
-            String responseCode = OpenFeignUtils.getHeaderResponseCode(response);
             String responseMessage = OpenFeignUtils.getHeaderResponseMessage(response);
             log.error("{} 요청이 성공하지 못했습니다. requestUrl: {}, requestBody: {}, responseBody: {}, responseCode: {}, responseMessage: {}");
 
-            if(responseCode.equals(StringUtils.EMPTY) || responseMessage.equals(StringUtils.EMPTY))
+            if(responseMessage.equals(StringUtils.EMPTY))
                 return FeignException.errorStatus(methodKey, response);
 
             return new ApiException(URLDecoder.decode(responseMessage, StandardCharsets.UTF_8), HttpStatus.valueOf(response.status()));

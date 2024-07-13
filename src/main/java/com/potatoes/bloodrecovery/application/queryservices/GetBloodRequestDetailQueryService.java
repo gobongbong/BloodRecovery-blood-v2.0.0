@@ -5,7 +5,7 @@ import com.potatoes.bloodrecovery.domain.model.view.BloodRequestDetailView;
 import com.potatoes.bloodrecovery.domain.model.view.UserInfoView;
 import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

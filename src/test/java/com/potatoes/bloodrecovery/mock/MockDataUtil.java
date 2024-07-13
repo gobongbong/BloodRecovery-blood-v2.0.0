@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class MockDataUtil {
         BloodCard bloodCard = BloodCard.builder()
                 .cid("aaaa")
                 .code("1111")
-                .date("20230201")
+                .date(LocalDate.now())
                 .donationType("전혈")
                 .name("고봉")
                 .bloodCardId(1L)
@@ -41,7 +42,7 @@ public class MockDataUtil {
         return BloodCard.builder()
                 .cid("aaaa")
                 .code("1111")
-                .date("20230201")
+                .date(LocalDate.now())
                 .donationType("전혈")
                 .name("고봉")
                 .bloodCardId(1L)

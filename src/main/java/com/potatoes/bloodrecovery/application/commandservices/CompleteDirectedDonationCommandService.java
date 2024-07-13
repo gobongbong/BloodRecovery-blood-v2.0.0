@@ -6,7 +6,7 @@ import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.DonationHistoryRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.CompleteDirectedDonationReqDto;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;

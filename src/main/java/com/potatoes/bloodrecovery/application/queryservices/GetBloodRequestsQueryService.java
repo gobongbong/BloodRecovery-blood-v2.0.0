@@ -6,7 +6,7 @@ import com.potatoes.bloodrecovery.domain.model.view.UserInfoView;
 import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
 import com.potatoes.constants.RequestStatus;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static com.potatoes.constants.ResponseCode.FAIL_GET_BLOOD_REQUEST_LIST;
 

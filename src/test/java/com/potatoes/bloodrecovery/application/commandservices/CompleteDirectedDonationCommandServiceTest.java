@@ -5,7 +5,7 @@ import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.DonationHistoryRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.CompleteDirectedDonationReqDto;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
