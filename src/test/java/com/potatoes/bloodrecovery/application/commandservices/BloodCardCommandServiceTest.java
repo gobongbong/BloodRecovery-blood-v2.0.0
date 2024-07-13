@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
+
 import static com.potatoes.constants.ResponseCode.FAIL_REGISTER_CARD;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,7 +36,7 @@ class BloodCardCommandServiceTest {
         RegisterBloodCardCommand registerBloodCardCommand = RegisterBloodCardCommand.builder()
                 .cid("aaaa")
                 .code("1111")
-                .date("20230201")
+                .date(LocalDate.now())
                 .donationType("전혈")
                 .name("고봉")
                 .build();
@@ -52,7 +54,7 @@ class BloodCardCommandServiceTest {
         RegisterBloodCardCommand registerBloodCardCommand = RegisterBloodCardCommand.builder()
                 .cid("aaaa")
                 .code("1111")
-                .date("20230201")
+                .date(LocalDate.now())
                 .donationType("전혈")
                 .name("고봉")
                 .build();
