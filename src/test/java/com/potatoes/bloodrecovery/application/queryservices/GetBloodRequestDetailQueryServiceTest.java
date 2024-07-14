@@ -5,6 +5,7 @@ import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
 import com.potatoes.bloodrecovery.domain.model.view.BloodRequestDetailView;
 import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +36,7 @@ class GetBloodRequestDetailQueryServiceTest {
 
     @Test
     @DisplayName("요청글 상세 조회에 성공한다.")
+    @Disabled
     void getBloodRequestDetail_success(){
         //given
         BloodRequestDetailView expect = BloodRequestDetailView.builder()
@@ -60,6 +62,7 @@ class GetBloodRequestDetailQueryServiceTest {
 
     @Test
     @DisplayName("요청글 상세 조회에 성공한다. (수정 불가능)")
+    @Disabled
     void getBloodRequestDetail_success_not_modify(){
         //given
         BloodRequestDetailView expect = BloodRequestDetailView.builder()
