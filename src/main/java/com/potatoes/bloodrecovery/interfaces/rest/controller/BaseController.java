@@ -12,7 +12,7 @@ public class BaseController {
     protected HttpHeaders getSuccessHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set(RESULT_MESSAGE, SUCCESS.getUrlEncodingMessage());
-        headers.set(HTTP_STATUS, String.valueOf(SUCCESS.getHttpStatus()));
+        headers.set(HTTP_STATUS, String.valueOf(SUCCESS.getHttpStatus().value()));
         return headers;
     }
 }
