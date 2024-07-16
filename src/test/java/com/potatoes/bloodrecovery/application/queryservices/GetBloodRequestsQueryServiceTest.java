@@ -19,6 +19,8 @@ import java.util.List;
 import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodRequests;
 import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonUserInfoView;
 import static com.potatoes.constants.ResponseCode.FAIL_GET_BLOOD_REQUEST_LIST;
+import static com.potatoes.constants.StaticValues.BLOOD_CARD_DONATION;
+import static com.potatoes.constants.StaticValues.DIRECTED_DONATION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,25 +43,24 @@ class GetBloodRequestsQueryServiceTest {
         //given
         Page<BloodRequest> page = new PageImpl<>(commonBloodRequests());
 
-        given(bloodRequestRepository.findByRequestTypeAndRequestStatusIn(any(), any())).willReturn(page);
+        given(bloodRequestRepository.findByRequestTypeAndRequestStatusIn(any(), any(), any())).willReturn(page);
         given(userRepository.getUserInfo(any())).willReturn(commonUserInfoView());
 
         //when, then
-        List<BloodRequestView> result = getBloodRequestsQueryService.getBloodRequests(1, 2);
+        List<BloodRequestView> result = getBloodRequestsQueryService.getBloodRequests(1, 2, DIRECTED_DONATION);
 
         //then
         assertEquals(2, result.size());
-
     }
 
     @Test
     @DisplayName("요청글 목록 조회에 실패한다.")
     void getBloodRequests_fail(){
         //given
-        given(bloodRequestRepository.findByRequestTypeAndRequestStatusIn(any(), any())).willThrow();
+        given(bloodRequestRepository.findByRequestTypeAndRequestStatusIn(any(), any(), any())).willThrow();
 
         //when, then
-        Throwable throwable = assertThrows(ApiException.class, () -> getBloodRequestsQueryService.getBloodRequests(1, 2));
+        Throwable throwable = assertThrows(ApiException.class, () -> getBloodRequestsQueryService.getBloodRequests(1, 2, BLOOD_CARD_DONATION));
 
         //then
         assertEquals(throwable.getMessage(), FAIL_GET_BLOOD_REQUEST_LIST.getMessage());

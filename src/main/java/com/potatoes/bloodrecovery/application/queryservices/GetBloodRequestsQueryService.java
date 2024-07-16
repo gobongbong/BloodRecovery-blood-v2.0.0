@@ -33,7 +33,7 @@ public class GetBloodRequestsQueryService {
         List<BloodRequestView> bloodRequestViews = new ArrayList<>();
         try {
             PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by("post.regDate").descending());
-            Page<BloodRequest> bloodRequests = bloodRequestRepository.findByRequestTypeAndRequestStatusIn(pageRequest, RequestStatus.getOngoing());
+            Page<BloodRequest> bloodRequests = bloodRequestRepository.findByRequestTypeAndRequestStatusIn(pageRequest, requestType, RequestStatus.getOngoing());
             if (!bloodRequests.getContent().isEmpty()) {
                 for (BloodRequest bloodRequest: bloodRequests) {
                     UserInfoView userInfoView = userRepository.getUserInfo(bloodRequest.getCid());

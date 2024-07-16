@@ -54,7 +54,7 @@ class GetDirectedBloodRequestsQueryServiceTest {
     @DisplayName("지정 헌혈 요청글 목록 조회에 실패한다.")
     void getDirectedBloodRequests_fail(){
         //given
-        given(bloodRequestRepository.findByRequestTypeAndRequestStatusIn(any(), any())).willThrow();
+        given(bloodRequestRepository.findByCidAndRequestType(any(), any())).willThrow();
 
         //when, then
         Throwable throwable = assertThrows(ApiException.class, () -> getDirectedBloodRequestsQueryService.getDirectedBloodRequests("111"));
