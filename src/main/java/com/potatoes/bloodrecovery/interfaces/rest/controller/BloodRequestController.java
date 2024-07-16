@@ -85,7 +85,7 @@ public class BloodRequestController extends BaseController {
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
-    @GetMapping(BLOOD_REQUEST)
+    @GetMapping(BLOOD_REQUESTS)
     public ResponseEntity<Object> getBloodRequests(@RequestParam int pageSize, @RequestParam int pageNumber) {
         List<BloodRequestView> list = getBloodRequestsQueryService.getBloodRequests(pageNumber, pageSize);
         GetBloodRequestsRspDto getBloodRequestsRspDto = BloodRequestMapper.bloodRequestViewToDto(list);
