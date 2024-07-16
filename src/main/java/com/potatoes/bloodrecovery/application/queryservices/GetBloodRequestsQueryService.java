@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,9 +31,8 @@ public class GetBloodRequestsQueryService {
     @Transactional(readOnly = true)
     public List<BloodRequestView> getBloodRequests(int pageNumber, int pageSize) {
         List<BloodRequestView> bloodRequestViews = new ArrayList<>();
-        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
-
         try {
+            PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by("post.regDate").descending());
             Page<BloodRequest> bloodRequests = bloodRequestRepository.findByRequestStatusIn(pageRequest, RequestStatus.getOngoing());
             if (!bloodRequests.getContent().isEmpty()) {
                 for (BloodRequest bloodRequest: bloodRequests) {

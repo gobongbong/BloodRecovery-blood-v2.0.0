@@ -50,6 +50,7 @@ public class BloodRequest {
         this.cid = registerBloodRequestCommand.getCid();
         this.requestType = registerBloodRequestCommand.getRequestType();
         this.bloodReqCnt = registerBloodRequestCommand.getBloodReqCnt();
+        this.bloodDonationCnt = 0;
         this.requestStatus = REGISTER;
         this.post = new Post(registerBloodRequestCommand);
         if (Objects.nonNull(registerBloodRequestCommand.getDirectInfo())){
