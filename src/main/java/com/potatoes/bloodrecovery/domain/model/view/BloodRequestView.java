@@ -29,6 +29,7 @@ public class BloodRequestView {
         this.bloodDonationCnt = bloodRequest.getBloodDonationCnt();
         this.postInfo = Post.builder()
                 .title(bloodRequest.getPost().getTitle())
+                .contents(bloodRequest.getPost().getContents())
                 .regDate(bloodRequest.getPost().getRegDate())
                 .build();
     }
