@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BloodRequestDetailView {
-    private String userNickName;
+    private String userNickname;
     private String profileImage;
     private String requestType;
     private boolean editable;
@@ -21,7 +21,7 @@ public class BloodRequestDetailView {
     private DirectedDonation directInfo;
 
     public BloodRequestDetailView(BloodRequest bloodRequest, UserInfoView userInfoView, boolean editable) {
-        this.userNickName = userInfoView.getNickname();
+        this.userNickname = userInfoView.getNickname();
         this.profileImage = userInfoView.getFileNm();
         this.requestType = bloodRequest.getRequestType();
         this.editable = editable;

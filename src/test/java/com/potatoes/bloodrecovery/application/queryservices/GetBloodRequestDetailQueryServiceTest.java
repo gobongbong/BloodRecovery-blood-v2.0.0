@@ -38,7 +38,7 @@ class GetBloodRequestDetailQueryServiceTest {
     void getBloodRequestDetail_success(){
         //given
         BloodRequestDetailView expect = BloodRequestDetailView.builder()
-                .userNickName("gobong")
+                .userNickname("gobong")
                 .profileImage("aaaaa")
                 .requestType(DIRECTED_DONATION)
                 .editable(true)
@@ -63,7 +63,7 @@ class GetBloodRequestDetailQueryServiceTest {
     void getBloodRequestDetail_success_not_modify(){
         //given
         BloodRequestDetailView expect = BloodRequestDetailView.builder()
-                .userNickName("gobong")
+                .userNickname("gobong")
                 .profileImage("aaaaa")
                 .requestType(DIRECTED_DONATION)
                 .editable(false)
