@@ -41,7 +41,7 @@ class GetBloodRequestsQueryServiceTest {
         //given
         Page<BloodRequest> page = new PageImpl<>(commonBloodRequests());
 
-        given(bloodRequestRepository.findByRequestStatusIn(any(), any())).willReturn(page);
+        given(bloodRequestRepository.findByRequestTypeAndRequestStatusIn(any(), any())).willReturn(page);
         given(userRepository.getUserInfo(any())).willReturn(commonUserInfoView());
 
         //when, then
@@ -56,7 +56,7 @@ class GetBloodRequestsQueryServiceTest {
     @DisplayName("요청글 목록 조회에 실패한다.")
     void getBloodRequests_fail(){
         //given
-        given(bloodRequestRepository.findByRequestStatusIn(any(), any())).willThrow();
+        given(bloodRequestRepository.findByRequestTypeAndRequestStatusIn(any(), any())).willThrow();
 
         //when, then
         Throwable throwable = assertThrows(ApiException.class, () -> getBloodRequestsQueryService.getBloodRequests(1, 2));

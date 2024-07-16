@@ -17,7 +17,7 @@ public class BloodApiUrl {
     public static final String BLOOD_REQUEST = "/request";
 
     /** 헌혈 요청 글 전체 목록 조회 */
-    public static final String BLOOD_REQUESTS = "/requests";
+    public static final String BLOOD_REQUESTS = "/requests/{requestType}";
 
     /** 지정 헌혈 요청 글 목록 조회 */
     public static final String DIRECTED_BLOOD_REQUESTS = "/request/direct";
