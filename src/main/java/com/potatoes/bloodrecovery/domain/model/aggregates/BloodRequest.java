@@ -8,6 +8,7 @@ import com.potatoes.constants.RequestStatus;
 import com.potatoes.converter.RequestStatusConverter;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
@@ -24,6 +25,7 @@ import static com.potatoes.constants.RequestStatus.ONGOING;
 @Getter
 @Table(name = "blood_request")
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 public class BloodRequest {
 
     @Id
@@ -51,7 +53,7 @@ public class BloodRequest {
         this.requestStatus = REGISTER;
         this.post = new Post(registerBloodRequestCommand);
         if (Objects.nonNull(registerBloodRequestCommand.getDirectInfo())){
-            new DirectedDonation(registerBloodRequestCommand);
+            this.directedDonation = new DirectedDonation(registerBloodRequestCommand);
         }
     }
 
