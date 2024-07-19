@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetBloodRequestDetailRspDto {
-    private String userNickName;
+    private String userNickname;
     private String profileImage;
     private String requestType;
     private boolean editable;

@@ -24,13 +24,12 @@ public class BloodCardCommandService {
     public void registerBloodCard(RegisterBloodCardCommand registerBloodCardCommand){
 
         BloodCard bloodCard = new BloodCard(registerBloodCardCommand);
-        registerBloodCardCommand.setBloodCardId(bloodCard);
-
-        BloodCardHistory bloodCardHistory = new BloodCardHistory(registerBloodCardCommand);
 
         if ((bloodCard.isValidBloodCard())){
             try {
                 bloodCardRepository.save(bloodCard);
+                registerBloodCardCommand.setBloodCardId(bloodCard);
+                BloodCardHistory bloodCardHistory = new BloodCardHistory(registerBloodCardCommand);
                 bloodCardHistoryRepository.save(bloodCardHistory);
             } catch (Exception e){
                 throw new ApiException(FAIL_REGISTER_CARD);
