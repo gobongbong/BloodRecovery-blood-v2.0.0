@@ -5,19 +5,20 @@ import com.potatoes.bloodrecovery.domain.model.aggregates.DonationHistory;
 import com.potatoes.bloodrecovery.domain.model.commands.DirectedBloodDonationCommand;
 import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.DonationHistoryRepository;
+import com.potatoes.constants.RequestStatus;
 import com.potatoes.exception.ApiException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
 
 import static com.potatoes.constants.RequestStatus.*;
 import static com.potatoes.constants.ResponseCode.*;
-import static com.potatoes.constants.StaticValues.DIRECTED_BLOOD_DONATION;
-/**
- * 지정헌혈을 처리하는 Service
- */
+import static com.potatoes.constants.StaticValues.DIRECTED_DONATION;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class DirectedBloodDonationCommandService {
@@ -26,25 +27,28 @@ public class DirectedBloodDonationCommandService {
 
     @Transactional
     public void applyDirectedBloodDonation(DirectedBloodDonationCommand directedBloodDonationCommand) {
-        BloodRequest bloodRequest = bloodRequestRepository.findByRequestIdAndCid(directedBloodDonationCommand.getRequestId(), directedBloodDonationCommand.getCid())
+        BloodRequest bloodRequest = bloodRequestRepository.findByRequestIdAndRequestStatusIn(directedBloodDonationCommand.getRequestId(), RequestStatus.getOngoing())
                 .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
 
-        if(!bloodRequest.getRequestType().equals(DIRECTED_BLOOD_DONATION)) {
+        if(!bloodRequest.getRequestType().equals(DIRECTED_DONATION)) {
             throw new ApiException(BAD_REQUEST_TYPE);
         }
 
-        if(bloodRequest.getRequestStatus().equals(COMPLETE)) {
-            throw new ApiException(FAIL_APPLY_DIRECTED_BLOOD_DONATION);
+        List<DonationHistory> donationHistories = donationHistoryRepository.findByCidAndDonationTypeAndDonationStatus(
+                directedBloodDonationCommand.getCid(), DIRECTED_DONATION, DIRECTED_DONATION_ONGOING);
+
+        if(!donationHistories.isEmpty()) {
+            throw new ApiException(EXIST_ONGOING_DIRECTED_BLOOD_DONATION_HISTORY);
         }
 
         try {
             changeRequestStatusAndDonationCnt(bloodRequest);
 
-            // todo 수정 가능성 있음
             DonationHistory donationHistory = new DonationHistory(directedBloodDonationCommand);
             donationHistoryRepository.save(donationHistory);
         } catch (Exception e) {
-            throw new ApiException(FAIL_APPLY_DIRECTED_BLOOD_DONATION);
+            log.error("지정헌혈 신청 처리 중 DB ERROR 발생 + {}", e);
+            throw  e;
         }
     }
 
@@ -53,7 +57,6 @@ public class DirectedBloodDonationCommandService {
             bloodRequest.changeRequestStatus(DIRECTED_DONATION_ONGOING);
         }
 
-        // 만약 신청이 다 찼으면 지정헌혈을 신청을 못하게 하되, 만약 마감일까지 헌혈이 되지 않으면 패널티
         if (bloodRequest.getRequestStatus().equals(DIRECTED_DONATION_ONGOING)) {
             if (bloodRequest.getBloodDonationCnt() + 1 == bloodRequest.getBloodReqCnt()) {
                 bloodRequest.changeRequestStatus(COMPLETE);
