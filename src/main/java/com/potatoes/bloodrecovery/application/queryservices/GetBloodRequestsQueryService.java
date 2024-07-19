@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.potatoes.constants.ResponseCode.FAIL_GET_BLOOD_REQUEST_LIST;
+import static com.potatoes.constants.StaticValues.BLOOD_CARD_DONATION;
+import static com.potatoes.constants.StaticValues.DIRECTED_DONATION;
 
 @Service
 @RequiredArgsConstructor
@@ -29,10 +31,13 @@ public class GetBloodRequestsQueryService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public List<BloodRequestView> getBloodRequests(int pageNumber, int pageSize, String requestType) {
+    public List<BloodRequestView> getBloodRequests(int pageNumber, int pageSize, int type) {
         List<BloodRequestView> bloodRequestViews = new ArrayList<>();
+        String requestType = type == 1 ? BLOOD_CARD_DONATION : DIRECTED_DONATION;
+
         try {
             PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by("post.regDate").descending());
+
             Page<BloodRequest> bloodRequests = bloodRequestRepository.findByRequestTypeAndRequestStatusIn(pageRequest, requestType, RequestStatus.getOngoing());
             if (!bloodRequests.getContent().isEmpty()) {
                 for (BloodRequest bloodRequest: bloodRequests) {
@@ -44,6 +49,7 @@ public class GetBloodRequestsQueryService {
         }catch (Exception e){
             throw new ApiException(FAIL_GET_BLOOD_REQUEST_LIST);
         }
+
         return bloodRequestViews;
     }
 }

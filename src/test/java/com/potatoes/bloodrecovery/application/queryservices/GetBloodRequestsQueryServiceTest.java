@@ -47,7 +47,7 @@ class GetBloodRequestsQueryServiceTest {
         given(userRepository.getUserInfo(any())).willReturn(commonUserInfoView());
 
         //when, then
-        List<BloodRequestView> result = getBloodRequestsQueryService.getBloodRequests(1, 2, DIRECTED_DONATION);
+        List<BloodRequestView> result = getBloodRequestsQueryService.getBloodRequests(1, 2, 2);
 
         //then
         assertEquals(2, result.size());
@@ -60,7 +60,7 @@ class GetBloodRequestsQueryServiceTest {
         given(bloodRequestRepository.findByRequestTypeAndRequestStatusIn(any(), any(), any())).willThrow();
 
         //when, then
-        Throwable throwable = assertThrows(ApiException.class, () -> getBloodRequestsQueryService.getBloodRequests(1, 2, BLOOD_CARD_DONATION));
+        Throwable throwable = assertThrows(ApiException.class, () -> getBloodRequestsQueryService.getBloodRequests(1, 2, 1));
 
         //then
         assertEquals(throwable.getMessage(), FAIL_GET_BLOOD_REQUEST_LIST.getMessage());
