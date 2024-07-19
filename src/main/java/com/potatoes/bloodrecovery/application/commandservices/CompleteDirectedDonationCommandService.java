@@ -40,7 +40,7 @@ public class CompleteDirectedDonationCommandService {
                 DonationHistory donationHistory = donationHistories.get(0);
                 donationHistory.changeDonationStatus(COMPLETE.getValue());
 
-                userRepository.requestPoint(cid, POINT_PLUS, 50);
+//                userRepository.requestPoint(cid, POINT_PLUS, 50);
 
                 BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(requestId).orElseThrow();
                 bloodRequest.changeRequestStatus(COMPLETE);

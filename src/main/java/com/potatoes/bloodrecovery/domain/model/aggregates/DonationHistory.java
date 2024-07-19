@@ -5,11 +5,9 @@ import com.potatoes.constants.RequestStatus;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 import static com.potatoes.constants.StaticValues.BLOOD_CARD_DONATION;
@@ -22,6 +20,7 @@ import static com.potatoes.constants.StaticValues.BLOOD_CARD_DONATION;
 @Getter
 @Table(name = "donation_history")
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 public class DonationHistory {
 
     @Id

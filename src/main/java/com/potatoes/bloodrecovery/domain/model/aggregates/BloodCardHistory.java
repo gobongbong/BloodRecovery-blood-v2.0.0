@@ -7,10 +7,13 @@ import com.potatoes.constants.BloodCardStatus;
 import com.potatoes.converter.BloodCardStatusConverter;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static com.potatoes.constants.BloodCardStatus.*;
 
@@ -22,6 +25,7 @@ import static com.potatoes.constants.BloodCardStatus.*;
 @Getter
 @Table(name = "blood_card_history")
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 public class BloodCardHistory {
 
     @Id
@@ -35,6 +39,9 @@ public class BloodCardHistory {
     private String donationType;
     private String name;
     private LocalDate date;
+
+    @CreatedDate
+    private LocalDateTime regDate;
     @Convert(converter = BloodCardStatusConverter.class)
     private BloodCardStatus status;
 

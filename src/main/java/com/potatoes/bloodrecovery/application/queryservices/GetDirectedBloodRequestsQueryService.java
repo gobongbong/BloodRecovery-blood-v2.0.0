@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.potatoes.bloodrecovery.domain.model.view.UserInfoView.userInfoView;
 import static com.potatoes.constants.ResponseCode.*;
 import static com.potatoes.constants.StaticValues.DIRECTED_DONATION;
 
@@ -33,7 +34,8 @@ public class GetDirectedBloodRequestsQueryService {
             List<BloodRequest> bloodRequests = bloodRequestRepository.findByCidAndRequestType(cid, DIRECTED_DONATION);
             if (!bloodRequests.isEmpty()) {
                 for (BloodRequest bloodRequest: bloodRequests) {
-                    UserInfoView userInfoView = userRepository.getUserInfo(bloodRequest.getCid());
+//                    UserInfoView userInfoView = userRepository.getUserInfo(bloodRequest.getCid());
+                    UserInfoView userInfoView = userInfoView();
                     BloodRequestView bloodRequestView = new BloodRequestView(bloodRequest, userInfoView);
                     bloodRequestViews.add(bloodRequestView);
                 }

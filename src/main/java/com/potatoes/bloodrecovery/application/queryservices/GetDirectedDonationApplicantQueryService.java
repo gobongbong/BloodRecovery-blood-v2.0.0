@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.potatoes.bloodrecovery.domain.model.view.UserInfoView.userInfoView;
 import static com.potatoes.constants.ResponseCode.FAIL_GET_DIRECTED_DONATION_APPLICANT;
 import static com.potatoes.constants.StaticValues.DIRECTED_DONATION;
 
@@ -38,7 +39,8 @@ public class GetDirectedDonationApplicantQueryService {
                 }
 
                 for (DonationHistory history: histories) {
-                    UserInfoView userInfoView = userRepository.getUserInfo(history.getCid());
+//                    UserInfoView userInfoView = userRepository.getUserInfo(history.getCid());
+                    UserInfoView userInfoView = userInfoView();
                     DirectedDonationApplicantView directedDonationApplicantView = DirectedDonationApplicantView.builder()
                             .cid(history.getCid())
                             .name(userInfoView.getName())

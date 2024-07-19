@@ -43,10 +43,10 @@ public class ModifyBloodRequestCommandService {
         int oldBloodReqCnt = bloodRequest.getBloodReqCnt();
 
         if (oldBloodReqCnt > newBloodReqCnt){
-            userRepository.requestPoint(modifyBloodRequestCommand.getCid(), POINT_MINUS, 50 * (oldBloodReqCnt - newBloodReqCnt));
+//            userRepository.requestPoint(modifyBloodRequestCommand.getCid(), POINT_MINUS, 50 * (oldBloodReqCnt - newBloodReqCnt));
         }
         if (oldBloodReqCnt < newBloodReqCnt){
-            userRepository.requestPoint(modifyBloodRequestCommand.getCid(), POINT_PLUS, 50 * (newBloodReqCnt - oldBloodReqCnt));
+//            userRepository.requestPoint(modifyBloodRequestCommand.getCid(), POINT_PLUS, 50 * (newBloodReqCnt - oldBloodReqCnt));
         }
     }
 }
