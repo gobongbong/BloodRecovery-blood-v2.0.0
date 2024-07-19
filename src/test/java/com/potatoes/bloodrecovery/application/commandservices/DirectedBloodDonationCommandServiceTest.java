@@ -1,14 +1,9 @@
 package com.potatoes.bloodrecovery.application.commandservices;
 
-import com.potatoes.bloodrecovery.domain.model.aggregates.BloodRequest;
-import com.potatoes.bloodrecovery.domain.model.aggregates.DonationHistory;
 import com.potatoes.bloodrecovery.domain.model.commands.DirectedBloodDonationCommand;
-import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
 import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.DonationHistoryRepository;
-import com.potatoes.bloodrecovery.domain.repository.UserRepository;
 import com.potatoes.bloodrecovery.exception.ApiException;
-import com.potatoes.constants.RequestStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,16 +11,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-import static com.potatoes.constants.RequestStatus.DIRECTED_DONATION_ONGOING;
-import static com.potatoes.constants.StaticValues.BLOOD_CARD_DONATION;
-import static com.potatoes.constants.StaticValues.DIRECTED_DONATION;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodRequest;
+import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonDonationHistoryList_DirectedOnGoing;
+import static com.potatoes.constants.RequestStatus.REGISTER;
+import static com.potatoes.constants.ResponseCode.EXIST_ONGOING_DIRECTED_BLOOD_DONATION_HISTORY;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -49,17 +41,7 @@ class DirectedBloodDonationCommandServiceTest {
                 .requestId(1L)
                 .build();
 
-        BloodRequest bloodRequest = BloodRequest.builder()
-                .requestId(1L)
-                .bloodDonationCnt(0)
-                .bloodReqCnt(7)
-                .requestStatus(RequestStatus.REGISTER)
-                .requestType(DIRECTED_DONATION)
-                .cid("1111")
-                .post(new Post())
-                .build();
-
-        given(bloodRequestRepository.findByRequestIdAndRequestStatusIn(any(), any())).willReturn(Optional.of(bloodRequest));
+        given(bloodRequestRepository.findByRequestIdAndRequestStatusIn(any(), any())).willReturn(Optional.of(commonBloodRequest(REGISTER)));
 
         // when, then
         assertDoesNotThrow(() ->
@@ -67,32 +49,7 @@ class DirectedBloodDonationCommandServiceTest {
     }
 
     @Test
-    @DisplayName("잘못된 requestType 으로 인해 지정헌혈 신청에 실패한다.")
-    void applyDirectedBloodDonation_type_error() {
-        // given
-        DirectedBloodDonationCommand directedBloodDonationCommand = DirectedBloodDonationCommand.builder()
-                .cid("2222")
-                .requestId(1L)
-                .build();
-
-        BloodRequest bloodRequest = BloodRequest.builder()
-                .requestId(1L)
-                .bloodDonationCnt(0)
-                .bloodReqCnt(7)
-                .requestType(BLOOD_CARD_DONATION)
-                .cid("1111")
-                .post(new Post())
-                .build();
-
-        given(bloodRequestRepository.findByRequestIdAndRequestStatusIn(any(), any())).willReturn(Optional.of(bloodRequest));
-
-        // when, then
-        assertThrows(ApiException.class, () ->
-                directedBloodDonationCommandService.applyDirectedBloodDonation(directedBloodDonationCommand));
-    }
-
-    @Test
-    @DisplayName("진행 중인 지정 헌혈 이력이 있어 지정헌혈 신청에 실패한다.")
+    @DisplayName("지정 헌혈 신청에 실패한다. (진행 중인 지정 헌혈 이력이 있는 경우)")
     void applyDirectedBloodDonation_cid_error() {
         // given
         DirectedBloodDonationCommand directedBloodDonationCommand = DirectedBloodDonationCommand.builder()
@@ -100,34 +57,14 @@ class DirectedBloodDonationCommandServiceTest {
                 .requestId(1L)
                 .build();
 
-        BloodRequest bloodRequest = BloodRequest.builder()
-                .requestId(1L)
-                .bloodDonationCnt(0)
-                .bloodReqCnt(7)
-                .requestType(DIRECTED_DONATION)
-                .cid("1111")
-                .post(new Post())
-                .build();
+        given(bloodRequestRepository.findByRequestIdAndRequestStatusIn(any(), any())).willReturn(Optional.of(commonBloodRequest(REGISTER)));
+        given(donationHistoryRepository.findByCidAndDonationTypeAndDonationStatus(any(), any(), any())).willReturn(commonDonationHistoryList_DirectedOnGoing());
 
-        given(bloodRequestRepository.findByRequestIdAndRequestStatusIn(any(), any())).willReturn(Optional.of(bloodRequest));
-
-        List<DonationHistory> donationHistories = new ArrayList<>();
-        donationHistories.add(
-                DonationHistory.builder()
-                        .cid("2222")
-                        .requestId(1l)
-                        .donationStatus(DIRECTED_DONATION_ONGOING.getValue())
-                        .donationCnt(1)
-                        .historyId(1l)
-                        .donationType(DIRECTED_DONATION)
-                        .date(LocalDateTime.now())
-                        .build()
-        );
-
-        given(donationHistoryRepository.findByCidAndDonationTypeAndDonationStatus(any(), any(), any())).willReturn(donationHistories);
-
-        // when, then
-        assertThrows(ApiException.class, () ->
+        // when
+        Throwable throwable = assertThrows(ApiException.class, () ->
                 directedBloodDonationCommandService.applyDirectedBloodDonation(directedBloodDonationCommand));
+
+        // then
+        assertEquals(throwable.getMessage(), EXIST_ONGOING_DIRECTED_BLOOD_DONATION_HISTORY.getMessage());
     }
 }

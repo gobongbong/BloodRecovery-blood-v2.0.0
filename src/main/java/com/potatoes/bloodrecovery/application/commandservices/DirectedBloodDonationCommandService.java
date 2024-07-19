@@ -30,10 +30,6 @@ public class DirectedBloodDonationCommandService {
         BloodRequest bloodRequest = bloodRequestRepository.findByRequestIdAndRequestStatusIn(directedBloodDonationCommand.getRequestId(), RequestStatus.getOngoing())
                 .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
 
-        if(!bloodRequest.getRequestType().equals(DIRECTED_DONATION)) {
-            throw new ApiException(BAD_REQUEST_TYPE);
-        }
-
         List<DonationHistory> donationHistories = donationHistoryRepository.findByCidAndDonationTypeAndDonationStatus(
                 directedBloodDonationCommand.getCid(), DIRECTED_DONATION, DIRECTED_DONATION_ONGOING);
 
@@ -47,8 +43,7 @@ public class DirectedBloodDonationCommandService {
             DonationHistory donationHistory = new DonationHistory(directedBloodDonationCommand);
             donationHistoryRepository.save(donationHistory);
         } catch (Exception e) {
-            log.error("지정헌혈 신청 처리 중 DB ERROR 발생 + {}", e);
-            throw  e;
+            throw new ApiException(FAIL_APPLY_DIRECTED_BLOOD_DONATION);
         }
     }
 
