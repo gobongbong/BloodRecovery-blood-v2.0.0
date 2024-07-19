@@ -3,7 +3,7 @@ package com.potatoes.bloodrecovery.application.commandservices;
 import com.potatoes.bloodrecovery.domain.model.aggregates.BloodRequest;
 import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +26,6 @@ public class CompleteBloodRequestCommandService {
 
         try {
             if (bloodRequest.getBloodDonationCnt() < bloodRequest.getBloodReqCnt()){
-                //todo event transaction 끝나고...
                 userRepository.requestPoint(cid, POINT_PLUS, 50 * (bloodRequest.getBloodReqCnt() - bloodRequest.getBloodDonationCnt()));
             }
             bloodRequest.changeRequestStatus(COMPLETE);

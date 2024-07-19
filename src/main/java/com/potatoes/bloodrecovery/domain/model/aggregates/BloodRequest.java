@@ -5,14 +5,14 @@ import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestComm
 import com.potatoes.bloodrecovery.domain.model.valueobjects.DirectedDonation;
 import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
 import com.potatoes.constants.RequestStatus;
+import com.potatoes.converter.RequestStatusConverter;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.*;
+import javax.persistence.*;
+
+import java.util.Objects;
 
 import static com.potatoes.constants.RequestStatus.*;
 
@@ -24,32 +24,36 @@ import static com.potatoes.constants.RequestStatus.*;
 @Getter
 @Table(name = "blood_request")
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 public class BloodRequest {
 
     @Id
     @GeneratedValue
     private Long requestId;
     private String cid;
+    @Convert(converter = RequestStatusConverter.class)
     private RequestStatus requestStatus;
-
     private String requestType;
     private Integer bloodReqCnt;
     private Integer bloodDonationCnt;
 
+    @Embedded
     private Post post;
-
+    @Embedded
     private DirectedDonation directedDonation;
 
+    @Transient
     private boolean editable;
 
     public BloodRequest(RegisterBloodRequestCommand registerBloodRequestCommand) {
         this.cid = registerBloodRequestCommand.getCid();
         this.requestType = registerBloodRequestCommand.getRequestType();
         this.bloodReqCnt = registerBloodRequestCommand.getBloodReqCnt();
+        this.bloodDonationCnt = 0;
         this.requestStatus = REGISTER;
         this.post = new Post(registerBloodRequestCommand);
         if (Objects.nonNull(registerBloodRequestCommand.getDirectInfo())){
-            new DirectedDonation(registerBloodRequestCommand);
+            this.directedDonation = new DirectedDonation(registerBloodRequestCommand);
         }
     }
 

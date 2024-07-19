@@ -5,12 +5,13 @@ import com.potatoes.bloodrecovery.domain.model.aggregates.BloodCardHistory;
 import com.potatoes.bloodrecovery.domain.model.commands.DeleteBloodCardCommand;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardHistoryRepository;
 import com.potatoes.bloodrecovery.domain.repository.BloodCardRepository;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.potatoes.constants.ResponseCode.FAIL_DELETE_CARD;
 import static com.potatoes.constants.ResponseCode.NO_BLOOD_CARD;
 
 @Service
@@ -33,8 +34,8 @@ public class DeleteBloodCardCommandService {
             bloodCardRepository.deleteByBloodCardId(deleteBloodCardCommand.getBloodCardId());
             bloodCardHistoryRepository.save(bloodCardHistory);
         }catch (Exception e){
-            log.error("헌혈증 삭제 처리 중 DB ERROR 발생 + {}", e);
-            throw  e;
+            log.error("헌혈증 삭제 처리 중 DB ERROR 발생 + {}", e.getMessage());
+            throw new ApiException(FAIL_DELETE_CARD);
         }
     }
 }

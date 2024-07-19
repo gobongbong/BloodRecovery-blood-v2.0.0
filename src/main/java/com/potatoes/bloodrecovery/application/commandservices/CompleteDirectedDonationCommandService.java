@@ -6,7 +6,7 @@ import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.DonationHistoryRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
 import com.potatoes.bloodrecovery.interfaces.rest.dto.CompleteDirectedDonationReqDto;
-import com.potatoes.exception.ApiException;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
@@ -38,16 +38,16 @@ public class CompleteDirectedDonationCommandService {
                 }
 
                 DonationHistory donationHistory = donationHistories.get(0);
-                donationHistory.changeRequestStatus(COMPLETE);
+                donationHistory.changeDonationStatus(COMPLETE.getValue());
 
                 userRepository.requestPoint(cid, POINT_PLUS, 50);
 
-                BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(requestId).orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
+                BloodRequest bloodRequest = bloodRequestRepository.findByRequestId(requestId).orElseThrow();
                 bloodRequest.changeRequestStatus(COMPLETE);
 
                 //todo 알람 호출(지정헌혈 신청자에게)
             }
-        }catch (Exception e){
+        } catch (Exception e){
             throw new ApiException(FAIL_COMPLETE_BLOOD_REQUEST);
         }
     }

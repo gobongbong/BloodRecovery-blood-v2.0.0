@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Slf4j
 @Entity
@@ -28,7 +29,7 @@ public class BloodCard {
     private String code;
     private String donationType;
     private String name;
-    private String date;
+    private LocalDate date;
 
     public BloodCard(RegisterBloodCardCommand registerBloodCardCommand) {
         this.cid = registerBloodCardCommand.getCid();

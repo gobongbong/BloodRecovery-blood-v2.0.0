@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 public abstract class BloodCardMapper {
 
     @Mapping(target = "bloodCardId", ignore = true)
+    @Mapping(target = "date", dateFormat = "yyyy-MM-dd")
     public abstract RegisterBloodCardCommand registerReqtoCommand(String cid, RegisterBloodCardReqDto registerBloodCardReqDto);
 
     @Mapping(target = "code", ignore = true)

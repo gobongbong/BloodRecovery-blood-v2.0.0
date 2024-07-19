@@ -9,15 +9,13 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetBloodRequestRspDto {
-    private String userNickName;
+public class GetBloodRequestDetailRspDto {
+    private String userNickname;
     private String profileImage;
     private String requestType;
     private boolean editable;
     private Integer bloodReqCnt;
     private Integer bloodDonationCnt;
-    //todo list?
     private Post postInfo;
-    //todo list?
     private DirectedDonation directInfo;
 }

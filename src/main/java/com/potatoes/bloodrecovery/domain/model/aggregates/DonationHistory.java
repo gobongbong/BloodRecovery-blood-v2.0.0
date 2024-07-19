@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+import static com.potatoes.constants.RequestStatus.DIRECTED_DONATION_ONGOING;
 import static com.potatoes.constants.StaticValues.*;
 
 @Slf4j
@@ -34,7 +35,7 @@ public class DonationHistory {
 
     private Integer donationCnt;
     private String donationType;
-    private RequestStatus donationStatus;
+    private String donationStatus;
 
     @CreatedDate
     private LocalDateTime date;
@@ -46,18 +47,15 @@ public class DonationHistory {
         this.donationType = BLOOD_CARD_DONATION;
     }
 
-    /**
-     * 지정헌혈 이력 생성자
-     */
     public DonationHistory(DirectedBloodDonationCommand directedBloodDonationCommand) {
         this.requestId = directedBloodDonationCommand.getRequestId();
         this.cid = directedBloodDonationCommand.getCid();
         this.donationCnt = 1;
         this.donationType = DIRECTED_DONATION;
-        this.donationStatus = RequestStatus.DIRECTED_DONATION_ONGOING;
+        this.donationStatus = DIRECTED_DONATION_ONGOING.getValue();
     }
 
-    public void changeRequestStatus(RequestStatus requestStatus) {
-        this.donationStatus = requestStatus;
+    public void changeDonationStatus(String donationStatus) {
+        this.donationStatus = donationStatus;
     }
 }

@@ -7,8 +7,8 @@ import com.potatoes.bloodrecovery.domain.model.valueobjects.Post;
 import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.DonationHistoryRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
+import com.potatoes.bloodrecovery.exception.ApiException;
 import com.potatoes.constants.RequestStatus;
-import com.potatoes.exception.ApiException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.potatoes.constants.RequestStatus.DIRECTED_DONATION_ONGOING;
 import static com.potatoes.constants.StaticValues.BLOOD_CARD_DONATION;
 import static com.potatoes.constants.StaticValues.DIRECTED_DONATION;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -115,7 +116,7 @@ class DirectedBloodDonationCommandServiceTest {
                 DonationHistory.builder()
                         .cid("2222")
                         .requestId(1l)
-                        .donationStatus(RequestStatus.DIRECTED_DONATION_ONGOING)
+                        .donationStatus(DIRECTED_DONATION_ONGOING.getValue())
                         .donationCnt(1)
                         .historyId(1l)
                         .donationType(DIRECTED_DONATION)

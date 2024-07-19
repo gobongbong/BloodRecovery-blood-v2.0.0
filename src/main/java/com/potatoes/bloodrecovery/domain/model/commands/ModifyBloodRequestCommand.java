@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
-
 @Slf4j
 @Getter
 @ToString
@@ -20,8 +18,6 @@ public class ModifyBloodRequestCommand {
     private Integer bloodReqCnt;
     private String title;
     private String contents;
-
-    private String postStatus;
 
     private DirectedDonation directInfo;
 

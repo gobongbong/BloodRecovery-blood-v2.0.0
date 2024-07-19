@@ -41,14 +41,15 @@ public class BloodDonationController extends BaseController{
     private final GetDirectedDonationApplicantQueryService getDirectedDonationApplicantQueryService;
 
     @PostMapping(DONATION_BLOOD_CARD)
-    public ResponseEntity<Object> donationBloodCard(@RequestHeader(value = HEADER_CID) String cid, @RequestBody @Valid DonationBloodCardReqDto donationBloodCardReqDto) {
+    public ResponseEntity<Object> donationBloodCard(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
+                                                    @RequestBody @Valid DonationBloodCardReqDto donationBloodCardReqDto) {
         DonationBloodCardCommand donationBloodCardCommand = donationBloodMapper.donationBloodCardReqtoCommand(cid, donationBloodCardReqDto);
         donationBloodCardCommandService.donationBloodCard(donationBloodCardCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
     @GetMapping(DONATION_BLOOD_CARD)
-    public ResponseEntity<Object> getDonationHistory(@RequestHeader(value = HEADER_CID) String cid){
+    public ResponseEntity<Object> getDonationHistory(@RequestHeader(value = HEADER_CID) @NotBlank String cid){
         GetDonationHistoryRspDto getDonationHistoryRspDto = GetDonationHistoryRspDto.builder()
                 .donationHistory(getDonationHistoryQueryService.getDonationHistory(cid))
                 .build();
@@ -56,22 +57,23 @@ public class BloodDonationController extends BaseController{
     }
 
     @PatchMapping(COMPLETE_DIRECTED_DONATION)
-    public ResponseEntity<Object> completeDirectedDonation(@PathVariable Long requestId, @RequestBody @Valid CompleteDirectedDonationReqDto completeDirectedDonationReqDto) {
+    public ResponseEntity<Object> completeDirectedDonation(@PathVariable Long requestId,
+                                                           @RequestBody @Valid CompleteDirectedDonationReqDto completeDirectedDonationReqDto) {
         completeDirectedDonationCommandService.completeDirectedDonation(requestId, completeDirectedDonationReqDto);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
     @GetMapping(GET_DIRECTED_DONATION_APPLICANT)
-    public ResponseEntity<Object> getDirectedDonationApplicant(@RequestHeader(value = HEADER_CID) String cid, @PathVariable Long requestId){
+    public ResponseEntity<Object> getDirectedDonationApplicant(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
+                                                               @PathVariable Long requestId){
         GetDirectedDonationApplicantRspDto getDirectedDonationApplicantRspDto= GetDirectedDonationApplicantRspDto.builder()
                 .applicants(getDirectedDonationApplicantQueryService.getDirectedDonationApplicant(cid, requestId))
                 .build();
         return new ResponseEntity<>(getDirectedDonationApplicantRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 
-    // todo validation
     @PostMapping(APPLY_DIRECTED_DONATION)
-    public ResponseEntity<Object> applyDirectedBloodDonation(@RequestHeader(value = HEADER_CID) String cid, @RequestBody @Valid DirectedBloodDonationReqDto directedBloodDonationReqDto) {
+    public ResponseEntity<Object> applyDirectedBloodDonation(@RequestHeader(value = HEADER_CID) @NotBlank String cid, @RequestBody @Valid DirectedBloodDonationReqDto directedBloodDonationReqDto) {
         DirectedBloodDonationCommand directedBloodDonationCommand = donationBloodMapper.directedDonationReqtoCommand(cid, directedBloodDonationReqDto);
         directedBloodDonationCommandService.applyDirectedBloodDonation(directedBloodDonationCommand);
 

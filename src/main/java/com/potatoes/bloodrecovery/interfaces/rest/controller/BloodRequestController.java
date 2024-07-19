@@ -4,13 +4,17 @@ import com.potatoes.bloodrecovery.application.commandservices.CompleteBloodReque
 import com.potatoes.bloodrecovery.application.commandservices.DeleteBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.ModifyBloodRequestCommandService;
 import com.potatoes.bloodrecovery.application.commandservices.RegisterBloodRequestCommandService;
-import com.potatoes.bloodrecovery.application.queryservices.CustomerRequestsQueryService;
-import com.potatoes.bloodrecovery.application.queryservices.GetBloodRequestQueryService;
+import com.potatoes.bloodrecovery.application.queryservices.GetBloodRequestDetailQueryService;
+import com.potatoes.bloodrecovery.application.queryservices.GetBloodRequestsQueryService;
+import com.potatoes.bloodrecovery.application.queryservices.GetDirectedBloodRequestsQueryService;
 import com.potatoes.bloodrecovery.domain.model.commands.ModifyBloodRequestCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.RegisterBloodRequestCommand;
-import com.potatoes.bloodrecovery.domain.model.queries.GetCustomerRequestsQuery;
+import com.potatoes.bloodrecovery.domain.model.view.BloodRequestDetailView;
 import com.potatoes.bloodrecovery.domain.model.view.BloodRequestView;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.*;
+import com.potatoes.bloodrecovery.interfaces.rest.dto.GetBloodRequestDetailRspDto;
+import com.potatoes.bloodrecovery.interfaces.rest.dto.GetBloodRequestsRspDto;
+import com.potatoes.bloodrecovery.interfaces.rest.dto.ModifyBloodRequestReqDto;
+import com.potatoes.bloodrecovery.interfaces.rest.dto.RegisterBloodRequestReqDto;
 import com.potatoes.bloodrecovery.interfaces.rest.mapper.BloodRequestMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +24,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 
-import static com.potatoes.bloodrecovery.interfaces.rest.constants.ValidationErrorMessage.EMPTY_HEADER_PARAMETER_CID;
 import static com.potatoes.bloodrecovery.interfaces.rest.constants.apiurl.BloodApiUrl.*;
 import static com.potatoes.constants.StaticValues.HEADER_CID;
 
@@ -31,61 +35,68 @@ import static com.potatoes.constants.StaticValues.HEADER_CID;
 @RequiredArgsConstructor
 @Validated
 @RequestMapping(BLOOD_BASE_URL)
-public class BloodRequestController extends BaseController{
+public class BloodRequestController extends BaseController {
 
-    private final CustomerRequestsQueryService customerRequestsQueryService;
     private final BloodRequestMapper bloodRequestMapper;
     private final RegisterBloodRequestCommandService registerBloodRequestCommandService;
     private final ModifyBloodRequestCommandService modifyBloodRequestCommandService;
     private final DeleteBloodRequestCommandService deleteBloodRequestCommandService;
-    private final GetBloodRequestQueryService getBloodRequestQueryService;
+    private final GetBloodRequestDetailQueryService getBloodRequestDetailQueryService;
     private final CompleteBloodRequestCommandService completeBloodRequestCommandService;
+    private final GetBloodRequestsQueryService getBloodRequestsQueryService;
+    private final GetDirectedBloodRequestsQueryService getDirectedBloodRequestsQueryService;
 
-    @GetMapping(GET_CUSTOMER_REQUESTS)
-    //todo 추후 수정 필요
-    public ResponseEntity<Object> getCustomerRequests(@RequestHeader(value = HEADER_CID) @NotEmpty(message = EMPTY_HEADER_PARAMETER_CID) String cid) {
-        GetCustomerRequestsRspDto getCustomerRequestsRspDto = GetCustomerRequestsRspDto.builder()
-                .requests(customerRequestsQueryService.getCustomerRequests(GetCustomerRequestsQuery.builder()
-                        .build()))
-                .build();
-        return new ResponseEntity<>(getCustomerRequestsRspDto, getSuccessHeaders(), HttpStatus.OK);
-    }
-
-    @PostMapping(REGISTER_BLOOD_REQUEST)
-    public ResponseEntity<Object> registerBloodRequest(@RequestHeader(value = HEADER_CID) String cid, @RequestBody @Valid RegisterBloodRequestReqDto registerBloodRequestReqDto) {
+    @PostMapping(BLOOD_REQUEST)
+    public ResponseEntity<Object> registerBloodRequest(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
+                                                       @RequestBody @Valid RegisterBloodRequestReqDto registerBloodRequestReqDto) {
         RegisterBloodRequestCommand registerBloodRequestCommand = bloodRequestMapper.registerReqToCommand(cid, registerBloodRequestReqDto);
         registerBloodRequestCommandService.registerBloodRequest(registerBloodRequestCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
-    @PatchMapping(MODIFY_BLOOD_REQUEST)
-    public ResponseEntity<Object> modifyBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
-                                                   @PathVariable Long requestId,
-                                                   @RequestBody @Valid ModifyBloodRequestReqDto modifyBloodRequestReqDto) {
+    @PatchMapping(BLOOD_REQUEST + "/{requestId}")
+    public ResponseEntity<Object> modifyBloodRequest(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
+                                                     @PathVariable Long requestId,
+                                                     @RequestBody @Valid ModifyBloodRequestReqDto modifyBloodRequestReqDto) {
         ModifyBloodRequestCommand modifyBloodRequestCommand = bloodRequestMapper.modifyReqToCommand(cid, requestId, modifyBloodRequestReqDto);
         modifyBloodRequestCommandService.modifyBloodRequest(modifyBloodRequestCommand);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
-    @PostMapping(DELETE_BLOOD_REQUEST)
-    public ResponseEntity<Object> deleteBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
+    @PostMapping(BLOOD_REQUEST + "/{requestId}")
+    public ResponseEntity<Object> deleteBloodRequest(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
                                                      @PathVariable Long requestId) {
         deleteBloodRequestCommandService.deleteBloodRequest(cid, requestId);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
     }
 
-    @GetMapping(GET_BLOOD_REQUEST)
-    public ResponseEntity<Object> getBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
-                                                     @PathVariable Long requestId) {
-        BloodRequestView bloodRequestView = getBloodRequestQueryService.getBloodRequest(cid, requestId);
-        GetBloodRequestRspDto getBloodRequestRspDto = bloodRequestMapper.bloodRequsetViewToDto(bloodRequestView);
-        return new ResponseEntity<>(getBloodRequestRspDto, getSuccessHeaders(), HttpStatus.OK);
+    @GetMapping(BLOOD_REQUEST + "/{requestId}")
+    public ResponseEntity<Object> getBloodRequestDetail(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
+                                                        @PathVariable Long requestId) {
+        BloodRequestDetailView bloodRequestDetailView = getBloodRequestDetailQueryService.getBloodRequestDetail(cid, requestId);
+        GetBloodRequestDetailRspDto getBloodRequestDetailRspDto = bloodRequestMapper.bloodRequestDetailViewToDto(bloodRequestDetailView);
+        return new ResponseEntity<>(getBloodRequestDetailRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 
     @PatchMapping(COMPLETE_BLOOD_REQUEST)
-    public ResponseEntity<Object> completeBloodRequest(@RequestHeader(value = HEADER_CID) String cid,
-                                                     @PathVariable Long requestId) {
+    public ResponseEntity<Object> completeBloodRequest(@RequestHeader(value = HEADER_CID) @NotBlank String cid,
+                                                       @PathVariable Long requestId) {
         completeBloodRequestCommandService.completeBloodRequest(cid, requestId);
         return new ResponseEntity<>(getSuccessHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping(BLOOD_REQUESTS)
+    public ResponseEntity<Object> getBloodRequests(@RequestParam int pageSize, @RequestParam int pageNumber,
+                                                   @PathVariable int type) {
+        List<BloodRequestView> list = getBloodRequestsQueryService.getBloodRequests(pageNumber, pageSize, type);
+        GetBloodRequestsRspDto getBloodRequestsRspDto = BloodRequestMapper.bloodRequestViewToDto(list);
+        return new ResponseEntity<>(getBloodRequestsRspDto, getSuccessHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping(DIRECTED_BLOOD_REQUESTS)
+    public ResponseEntity<Object> getDirectedBloodRequests(@RequestHeader(value = HEADER_CID) @NotBlank String cid) {
+        List<BloodRequestView> list = getDirectedBloodRequestsQueryService.getDirectedBloodRequests(cid);
+        GetBloodRequestsRspDto getBloodRequestsRspDto = BloodRequestMapper.bloodRequestViewToDto(list);
+        return new ResponseEntity<>(getBloodRequestsRspDto, getSuccessHeaders(), HttpStatus.OK);
     }
 }

@@ -11,9 +11,8 @@ public class BaseController {
 
     protected HttpHeaders getSuccessHeaders() {
         HttpHeaders headers = new HttpHeaders();
-//        headers.set(RESULT_CODE, SUCCESS.getResponseCode());
         headers.set(RESULT_MESSAGE, SUCCESS.getUrlEncodingMessage());
-        headers.set(HTTP_STATUS, String.valueOf(SUCCESS.getHttpStatus())); //todo 굳이?
+        headers.set(HTTP_STATUS, String.valueOf(SUCCESS.getHttpStatus()));
         return headers;
     }
 }
