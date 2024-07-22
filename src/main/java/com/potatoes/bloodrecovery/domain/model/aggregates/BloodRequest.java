@@ -76,7 +76,7 @@ public class BloodRequest {
     }
 
     public boolean isModifiable(){
-        return !this.requestStatus.equals(DIRECTED_DONATION_ONGOING) && !this.requestStatus.equals(ONGOING);
+        return !this.requestStatus.equals(ONGOING);
     }
 
     public void changeRequestStatus(RequestStatus requestStatus){
