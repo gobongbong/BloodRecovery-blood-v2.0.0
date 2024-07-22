@@ -64,7 +64,7 @@ public class BloodRequest {
         this.bloodReqCnt = modifyBloodRequestCommand.getBloodReqCnt();
         this.post = new Post(modifyBloodRequestCommand);
         if (Objects.nonNull(modifyBloodRequestCommand.getDirectInfo())){
-            new DirectedDonation(modifyBloodRequestCommand);
+            this.directedDonation = new DirectedDonation(modifyBloodRequestCommand);
         }
     }
 
