@@ -11,6 +11,10 @@ import javax.validation.constraints.NotNull;
 @Builder
 @ToString
 @AllArgsConstructor
+<<<<<<< HEAD
+=======
+@NoArgsConstructor
+>>>>>>> ae14955f91ceb79334624d7a58822365b98282f1
 public class DirectedBloodDonationReqDto {
     @NotNull
     private Long requestId;
