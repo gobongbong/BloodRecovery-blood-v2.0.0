@@ -64,7 +64,7 @@ public class BloodRequest {
         this.bloodReqCnt = modifyBloodRequestCommand.getBloodReqCnt();
         this.post = new Post(modifyBloodRequestCommand);
         if (Objects.nonNull(modifyBloodRequestCommand.getDirectInfo())){
-            new DirectedDonation(modifyBloodRequestCommand);
+            this.directedDonation = new DirectedDonation(modifyBloodRequestCommand);
         }
     }
 
@@ -76,7 +76,7 @@ public class BloodRequest {
     }
 
     public boolean isModifiable(){
-        return !this.requestStatus.equals(DIRECTED_DONATION_ONGOING) && !this.requestStatus.equals(ONGOING);
+        return !this.requestStatus.equals(ONGOING);
     }
 
     public void changeRequestStatus(RequestStatus requestStatus){

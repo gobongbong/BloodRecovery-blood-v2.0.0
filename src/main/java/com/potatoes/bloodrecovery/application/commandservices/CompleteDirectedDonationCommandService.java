@@ -5,8 +5,8 @@ import com.potatoes.bloodrecovery.domain.model.aggregates.DonationHistory;
 import com.potatoes.bloodrecovery.domain.repository.BloodRequestRepository;
 import com.potatoes.bloodrecovery.domain.repository.DonationHistoryRepository;
 import com.potatoes.bloodrecovery.domain.repository.UserRepository;
-import com.potatoes.bloodrecovery.interfaces.rest.dto.CompleteDirectedDonationReqDto;
 import com.potatoes.bloodrecovery.exception.ApiException;
+import com.potatoes.bloodrecovery.interfaces.rest.dto.CompleteDirectedDonationReqDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
@@ -14,9 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.potatoes.constants.DonationStatus.DIRECTED_DONATION_ONGOING;
 import static com.potatoes.constants.RequestStatus.COMPLETE;
-import static com.potatoes.constants.RequestStatus.DIRECTED_DONATION_ONGOING;
-import static com.potatoes.constants.ResponseCode.*;
+import static com.potatoes.constants.ResponseCode.FAIL_COMPLETE_BLOOD_REQUEST;
+import static com.potatoes.constants.ResponseCode.NO_BLOOD_DONATION;
 import static com.potatoes.constants.StaticValues.DIRECTED_DONATION;
 import static com.potatoes.constants.StaticValues.POINT_PLUS;
 
