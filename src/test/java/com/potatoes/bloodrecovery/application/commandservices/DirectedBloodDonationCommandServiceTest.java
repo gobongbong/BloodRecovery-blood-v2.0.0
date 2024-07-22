@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonBloodRequest;
-import static com.potatoes.bloodrecovery.mock.MockDataUtil.commonDonationHistoryList_DirectedOnGoing;
 import static com.potatoes.constants.RequestStatus.REGISTER;
 import static com.potatoes.constants.ResponseCode.EXIST_ONGOING_DIRECTED_BLOOD_DONATION_HISTORY;
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,7 +57,7 @@ class DirectedBloodDonationCommandServiceTest {
                 .build();
 
         given(bloodRequestRepository.findByRequestIdAndRequestStatusIn(any(), any())).willReturn(Optional.of(commonBloodRequest(REGISTER)));
-        given(donationHistoryRepository.findByCidAndDonationTypeAndDonationStatus(any(), any(), any())).willReturn(commonDonationHistoryList_DirectedOnGoing());
+        given(donationHistoryRepository.existsByCidAndDonationTypeAndDonationStatus(any(), any(), any())).willReturn(true);
 
         // when
         Throwable throwable = assertThrows(ApiException.class, () ->

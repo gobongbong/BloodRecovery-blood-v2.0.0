@@ -12,8 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
+import static com.potatoes.constants.DonationStatus.DIRECTED_DONATION_ONGOING;
 import static com.potatoes.constants.RequestStatus.*;
 import static com.potatoes.constants.ResponseCode.*;
 import static com.potatoes.constants.StaticValues.DIRECTED_DONATION;
@@ -30,10 +29,10 @@ public class DirectedBloodDonationCommandService {
         BloodRequest bloodRequest = bloodRequestRepository.findByRequestIdAndRequestStatusIn(directedBloodDonationCommand.getRequestId(), RequestStatus.getOngoing())
                 .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
 
-        List<DonationHistory> donationHistories = donationHistoryRepository.findByCidAndDonationTypeAndDonationStatus(
+        boolean donationHistories = donationHistoryRepository.existsByCidAndDonationTypeAndDonationStatus(
                 directedBloodDonationCommand.getCid(), DIRECTED_DONATION, DIRECTED_DONATION_ONGOING);
 
-        if(!donationHistories.isEmpty()) {
+        if(donationHistories) {
             throw new ApiException(EXIST_ONGOING_DIRECTED_BLOOD_DONATION_HISTORY);
         }
 
@@ -49,10 +48,10 @@ public class DirectedBloodDonationCommandService {
 
     private void changeRequestStatusAndDonationCnt(BloodRequest bloodRequest) {
         if (bloodRequest.getRequestStatus().equals(REGISTER)) {
-            bloodRequest.changeRequestStatus(DIRECTED_DONATION_ONGOING);
+            bloodRequest.changeRequestStatus(ONGOING);
         }
 
-        if (bloodRequest.getRequestStatus().equals(DIRECTED_DONATION_ONGOING)) {
+        if (bloodRequest.getRequestStatus().equals(ONGOING)) {
             if (bloodRequest.getBloodDonationCnt() + 1 == bloodRequest.getBloodReqCnt()) {
                 bloodRequest.changeRequestStatus(COMPLETE);
             }

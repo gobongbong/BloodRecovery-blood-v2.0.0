@@ -135,21 +135,6 @@ public class MockDataUtil {
         return list;
     }
 
-    public static List<DonationHistory> commonDonationHistoryList_DirectedOnGoing() {
-        List<DonationHistory> list = new ArrayList<>();
-        DonationHistory donationHistory = DonationHistory.builder()
-                .cid("2222")
-                .requestId(1l)
-                .donationStatus(DIRECTED_DONATION_ONGOING.getValue())
-                .donationCnt(1)
-                .historyId(1l)
-                .donationType(DIRECTED_DONATION)
-                .date(LocalDateTime.now())
-                .build();
-        list.add(donationHistory);
-        return list;
-    }
-
     public static UserInfoView commonUserInfoView(){
         return UserInfoView.builder()
                 .userId("1111")

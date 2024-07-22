@@ -2,7 +2,6 @@ package com.potatoes.bloodrecovery.domain.model.aggregates;
 
 import com.potatoes.bloodrecovery.domain.model.commands.DirectedBloodDonationCommand;
 import com.potatoes.bloodrecovery.domain.model.commands.DonationBloodCardCommand;
-import com.potatoes.constants.RequestStatus;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
-import static com.potatoes.constants.RequestStatus.DIRECTED_DONATION_ONGOING;
+import static com.potatoes.constants.DonationStatus.DIRECTED_DONATION_ONGOING;
 import static com.potatoes.constants.StaticValues.*;
 
 @Slf4j
