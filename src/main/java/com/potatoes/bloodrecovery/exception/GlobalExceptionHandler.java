@@ -1,12 +1,11 @@
 package com.potatoes.bloodrecovery.exception;
 
-import com.potatoes.bloodrecovery.interfaces.rest.controller.BloodRequestController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -18,7 +17,7 @@ import static com.potatoes.constants.StaticValues.HTTP_STATUS;
 import static com.potatoes.constants.StaticValues.RESULT_MESSAGE;
 
 @Slf4j
-@RestControllerAdvice(assignableTypes = BloodRequestController.class)
+@ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private HttpHeaders setHeaders(String message, HttpStatus status) {
