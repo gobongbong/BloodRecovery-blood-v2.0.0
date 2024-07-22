@@ -29,10 +29,10 @@ public class DirectedBloodDonationCommandService {
         BloodRequest bloodRequest = bloodRequestRepository.findByRequestIdAndRequestStatusIn(directedBloodDonationCommand.getRequestId(), RequestStatus.getOngoing())
                 .orElseThrow(() -> new ApiException(NO_BLOOD_REQUEST));
 
-        boolean donationHistories = donationHistoryRepository.existsByCidAndDonationTypeAndDonationStatus(
-                directedBloodDonationCommand.getCid(), DIRECTED_DONATION, DIRECTED_DONATION_ONGOING);
+        boolean isDonationHistoryExist = donationHistoryRepository.existsByCidAndDonationTypeAndDonationStatus(
+                directedBloodDonationCommand.getCid(), DIRECTED_DONATION, DIRECTED_DONATION_ONGOING.getValue());
 
-        if(donationHistories) {
+        if(isDonationHistoryExist) {
             throw new ApiException(EXIST_ONGOING_DIRECTED_BLOOD_DONATION_HISTORY);
         }
 

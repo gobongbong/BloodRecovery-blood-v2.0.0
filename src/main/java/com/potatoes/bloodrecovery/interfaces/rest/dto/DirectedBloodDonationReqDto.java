@@ -12,9 +12,8 @@ import javax.validation.constraints.NotNull;
 @Builder
 @ToString
 @AllArgsConstructor
-@DirectedBloodDonationReqValidation
+@NoArgsConstructor
 public class DirectedBloodDonationReqDto {
-    // todo validation 추가 필요
-    @NotNull(message = "")
+    @NotNull
     private Long requestId;
 }
