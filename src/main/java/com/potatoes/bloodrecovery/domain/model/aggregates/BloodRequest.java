@@ -15,7 +15,6 @@ import javax.persistence.*;
 import java.util.Objects;
 
 import static com.potatoes.constants.RequestStatus.*;
-import static com.potatoes.constants.RequestStatus.ONGOING;
 
 @Slf4j
 @Entity

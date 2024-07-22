@@ -12,4 +12,5 @@ public interface DonationHistoryJPARepository extends JpaRepository<DonationHist
     List<DonationHistory> findByCid(String cid);
     List<DonationHistory> findByCidAndDonationTypeAndDonationStatus(String cid, String donationType, DonationStatus requestStatus);
     List<DonationHistory> findByRequestIdAndDonationType(Long requestId, String donationType);
+    boolean existsByCidAndDonationTypeAndDonationStatus(String cid, String donationType, String requestStatus);
 }
